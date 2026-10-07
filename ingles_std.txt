@@ -1,0 +1,2823 @@
+
+
+-- 1 of 64 --
+
+La Edición original de los Estándares Educativos Nacionales-Ingles, de
+1ro. a 9no. Grado, son propiedad de la Secretaría de Educación de Honduras.
+Presidencia de la República
+Secretaría de Estado en el Despacho de Educación
+Sub Secretaría de Asuntos Técnico Pedagógicos
+Sub Secretaría de Asuntos Administrativos y Financieros
+Dirección General de Currículo y Evaluación
+Sub Dirección General de Educación Básica
+© Secretaría de Educación Revisión Técnico-Gráfico y Pedagógica
+Comayagüela, M.D.C.
+Honduras, C.A.
+Estándares Educativos
+Nacionales-Ingles
+1ro - 9no grado,
+Edición año 2011
+ISBN:
+Neyra Gimena Paz E.
+Eda Mayra Meza
+Levis Nohelia Escober
+Dirección General de Tecnología Educativa
+Se prohíbe la reproducción total o parcial de los Estándares Educativos Nacionales-
+Ingles de 1ro a 9no grado, por cualquier medio, sin el permiso por escrito de la
+Secretaría de Educación.
+Ref. LPI-SEDUC-001-2015 "Impresión y distribución de Textos y Adquisición de
+Materiales Escolares en el Marco de la Propuesta Curricular del Plan EFA-2015".
+Financiamiento Fondo Común.
+DISTRIBUCIÓN GRATUITA - PROHIBIDA SU VENTA
+
+-- 2 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+1
+1st - 9th
+Level
+ÍNDICE
+PRESENTATION......................................................................................................................................3
+ENGLISH STANDARDS...........................................................................................................................5
+ENGLISH STANDARDS MAP..................................................................................................................7
+STANDARDS AND COMPONENT...........................................................................................................9
+BLOCK, COMPONENT, STANDARD AND INDICATOR PER LEVEL..................................................11
+Block 1: Communication.
+Component 1: Communicate in another language.
+Students use another language to communicate with others.......................................................11
+Block 2: Culture.
+Component 1: Gain knowledge and understanding of other cultures. Students use their
+understanding of culture to communicate and function appropriately in another culture.............20
+Block 3: Connections
+Component 1: Connect with other disciplines and acquire information.
+Students use their understanding of another language and culture to
+reinforce and expand their knowledge of other disciplines and vice versa..................................25
+Block 4: Comparisons.
+Component 1: Develop insight into the nature of language and culture.
+Students demonstrate an understanding of the similarities, differences
+and interactions across languages..............................................................................................33
+Block 5: Communities.
+Component 1: Participate in multilingual communities at home and around
+the world. Students use their knowledge of language and culture
+to enrich my life and broaden my opportunities............................................................................37
+
+-- 3 of 64 --
+
+2
+English / Inglés
+ESTÁNDARES DE INGLÉS (TRADUCCIÓN).....................................................................................43
+MAPA ESTÁNDARES DE INGLÉS......................................................................................................45
+ESTÁNDARES Y COMPONENTES.....................................................................................................47
+BLOQUE, COMPONENTE, ESTÁNDAR E INDICADOR DE LOGRO..................................................47
+BLOQUE 1: Comunicación.
+COMPONENTE 1: Comunicarse en otra lengua.........................................................................49
+BLOQUE 2: Cultura.
+COMPONENTE 1: Obtiene conocimiento y comprensión de otras culturas.................................53
+BLOQUE 3: Conexiones.
+COMPONENTE 1: Relacionan con otras disciplinas y adquieren información...........................55
+BLOQUE 4: Comparaciones.
+COMPONENTE 1: Desarrolla un enfoque hacia
+la naturaleza de la lengua extranjera y su cultura..............................................................................59
+BLOQUE 5: Comunidades.
+COMPONENTE 1: Participan en comunidades multilingües en
+casa y en cualquier otro lugar del mundo........................................................................................51
+AGRADECIMIENTO...............................................................................................................................63
+
+-- 4 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+3
+1st - 9th
+Level
+P RESENTATION
+The Secretaria de Educación, in the process of transforming the National Education System
+as response to the aspiration of Honduran society embodied in the proposal presented
+by the Foro Nacional de Convergencia (FONAC), has elaborated the National Educational
+English Standards for Basic Education that will guide month by month the teacher´s labor in the
+classroom.
+The National Educational Standards were made base in the National Curriculum Design for
+Basic Education for the content area of English. They are align with the National Educational
+Standards, which has the defined goals of what must be taught and students must achieve
+during the process of learning.
+Likewise, the National Education Standards observed a close relationship with the contents of
+DCNB no scope of any specific literature, so it is recommended the use of multiple resources
+and texts available, inviting the teachers to be creative and manager in their teaching, thereby
+seeking to complement a quality educational process.
+National Education Standards reflect consistency, alignment and gradual approach between the
+different educational levels and are designed to facilitate the pedagogical practice of teachers
+in the classroom, providing the information needed to plan, allocate time and work to develop
+organized content for each week, month and year, and to evaluate the educational process.
+Being that the effectiveness of this document is a major concern the Secretaria de Educación, it
+is expected that the use and management on the part of teachers to be directed towards active
+participation for validation, integrated in a process that allows constructive criticism in achieving
+the quality of both teaching and learning exercise for students and beneficial to the country’s
+education quality.
+
+-- 5 of 64 --
+
+
+
+-- 6 of 64 --
+
+4
+English / Inglés
+P RESENTACIÓN
+La Secretaría de Educación, en el marco de la transformación del Sistema Educativo Nacional
+y en respuesta a las aspiraciones de la sociedad hondureña plasmada en la propuesta
+presentada por el Foro Nacional de Convergencia (FONAC), ha elaborado los Estándares
+Educativos Nacionales de Inglés para la Educación Básica que servirán para orientar mes a
+mes la labor docente en el aula de clase.
+Los Estándares Educativos Nacionales están elaborados con base en el Diseño Curricular
+Nacional para la Educación Básica (DCNB) para el área de Inglés. Están además alineados
+con los Estándares Educativos Nacionales, que son los objetivos que definen lo que se debe
+enseñar y lo que los alumnos y alumnas deben lograr durante su proceso de aprendizaje.
+Así mismo, los Estándares Educativos Nacionales observan una relación estrecha con
+los contenidos del DCNB, sin enmarcarse en ninguna bibliografía específica, por lo que se
+recomienda el uso de múltiples recursos y textos disponibles en el medio, invitando al docente a
+ser creativo y gestor en su labor docente, procurando de esa manera complementar un proceso
+educativo de calidad.
+Los Estándares Educativos Nacionales reflejan coherencia, alineación y gradualidad entre
+los diferentes niveles educativos y tienen como finalidad facilitar la práctica pedagógica de los
+docentes en el aula de clase, brindándole los elementos necesarios para planificar, distribuir
+el tiempo de trabajo y organizar los contenidos a desarrollar en cada semana, mes y año, así
+como para evaluar los procesos educativos.
+Siendo que la efectividad de este documento es una de las mayores preocupaciones de la
+Secretaría de Educación, se espera que el uso y manejo por parte de los docentes se oriente
+a la participación activa para su validación, integrándose a un proceso que permita la crítica
+constructiva en el logro de la calidad, tanto del ejercicio docente como del aprendizaje de los
+alumnos y alumnas y que redunde en beneficio de la calidad educativa del país.
+
+-- 7 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+5
+1st - 9th
+Level
+E n g l i s h
+Standards
+Here are the National Education
+Standards for English from first to
+ninth Sub-levels.
+All blocks and components are
+distributed in all Sub-levels
+
+-- 8 of 64 --
+
+ENGLISH STANDARDS MAP
+
+-- 9 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+9
+1st - 9th
+Level
+STANDARDS AND COMPONENT
+Block 1: Communication.
+Block 2: Culture.
+Block 3: Connections.
+E N GLISH
+Component 	Standards
+1. Communicate in another language. 	Standard 1: Students engage in conversations, provide
+and obtain information, express feelings and emotions,
+and exchange opinions (interpersonal).
+Standard 2: Students understand and interpret written
+and spoken language on a variety of topics (interpretive).
+Standard 3: Students present information, concepts, and
+ideas to an audience of listeners or readers on a variety of
+topics (presentational).
+Component 	Standards
+1. Gain knowledge and understanding of other
+cultures.
+Standard 1: Students demonstrate an understanding of
+the relationship between the practices and perspectives of
+the culture studied.
+Standard 2: Students demonstrate an understanding of
+the relationship between the products and perspectives of
+the culture studied.
+Component 	Standards
+1. Connect with other disciplines and acquire
+information.
+Standard 1: Students reinforce and further their
+knowledge of other disciplines through the world
+language.
+Standard 2: Students acquire and use information from
+a variety of sources only available in the world language,
+using technology, print, audiovisual, media, data and
+human resources (interdisciplinary).
+
+-- 10 of 64 --
+
+10
+English / Inglés
+Block 4: Comparisons.
+Block 5: Communities.
+Component 	Standards
+1. Develop insight into the nature of language
+and culture.
+Standard 1: Students demonstrate an understanding
+of the nature of language through comparison of the
+language studied and their own.
+Standard 2: Students demonstrate an understanding of
+the concept of culture through comparisons of the cultures
+studied and their own.
+Component 	Standards
+1. Participate in multilingual communities at
+home and around the world.
+Standard 1: Students use the world language both within
+and beyond the school setting.
+Standard 2: Students show evidence of becoming
+life-long learners by using the language for personal
+enjoyment and enrichment.
+
+-- 11 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+11
+1st - 9th
+Level
+Standard 1: Students engage in conversations, provide and obtain information, express feelings and emotions,
+and exchange opinions (interpersonal).
+Sub-Level 1
+1. 	Exchange simple greetings and farewells for the correct time of day (e.g., good morning/
+afternoon/ evening) (can be pictured activity).
+2. 	Respond to simple oral commands (e.g., line up, sit down, open your note book, get your
+pencil etc).
+3. 	Use courtesy phrases to express needs and wants, (e.g., May I go to the bathroom
+please? May I barrow your pencil/eraser, sharpener, ruler please? /Thank you/ You’re
+welcome).
+4. 	Identify colors, describing school environment (e.g., What color is your pencil? It’s yellow).
+5. 	Identify the days of the week on a calendar up to 31. Answer questions such as: What day
+is today? / How many days are there in a week? (cardinal numbers).
+6. 	Identify dates, (e.g. birthdays, national celebrations, etc.) using ordinal numbers up to 31.
+7. 	Identify and act out emotions; match feelings with pictures and ask classmates how they
+feel, (e.g., How do you feel today? I’m happy, I’m sad, I’m fine, I’m sick).
+8. 	Introduce themselves, their family members, and pets (e.g., me, my mother, my father,
+and my pet, etc).
+9. 	Respond to simple questions about themselves (age, feelings, birthday, etc.) and
+surroundings (e.g., What is the weather like today? It’s warm/ places in city, right, left,
+front and back).
+Sub-Level 2
+1. 	Give simple commands or instructions to classmates and teacher, (e.g., get in pairs, get in
+groups of three, underline…, make a circle, highlight…).
+2. 	Identify oneself on the phone. Ask how someone is. (e.g., Julio, hi. This is Maria. How are
+you?)
+3. 	Express likes and dislikes on a variety of topics (e.g., animals, sports, food, hobbies).
+4. 	Describe routines (e.g., wake up, get up, go to school, go to church, sports, meals). Give
+time framework (hour, day, month, today, yesterday, tomorrow) for when activities are
+performed.
+5. 	Ask and respond in simple conversations to questions about peers and teachers (e.g.,
+How are you? Where do you live? What time do you eat lunch? How many family
+members do you have)?
+6. 	Identify and describe themselves and members of immediate and extended family (e.g., I
+am tall, my uncle is short, my aunt is blonde).
+7. 	Ask and state location of places and things (e.g., “Where is the zoo? The zoo is behind
+the park.”).
+Block, Component, Standard and Indicator per Level
+Block 1: Communication.
+Component 1: Communicate in another language. Students use another language to communicate with
+others.
+
+-- 12 of 64 --
+
+12
+English / Inglés
+Sub-Level 3
+1. 	Expand communicative abilities based on new information (e.g., vacation, activities
+related to the family, information about student’s community), using there is and there are.
+2. 	Participate in extended exchanges with others using interrogation (e.g., What, When,
+Which, Where, Who, How many, How much, How and Why, and ask about the school
+government, artistic groups, sports, favorite musicians, movies, etc).
+3. 	Engage in activities that describe future plans (e.g., dream home, ideal vacation, ideal
+friend, etc).
+4. 	Acquire goods and services through basic communicative skills (e.g., ordering food in a
+restaurant, purchase goods at a supermarket, purchase at a drug store, at the general
+stores, school supplies, and others).
+5. 	Exchange opinions, feelings and emotions (e.g., I’m proud, I admire the hero, I hate drugs
+etc).
+6. 	Accept and decline invitations.
+Sub-Level 4
+1. 	Engage in conversational activities based on activities and holidays common to their
+communities.
+2. 	Use transitional words or phrases to sustain conversations (e.g., First, on the first hand,
+on the other hand, finally, etc).
+3. 	Give a one sentence opinion about problems in the communities and surrounding areas.
+4. 	Provide and obtain information about ways of solving problems in school, community, and
+their surroundings.
+5. 	Describe themselves and the members of their family and best friend (e.g., physical
+features, hobbies and interests, likes and dislikes, and personality traits).
+6. 	Relate the sequence of a story by following the illustrations and saying the key words
+(e.g., first, second, next, finally, etc).
+Sub-Level 5
+1. 	Expand oral abilities based on new information about climate, seasons, school schedule.
+2. 	Exchange opinions about problems in the country (e.g., I think, I believe, In my opinion,
+etc).
+3. 	Provide three reasons to support an opinion on how to solve current problems that affect
+the country.
+4. 	Respond to factual and interpretive questions audibly and clearly, varying pace, tone, and
+stress to enhance meaning.
+5. 	Exchange personal past events and share the biography of a national or international
+celebrity.
+6. 	Demonstrate an awareness of dialects and regional variations.
+7. 	Respond with simple, appropriate social expressions with correct grammar (e.g., “I have
+hunger” vs. “I am hungry”, “It makes cold” vs. “It is cold out”).
+8. 	Relate the sequence of a movie video without the sound.
+9. 	Identify customs from target cultures that have been assimilated to daily life in the U.S.
+(e.g., Taco Bell, Piñata at parties).
+
+-- 13 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+13
+1st - 9th
+Level
+Sub-Level 6
+1. 	Read a newspaper article and respond orally to express an opinion about the topic.
+2. 	Provide three reasons, orally, using evidence from a text, to support an opinion about a problem
+in the global community.
+3. 	Write questions on a particular topic to use in an oral interview (e.g., classmate, guest speaker).
+4. 	Follow instructions (building a paper boat, an invitation card, a recipe, etc).
+5. 	Express personal preferences to agree or disagree with someone else’s opinion (e.g., express
+approval, disapproval, wants, preferences, ask and answer what one likes best, give and
+respond to compliments).
+6. 	Predict a sequence of events (e.g., preview video without sound and write own dialog).
+7. 	Listen to a debate (e.g., the value of specific cultural traditions) and draw conclusions based on
+the information provided.
+Sub-Level 7
+1. 	Initiate and maintain discussions where some responses may be unpredictable (e.g.,
+scenarios).
+2. 	Provide an opinion on topics of social and personal interest (e.g., music, literature, the
+arts, and the sciences) and support with details and examples.
+3. 	Engage in extended conversations on a variety of topics.
+4. 	Critique information presented visually (through art, drama, etc).
+5. 	Develop a logical argument on the advantages and disadvantages of a proposed course
+of action (e.g., the year-round school, lowing the age for getting a driver’s license to 15).
+Sub-Level 8
+1. 	Listen to oral language (e.g., interview, broadcast, lecture, etc.) and restate the facts
+presented.
+2. 	Ask questions to reveal another’s opinion/belief on a topic (e.g., environmental issues)
+and why they think the way they do (e.g., What do you think about…? Why do you think
+so…?).
+3. 	Sequence items (presented visually) using transitional words or phrases (to sustain
+conversations).
+4. 	Persuade others to accomplish a given task (and give supporting details).
+5. 	Analyze and critique current events (e.g., social/ political/ music, literature, artistic
+performance, etc).
+6. 	Debate both sides of an issue (from a book, a magazine, a newspaper, etc.) developing a
+logical argument.
+7. 	Connect a common idiomatic expression with its literal meaning (e.g., “I know it like the
+back of my hand.” “It’s raining cats and dogs.”).
+Sub-Level 9
+1. 	Use formulaic expressions appropriately (e.g., state and accept an apology according to
+the severity of the situation by using appropriate phrases and intonation: “I’m so sorry.”).
+2. 	Verbally distinguish between the roles of members in a community (e.g., a principal
+has a different role from teachers and students, a priest has different roles from the
+parishioners).
+3. 	Provide information about future plans and hopes (e.g., I’ll go to La Ceiba next weekend. /
+I hope the climate will improve).
+4. 	Predict and narrate possible future events in a short story.
+5. 	Describe cause and effect (e.g., If I get a scholarship, I’ll buy a computer).
+6. 	Compare and contrast past and current information on a variety of topics.
+7. 	Comprehend the main idea of an oral discourse, asking and answering questions about it.
+8. 	Describe past situations that are not longer true (e.g., We used to live in a big city. Now
+we all live in a peaceful and quiet town).
+
+-- 14 of 64 --
+
+14
+English / Inglés
+Standard 2: Students understand and interpret written and spoken language on a variety of topics (Interpretive).
+Sub-Level 1
+1. 	Listen and respond appropriately to greetings, farewells and statements of feelings.
+2. 	Listen to simple questions and commands on classroom topics by responding correctly
+either orally or physically (e.g., Where is the trash can? Student says, “The trash can is in
+the corner” or points to the trash can).
+3. 	Recognize classroom objects in oral and written forms (e.g., clock, door, pencil
+sharpener).
+4. 	Orally supply missing word(s) to a song, rhyme, game or story at correct time (e.g.,
+Twinkle, twinkle little_____).
+5. 	Use 	pictures to tell the sequence of simple stories.
+6. 	Listen to, imitate and use gestures in simple songs, rhymes and stories (whenever
+possible they should be culturally authentic).
+7. 	Identify letters, symbols, or common characters in alphabetic, phonetic or syllabic
+systems.
+8. 	Recognize beginning letters of posted classroom words.
+9. 	Comprehend the main idea of orally related personal anecdotes, songs, rhymes, familiar
+fairy tales and other narratives (familiar and/or culturally related) based on well known age
+appropriate themes.
+10. Comprehend the main idea in highly illustrated texts in which cognates, repetition,
+predictability and rhythm are used (stories, simple advertisements and/or other literacy
+sources).
+11. Compare differences between opposites (e.g., tall/short, big /small, black/white).
+12. Read aloud familiar words demonstrating initial awareness of pronunciation, interaction,
+and stress.
+13. Make connections between illustrations and simple written texts (e.g., use picture
+dictionary, match illustrations with short phrases or sentences).
+14. Find key words in songs, rhymes, stories or games.
+Sub-Level 2
+1. 	Comprehend culture based material, listening to and imitating simple songs, rhymes and
+stories.
+2. 	Understand and use interaction, pronunciation and stress (e.g., recites aloud).
+3. 	Decode new vocabulary using contextual clues from previous knowledge (e.g., “The dog
+is inside the house.”).
+4. 	Elaborate on a simple picture dictionary.
+5. 	Read aloud a familiar short story with correct intonation and pronunciation (e.g., language
+ladder or simple rhymes).
+6. 	Retell the main storyline after reading a short narrative text (magazines, advertisements,
+newspapers, books, etc).
+7. 	Listen to an announcement and identify the main idea using contextual clues.
+8. 	Understand and follow five steps directions for classroom activities (e.g., origami,
+handcraft, etc).
+9. 	Read and demonstrate comprehension by acting out a fable using creativity in terms of
+staging, customs, values, etc.
+Block 1: Communication.
+Component 1: Students understand what others are trying to communicate in another language.
+
+-- 15 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+15
+1st - 9th
+Level
+Sub-Level 3
+1. 	Read aloud authentic materials (newspapers, magazines, advertisements, etc.) with
+correct intonation, pronunciation and stress.
+2. 	Demonstrate understanding of written or oral text by summarizing or paraphrasing (e.g.,
+setting, characters, plot etc).
+3. 	Read simple texts in target language and answer simple questions (e.g., weather report,
+travel poster or brochure, T.V. Guide, etc).
+4. 	Use primary bilingual dictionary, picture dictionary or glossary to access information.
+5. 	Obtain information from short messages (oral or written) (e.g., invitations, directions,
+announcements, appointments).
+6. 	Predict the plot of a story after looking a sequence of illustrations.
+7. 	Read a text and identify features such as: title, table of contents, chapters, headings,
+diagrams, charts, glossaries, and indexes.
+8. 	Read and prepare simple activities involving a series of steps (e.g., recipe, science
+experiment, etc).
+9. 	Read and perform a short simple story using creativity and imagination in terms of
+staging, customs, values, and characterization.
+10. Use a variety of idioms appropriately both in speech and writing.
+Sub-Level 4
+1. 	Read and respond to a variety of texts (designing a poster, making a graph, etc).
+2. 	Express viewpoints on newspaper articles and other non-fiction texts, etc.
+3. 	Summarize and establish sequence in a familiar event (e.g., a soccer game).
+4. 	Explore cultural components of Internet (where available).
+5. 	Read and respond to poetic texts by writing a rhyming poem (e.g., nonsense rhyming, the
+diamond poem).
+6. 	Predict the development of a story after reading the title or looking at illustrations.
+7. 	Read and indentify the main idea in authentic texts.
+8. 	Listen to an oral text and answer questions regarding main idea, setting, and characters.
+9. 	Read aloud familiar and unfamiliar texts with fluency and competent delivery.
+Sub-Level 5
+1. 	Write a narrative on a current issue.
+2. 	Read and respond creatively to texts by performing a play.
+3. 	Examine and discuss socio-cultural elements represented in text (e.g., values, attitudes
+and beliefs).
+4. 	Identify the tone, mood, and/ or point of view of speakers.
+5. 	Create a class bulletin board on a theme using visual images, quotes, and personal
+writing.
+6. 	Read and summarize a story.
+7. 	Identify organizational features of texts (e.g., paragraphs, diagrams, titles, headings, table
+of contents, references).
+8. 	Read and identify organizational features in magazines and newspapers.
+9. 	Use a variety of idioms, both in speech and writing.
+
+-- 16 of 64 --
+
+16
+English / Inglés
+Sub-Level 6
+1. 	Read and comprehend unfamiliar texts using contextual clues and words with more than
+one meaning (scientific articles, business articles).
+2. 	Present a brief report on a current event.
+3. 	Read a text and represent it creatively (e.g., comic strips, play, video, etc).
+4. 	Use the dictionary to determine the meaning of unfamiliar vocabulary (idioms and words
+with multiple meanings).
+5. 	Obtain and use information through different media sources.
+6. 	Use authentic documents to read and compare costs of goods and services in the home
+(e.g., gasoline, food, shelter, etc).
+7. 	Examine and discuss social cultural elements within larger communities.
+8. 	Compare and contrast the motives of characters in a work of fiction
+Sub-Level 7
+1. 	Read a piece of literature and show comprehension through identifying the different
+elements of literature (setting, plot, characters, etc).
+2. 	Read aloud plays and poetry with fluency and confident delivery.
+3. 	Infer a writer’s assumptions, purpose, or point of view (e.g., in an editorial from a popular
+newspaper, stories, etc).
+4. 	Analyze recurrent themes across literary works.
+5. 	Analyze purpose, social context and tone of spoken and written discourse (a coach pep
+talk, a presidential candidate speech, etc).
+6. 	Interpret and explain the significance of information presented visually.
+7. 	Respond to a series of instructions that involve interrelated tasks (e.g., how to set a cell
+phone, how to text message, how to open an account).
+Sub-Level 8
+1. 	Recognize multiple meaning of words and apply them to different texts.
+2. 	Read and identify the different elements in non-fiction texts (e.g., in business
+communication).
+3. 	Analyze information presented (e.g., in resumes and cover letters).
+4. 	Read literature (e.g., stories, folktales, etc.) and apply skills of critical analysis.
+5. 	Read a poem and demonstrate understanding through various tasks (e.g., identifying the
+theme, the pattern, etc).
+6. 	Read an authentic historical text and relate it to the present.
+Sub-Level 9
+1. 	Recognize multiple meanings of words and apply them to different academic settings
+(technical schools, teachings schools, computer system schools, accounting schools, etc).
+2. 	Establish contact with school or person via the Internet, or business letters.
+3. 	Analyze a variety of rhetorical styles found in writing (e.g., contracts, warranties, manuals,
+informational materials, etc).
+4. 	Analyze the features and rhetorical devices of at least two types of documents intended
+for the general public (e.g., notices, signs, ads, newspapers, magazines, junk mail
+promotions, etc).
+5. 	Read material and analyze how clarity is affected by patterns of organization, repetition of
+key ideas, syntax and word choice.
+6. 	Do research on (investigate) a particular content area and write and revise a paper which
+contains all the required elements of research papers (e.g., introduction, thesis statement,
+body parts, supporting details, evidence from various sources, conclusion, etc).
+
+-- 17 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+17
+1st - 9th
+Level
+Standard 3: Students present information, concepts, and ideas to an audience of listeners or readers on a
+variety of topics (Presentational).
+Sub-Level 1
+1. 	Identify and pronounce proper nouns (e.g. own name and classmates).
+2. 	Identify and label vocabulary connected to the lesson theme (personal introduction and
+items in the classroom).
+3. 	Complete simple sentences, phrases and/or short dialogues to accompany illustrations.
+4. 	Talk about pictures from simple stories, rhymes or songs (sequence in a story).
+5. 	Predict events in a story.
+6. 	Trace, copy words or characters from various sources (follow writing strategies employed
+in the L1)
+7. 	Begin to write familiar words, phrases and simple sentences in a meaningful context
+(school items, objects in the classroom and at home).
+8. 	Perform short conversations on topics related to school, community and home.
+9. 	Use information from a text or oral story to show sequence.
+10. Label pictures, diagrams, or charts.
+11. Collaborate with the teacher creating a story.
+12. Spell common words correctly and take written dictation.
+Sub-Level 2
+1. 	Spell common words correctly and take written dictation.
+2. 	Speak about situations related to the lesson theme.
+3. 	Write simple sentences related to the lesson theme.
+4. 	Illustrate and discuss the beginning, middle, and ending of a story through pictures and
+short sentences.
+5. 	Dramatize a fable and write a sentence about each part.
+6. 	Predict events using pictures from news papers.
+7. 	Participate in posting illustrations or pictures with captions for the student bulletin board.
+8. 	Use a picture dictionary to create an alphabet based on a theme (e.g., food alphabet,
+animal alphabet, cultural alphabet, etc).
+9. 	Write simple descriptive sentences given simple situations, (e.g., John is tall, short).
+Sub-Level 3
+1. 	Spell common words correctly and take written dictation.
+2. 	Create and perform short skits, puppet shows and role play.
+3. 	Produce and use basic print, capitalization and punctuation conventions (e.g., in English
+no inverted Spanish question marks, quotation marks, upper case for days of the week,
+etc).
+4. 	Write short narrative paragraphs (e.g., concrete topics about themselves).
+5. 	Begin to write for different purposes (e.g. the writing of a letter).
+6. 	Write and record a message (e.g., advertisement, weather reports, phone messages, etc).
+7. 	Summarize orally the plot of a folktale (e.g., the beginning, the middle, and the end).
+8. 	Complete text based on words from a known story using a word bank.
+Block 1: Communication
+Component 1: Communicate in another language. Students present information, concepts and ideas in
+another language in a way that is understood.
+
+-- 18 of 64 --
+
+18
+English / Inglés
+Sub-Level 4
+1. 	Take written dictation on unfamiliar text that is orthographically predictable.
+2. 	Engage in writing about chronology (own life story or someone else’s, more than one
+paragraph).
+3. 	Write informative texts (poster, news paper article).
+4. 	Follow and understand written instructions (simple instructions in manuals, writing a
+recipe).
+5. 	Write a personal letter with key words (e.g., Dear…, Sincerely, Yours Truly, Love, etc).
+Prepare envelopes.
+6. 	Write descriptions using posters or different scenarios.
+7. 	Engage in the writing and discussion of stories.
+8. 	Write, review, and edit own writing with teacher guidance.
+Sub-Level 5
+1. 	Write, review, and edit own writing with teacher guidance.
+2. 	Write a personal letter following letter writing conventions.
+3. 	Create and present short plays that show creativity and use of vocabulary.
+4. 	Prepare and present brief reports on a variety of topics (e.g., weather commercial, etc.)
+using different types of formats (e.g., brochures, diagrams, travel posters, etc).
+5. 	Identify in narrative texts the setting, main characters and events according to
+chronological appearance.
+6. 	Write a letter to the editor following the conventions for this type of writing.
+Sub-Level 6
+1. 	Write, review, and edit own writing with support from peers.
+2. 	Write responses to short newspaper articles or other news events presented in the target
+language.
+3. 	Create written journals in response to teacher prompt (introduction to the five paragraph
+essay).
+4. 	Take notes from recorded phone messages.
+5. 	Take notes from teachers lectures.
+6. 	Write personal letters and emails.
+7. 	Write a business letter identifying problems to somebody in a position of authority.
+8. 	Respond in writing to personal questions.
+Sub-Level 7
+1. 	Fill in authentic forms (e.g., magazine subscriptions, invitations, Internet forms where
+available).
+2. 	Write and act out a commercial with a group.
+3. 	Write brief paraphrases and summaries on teacher-given topics.
+4. 	Narrate/give an oral report in present, past and future tenses.
+5. 	Represent information visually.
+6. 	Design announcements.
+7. 	Write and present an original story.
+8. 	Propose solutions to problems (e.g., write a business letter, an email, a letter to the Editor
+of a newspaper, etc).
+
+-- 19 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+19
+1st - 9th
+Level
+Sub-Level 8
+1. 	Identify main ideas in short texts (e.g., articles, stories, etc).
+2. 	Extract information from non-fiction texts (e.g., timetables, menus, advertisements, etc).
+3. 	Write letters to news papers in response to editorials or news events.
+4. 	Write an editorial or opinion based on teacher-designed topic or real-world situation (e.g.,
+why people should vote for a particular person, etc).
+5. 	Create an original poem and illustrate it (on a poster).
+6. 	Write a narrative or description on a given topic (e.g., an account of an event, a problem,
+etc).
+7. 	Take detailed notes on topics presented orally and in writing.
+8. 	Retell events (sequencing) of video or lectures using detailed notes.
+9. 	Write a well-organized 5 paragraph essay with supporting details.
+10. Proofread and peer-edit essays with the use of developed rubrics and indicators.
+11. Prepare and give oral presentations taking into account target audience (use introduction,
+three supporting details, and a conclusion).
+12. Write different types of business communication.
+Sub-Level 9
+1. 	Identify and understand organizational elements of writing (e.g., titles, paragraphs,
+bibliography).
+2. 	Write a well-organized composition (including introduction, body paragraphs with topic
+sentences and supporting details, and conclusion).
+3. 	Complete, online (where available), authentic forms and documents (e.g., passport, job
+application).
+4. 	Write and proofread essays paying attention to the macro issues of compositions.
+5. 	Engage in the writing of a research paper, following the requirements of research (quality
+of sources and citing sources).
+6. 	Give a formal, well-organized, and sustained oral presentation on research done.
+7. 	Give speeches on various topics (e.g., about their academic plans using specialized
+vocabulary).
+
+-- 20 of 64 --
+
+20
+English / Inglés
+Standard 1: Students demonstrate an understanding of the relationship between the practices and perspectives
+of the culture studied.
+Sub-Level 1
+1. 	Respond to cultural expressions and gestures for greetings and farewells in appropriate
+social situations (e.g., good morning, good afternoon, good night, good evening, good-
+bye).
+2. 	Introduce oneself (e.g., Hi, Hello, What is your name? My name is…) in culturally
+appropriate ways (e.g., shaking hands).
+3. 	Participate in cultural activities and traditions (e.g., fairs, birthdays, Independence Day,
+etc).Match animals with sounds perceived by target culture (e.g., rooster says “cocka
+doodle do” in English and “Quiquiriqui” in Spanish).
+4. 	Name and experience foods and eating customs of the target culture (e.g., typical foods,
+table manners, etc).
+Sub-Level 2
+1. 	Respond with fluency to cultural expressions and gestures for greetings and farewells in
+appropriate social situations (e.g., to introduce another person, How are you? I’m fine,
+thank you. You’re welcome).
+2. 	Give introductions of oneself and others.
+3. 	Participate in cultural activities and traditions (e.g., fairs, birthdays, Independence Day,
+etc).
+4. 	Listen and respond/react to stories, songs, and rhymes of the Honduran culture and the
+target culture.
+5. 	Respond to routine courtesy exchanges (e.g., use polite language).
+Sub-Level 3
+1. 	Respond with appropriate cultural expressions and gestures for greetings and farewells in
+appropriate social situations and use in classroom routines.
+2. 	Make a list to plan and participate in cultural activities established on the civic calendar.
+3. 	Read and rewrite stories, songs, and rhymes of the Honduran culture and target culture
+noting similarities and differences between cultures.
+4. 	Organize and sequence stories and folktales from target culture through pictures.
+5. 	Identify chores of each member of the family in the target culture.
+6. 	Name and identify capitals and major topographical features of countries from target
+culture(s) on maps written in target language (e.g. map of central America, rivers, ports,
+volcanoes, lakes, etc).
+Sub-Level 4
+1. 	Make a request in a variety of social situations (e.g., asking for help, asking an adult for
+permission).
+2. 	Identify chores of each member of the family in the Honduran culture and compare with
+traditional tasks and chores of those in the target culture.
+3. 	Demonstrate understanding that families meet basic needs in a variety of ways across
+cultures.
+4. 	Demonstrate a basic knowledge of the history and geography and the people of the
+Honduran culture and those in the target culture.
+5. 	Identify and participate in sport activities and/or recess games typical of the Honduran
+culture and those of the target culture.
+6. 	Describe natural-ecological, cultural, archeological and engineering achievements, and/or
+symbols of the Honduran culture and the target culture.
+7. 	Describe (and participate in, if possible) cultural activities and traditions typical of the
+target culture.
+Block 2: Culture.
+Component 1: Gain knowledge and understanding of other cultures. Students use their understanding of
+culture to communicate and function appropriately in another culture.
+
+-- 21 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+21
+1st - 9th
+Level
+Sub-Level 5
+1. 	Ask orally and write a polite request in a variety of social situations (e.g., asking for help,
+asking an adult for permission, sending an email to a person in authority vs. a friend, etc).
+2. 	List, explain and compare chores of each member of the family in the Honduran culture
+and compare with traditional tasks and chores of those in the target culture.
+3. 	Demonstrate with examples an understanding that families meet basic needs in a variety
+of ways.
+4. 	Illustrate a basic knowledge of the history and geography and the people of the Honduran
+culture and those of the target culture.
+5. 	Explain how to play (process and rules), and participate in sport activities and/or recess
+games typical the target culture.
+6. 	Share information about natural-ecological, cultural, archeological, engineering achievements
+and/or symbols from the target culture (include meanings, materials, dates, etc).
+7. 	Explain a cultural activity or tradition from the target culture.
+Sub-Level 6
+1. 	Make a formal request in a variety of social situations (e.g., writing for help to a
+newspaper, or asking for permission to government agencies, etc).
+2. 	Identify chores of school members and the local government members in the Honduran
+culture and the target culture.
+3. 	Explain how families meet basic needs in a variety of ways.
+4. 	Use maps and timelines to show the history and geography of the target culture.
+5. 	Teach others to play games played in the target culture.
+6. 	Prepare a report about a natural-ecological, cultural, archeological and/or engineering
+achievement in the target culture.
+7. 	Share how the target culture practices a cultural activity and/or tradition and why.
+Sub-Level 7
+1. 	Support an opinion statement with evidence (e.g., on how the roles of men and women
+and their occupations are changing).
+2. 	Identify the economic situation of the Honduran culture and its position in the global
+economy in relation to the target culture.
+3. 	Identify subcultures within the target culture and chart out the characteristics of the groups
+(e.g., use food, language, etc).
+4. 	Identify various values reflected in food, clothing and shelter in the target culture.
+5. 	Describe cultural activities and traditions.
+6. 	Describe attitudes toward money in the target culture.
+7. 	Identify practices and beliefs with regard to body hygiene.
+8. 	Identify and name political leaders from the target culture (e.g., President of the USA,
+Prime Mister of the UK, etc).
+9. 	Exchange opinions with classmates on social issues from the target culture.
+Sub-Level 8
+1. 	Compare and contrast two things (e.g., the roles of men and women and their occupations
+in various countries).
+2. 	Compare and contrast various subcultures within the target cultures studied.
+3. 	Identify and describe various values reflected in food, clothing and shelter in various cultures.
+4. 	Compare and contrast similarities and differences between various cultural activities and
+traditions.
+5. 	Explain how money is used in the target culture.
+6. 	Compare and contrast practices and beliefs with regard to body hygiene between various cultures.
+7. 	Identify and name forms of government (e.g., democracy, monarchy, etc.) and political
+leaders from the target culture.
+8. 	Make hypotheses with classmates on what will happen if social issues are not dealt with
+around the world.
+9. 	Identify the economic situation of the target culture and its position in the global economy.
+
+-- 22 of 64 --
+
+22
+English / Inglés
+Sub-Level 9
+1. 	Based on a criteria for selection, make a choice between two options and provide
+supporting details for the choice.
+2. 	Investigate a subculture in the target culture and prepare a short report (orally and/or in
+writing).
+3. 	Explain how food, clothing and shelter are represented in the target culture in short oral
+and written reports.
+4. 	Plan and carry out a cultural festival including an agenda of events and a description of
+the various cultural practices of the target culture.
+5. 	Describe the monetary system in the target culture.
+6. 	Provide recommendations for dealing with cultural differences about beliefs and practices
+with regard to body hygiene.
+7. 	Compare and contrast various forms of government and the views of leaders in the target
+culture(s).
+8. 	Give recommendations for solutions to problems and social issues from around the world.
+9. 	Describe the economic situation of the target culture and its position in the global
+economy.
+
+-- 23 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+23
+1st - 9th
+Level
+Standard 2: Students demonstrate an understanding of the relationship between the products and perspectives
+of the culture studied.
+Sub-Level 1
+1. 	Listen and respond/react to stories, songs, and rhymes from the target culture.
+2. 	Participate in the creation of a group story from a cultural theme.
+3. 	Identify flags and symbols of the target culture.
+4. 	Name some Honduran holidays and /or festivals which the country has in common with
+the target culture.
+5. 	Dramatize simplified authentic folktales from the target culture.
+Sub-Level 2
+1. 	Listen to and retell stories from the target culture.
+2. 	Participate in children’s traditional games from the target culture (e.g., Duck Duck Goose).
+3. 	Listen and respond/react to stories, songs, and rhymes of the target culture.
+4. 	Dramatize simplified authentic folktales from the target culture.
+5. 	Create a calendar with Honduran and target culture’s holidays.
+Sub-Level 3
+1. 	Name and explain the significance of some of the target culture’s holidays and/or festivals.
+2. 	Dramatize simplified authentic folktales and stories.
+3. 	Identify artwork (visual and performing arts) as reflection of the target culture.
+4. 	Celebrate selected holidays with games, dances, food, songs, etc.
+5. 	Recognize and label foods and crafts from the target culture.
+6. 	Identify and name selected commercial establishments in the target culture (e.g., role play
+shopping).
+Sub-Level 4
+1. 	Match sport activities and/or recess games with pictures typical of the target culture.
+2. 	Identify natural-ecological, cultural, archeological engineering achievements, and/or
+symbols of the target culture.
+3. 	Identify cultural activities, traditions, celebrations, etc. from the target culture (and
+participate in them if possible).
+4. 	Read and respond to simple comprehension questions information found in cookbooks,
+folktales, and short stories on a variety of cultural holidays and festivals.
+Sub-Level 5
+1. 	Identify and participate in sport activities and/or recess games typical of the target culture.
+2. 	Describe natural-ecological, cultural, archeological, engineering achievements and/or
+symbols of the target culture.
+3. 	Identify cultural activities and traditions from the target culture and prepare informational
+bulletins regarding these activities.
+4. 	Identify and discuss significant individuals/heroes and events in the target culture.
+5. 	Write recipes and cookbooks for meals in the target culture and include ingredients and
+measurements from the target culture.
+Sub-Level 6
+1. 	Explain the rules for sports activities and/or recess games typical of the target culture.
+2. 	Research and report on a natural-ecological, cultural, archeological, engineering
+achievements and/or symbols of the target culture.
+3. 	Ask and answer questions regarding cultural activities and traditions of the target culture.
+4. 	Present an oral or written report on a cultural topic (e.g., dishes used in holiday
+celebrations, clothing, dance, roles and responsibilities of participants, etc).
+Block 2: Culture.
+Component 1: Gain knowledge and understanding of other cultures. Students use their understanding of
+culture to communicate and function appropriately in another culture.
+
+-- 24 of 64 --
+
+24
+English / Inglés
+Sub-Level 7
+1. 	Read directions (e.g., to learn to play a new game).
+2. 	Use different media (written sources and technology) to increase understanding of the
+target culture.
+3. 	Expand knowledge and use of idiomatic expressions.
+4. 	Describe the use of money in the target culture.
+5. 	Use appropriate etiquette in public places, at school, etc. (role play).
+6. 	Identify music and musicians in the target culture.
+Sub-Level 8
+1. 	Teach others to do something (e.g., play a game or to participate in a cultural activity,
+dance, etc).
+2. 	Use different media (written sources and technology) to research information regarding
+the target culture.
+3. 	Expand knowledge and use of idiomatic expressions.
+4. 	Recognize use of slang in conversations and text.
+5. 	Explain how to convert currency into the money of the target culture.
+6. 	Use appropriate etiquette with persons of different ages and status, in public places, at
+school, etc.
+7. 	Identify and analyze the role of music and television in showcasing attitudes and values in
+the target culture (e.g., youth, white teeth, in USA).
+Sub-Level 9
+1. 	Participate in cultural activities and traditions.
+2. 	Use different media (written sources and technology) to present information regarding the
+target culture.
+3. 	Expand knowledge and use of idiomatic expressions.
+4. 	Recognize use of slang, dialectics, and regionalisms in conversations and in writing.
+5. 	Describe attitudes and spending habits of the target culture.
+6. 	Use appropriate etiquette in phone conversations, public places, at school, etc.
+7. 	Summarize a story and/or movie from the target culture.
+
+-- 25 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+25
+1st - 9th
+Level
+Standard 1: Students reinforce and further their knowledge of other disciplines through the world language.
+Sub-Level 1
+1. 	Count, recognize, represent, name, and order a number of objects (up to 31). (MATH)
+2. 	Match and identify numbers on timeline and calendar. (MATH)
+3. 	Count and use numbers from 0 to 31. (MATH)
+4. 	Identify and classify objects by attributes (e.g., color, shape, etc). (MATH/ART)
+5. 	Identify the different parts of the clock. (MATH)
+6. 	Ask and provide basic personal information such as name, age, address and telephone
+number. (MATH)
+7. 	Name the seven days of week and 12 months of the year in correct order. (MATH)
+8. 	Match animals with their foods, homes, body parts, etc. (SCIENCE/SOCIAL STUDIES)
+9. 	Identify the four seasons relating weather expressions to each one (e.g., “It’s cold in the
+winter.”). (SCIENCE/SOCIAL STUDIES)
+10. Make connections between months, seasons and holidays. (SCIENCE/SOCIAL
+STUDIES)
+11. Describe the environment according to the 5 senses (sight, hearing, smell, taste, and
+touch). (SCIENCE)
+12. Repeat names of different types of homes or habitats from models and illustrations (e.g.,
+“house,” “nest”). (SCIENCE)
+13. Identify eight colors using, pictures, children’s clothing and related items. (ART)
+14. Use vocabulary learned from songs about colors, numbers, alphabet, body parts, shapes,
+seasons, greetings, etc. (MUSIC)
+15. Copy the English alphabet legibly, and read the letters aloud. (LANGUAGE ARTS)
+16. Follow simple directions through total physical response for activities typical of a physical
+education class (e.g., jump, run in place, crab walk, etc). (PHYSICAL EDUCATION)
+17. Demonstrate contrasts between slow and fast speeds while using loco motor skills.
+(PHYSICAL EDUCATION)
+18. Follow rules, such as sharing and taking turns, and know the consequences of breaking
+them. (SOCIAL STUDIES)
+19. Associate sounds of different modes of transportation with pictures (e.g., “Which goes
+choo choo?”) (SOCIAL STUDIES)
+Block 3: Connections
+Component 1: Connect with other disciplines and acquire information. Students use their understanding of
+another language and culture to reinforce and expand their knowledge of other disciplines and vice versa.
+
+-- 26 of 64 --
+
+26
+English / Inglés
+Sub-Level 2
+1. 	Count from 0 – 31, match and identify numbers on timeline and calendar. (MATH)
+2. 	Count and use numbers from 0 to 50 and use numbers in arithmetical operations. (MATH)
+3. 	Match the different parts of the clock. (MATH)
+4. 	Identify and classify objects by attributes. (MATH/SCIENCE)
+5. 	Ask and provide basic personal information such as name, age, address and telephone
+number. (MATH / SOCIAL STUDIES / LANGUAGE ARTS)
+6. 	Match animals with their foods, homes, body parts, etc. (SCIENCE /SOCIAL STUDIES)
+7. 	Name seven days of the week and the 12 months of the year in correct order. (MATH)
+8. 	Identify the four seasons relating weather expressions to each one. (SCIENCE)
+9. 	Organize the months into seasons and include holidays (e.g., “Christmas is celebrated in
+December.”) (SOCIAL STUDIES)
+10. Classify and describe in simple words living and nonliving things of the environment. (SCIENCE)
+11. Match homes or habitats to animals in illustrated scenes using phrases or chunks of
+language (e.g., “bee hive,” “in a pond”). (SCIENCE / SOCIAL STUDIES)
+12. Identify primary colors and tell how to create secondary colors. (ART)
+13. Identify authentic instruments of national culture (tambourine, drum, maracas, wooden
+key, rattle, bells). (MUSIC)
+14. Write a few words or phrases about an event or character from a story read by the
+teacher. (LANGUAGE ARTS)
+15. Follow complex directions through total physical response for activities typical of a
+physical education class (e.g., jump around the court yard, run in different speeds, jump
+rope etc). (PHYSICAL EDUCATION)
+16. Create shapes at high, medium, and low levels by using hands, arms, torso, feet, and legs
+in a variety of combinations. (ART)
+17. Match puzzle-type shapes and places of five or six regions or countries of target culture
+on primary map of the world.
+18. Identify modes of transportation from visually supported rhymes or chants (e.g., “The
+Wheels on the Bus”). (SOCIAL STUDIES)
+19. Speak and write about situations related to children’s rights. (SOCIAL STUDIES)
+Sub-Level 3
+1. 	Count to 100 by 1’s, 5’s, and 10’s. (MATH)
+2. 	Count and identify foreign currency. (MATH/SOCIAL STUDIES)
+3. 	Classify foods according to colors, shapes and food groups. (HEALTH/SCIENCE /MATH/ART)
+4. 	Tell time in the target language. (MATH)
+5. 	Ask and provide personal and family information such as name, age, address and
+telephone number. (LANGUAGE ARTS /SOCIAL STUDIES)
+6. 	Match animals with their foods, homes, body parts, etc. (SCIENCE/SOCIAL STUDIES)
+7. 	Name seven days of week and 12 months of the year in correct order. (MATH)
+8. 	Identify the four seasons relating weather expressions to each one. (SCIENCE)
+9. 	Make connections between months, seasons and holidays. (SOCIAL STUDIES/SCIENCE)
+10. Classify animals by type, diet, habitat, body parts, etc. (SCIENCE)
+11. Describe different types of homes or habitats from illustrated scenes using phrases or
+short sentences. (SCIENCE/SOCIAL STUDIES)
+12. Describe in the target language original works of arts. (ART)
+13. Name at least 10 different musical instruments of the target language. (MUSIC)
+14. Select right answer to factual comprehension questions about stories. (LANGUAGE ARTS)
+15. List from five to eight sport terms of the target language (soccer, basketball, baseball, etc).
+(PHYSICAL EDUCATION)
+16. Identify and describe parts of the body: the head, shoulders, neck, back, chest, waist,
+hips, arms, elbows, wrists, hands, fingers, legs, knees, ankles, feet, and toes. (HEALTH/
+SCIENCE / PHYSICAL EDUCATION)
+17. Place on a map pictures of people of specific regions according to their clothing, race, life
+styles, etc. (SOCIAL STUDIES)
+18. Match pictures of modes of transportation with descriptive statements (e.g., “Airplanes go
+fast.”). (SOCIAL STUDIES)
+19. Describe different types of homes or habitats from illustrated scenes using phrases or
+short sentence. (SCIENCE/SOCIAL STUDIES)
+
+-- 27 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+27
+1st - 9th
+Level
+Sub-Level 4
+1. 	Count to 100 by 1’s, 5’s, and 10’s. Odd and even numbers. (MATH)
+2. 	Count and identify for foreign currency and make simple conversions. (MATH/SOCIAL
+STUDIES)
+3. 	Classify foods according to colors, shapes and food groups. (HEALTH/SCIENCE /MATH/
+ART)
+4. 	Recognize emotional facial expressions through the use of pictures (e.g., “He’s happy.”).
+(SOCIAL STUDIES / ART)
+5. 	Provide personal information from the immediate environment using simple words and
+functional language. (LANGUAGE ARTS)
+6. 	Match animals with their foods, homes, body parts, and place them on a map by region.
+(SCIENCE/SOCIAL STUDIES)
+7. 	Make connections between months, seasons and national holidays. (SOCIAL STUDIES)
+8. 	Design some simple rules to take care of the environment within the school (e.g., reduce,
+reuse, recycle). (SCIENCE)
+9. 	Identify and list colors, shades, tones and texture to create a collage. (ART)
+10. Describe simple patterns found in music. (MUSIC)
+11. Create simple sentences or phrases with some assistance. (LANGUAGE ARTS)
+12. Identify common positions of the different sport teams of the target language. (PHYSICAL
+EDUCATION)
+13. Use prepositional phrases by demonstrating under, over, behind, next to, though, right,
+left, up, down, forward, backward, and in front of by using the body and an object.
+(LANGUAGE ARTS)
+14. Match simple descriptions of work that people do and the names of related jobs at the
+school, in the local community, and from historical accounts. (SOCIAL STUDIES)
+15. Pair modes of transportation with their environment (e.g., “Jets fly in the air,”) based on
+pictures and oral directions. (SCIENCE)
+Sub-Level 5
+1. 	Count and use numbers between 0 and 1000 to do the four operations (add, subtract,
+multiply and divide). (MATH)
+2. 	Describe and classify geometric shapes. (MATH)
+3. 	Use adjectives that express personal emotions to write short sentences. (HEATH/SOCIAL
+STUDIES/ LANGUAGE ARTS)
+4. 	Provide personal information from the immediate environment using key words and
+functional language. (LANGUAGE ARTS)
+5. 	Match animals with their foods, homes, body parts, and place them by region. (SCIENCE
+/ SOCIAL STUDIES)
+6. 	Make connections between months, seasons and American holidays. (SOCIAL STUDIES)
+7. 	Make a list to of rules to take care of the environment within the community. (SCIENCE/
+HEALTH)
+8. 	Recognize characteristics/ style of three to five famous artists and draw or paint a picture
+with your style. (ART)
+9. 	Recognize characteristics of three to five famous musicians and use key vocabulary (e.g.,
+jazz, classical, pop, rock, hip hop, blues, etc). (MUSIC)
+10. Identify different characters and settings in simple literacy texts by using words or
+phrases. (LANGUAGE ARTS)
+11. List some physical activities that are enjoyable and challenging (e.g., swimming, running,
+tennis, etc). (PHYSICAL EDUCATION)
+12. Explain how nutritious food provides energy for physical activity (e.g., Calcium helps build
+bones.” “Proteins are necessary for life.”). (SCIENCE / HEALTH)
+13. Recognize national symbols and icons from the target language countries (e.g., symbols
+such as eagles, flags, etc). (SOCIAL STUDIES)
+14. Differentiate modes of transportation from the past or present based on pictures and oral
+descriptions. (SOCIAL STUDIES)
+
+-- 28 of 64 --
+
+28
+English / Inglés
+Sub-Level 6
+1. 	Count and use numbers between 0 and 1000 to do the four operations (add, subtract,
+multiply and divide). (MATH)
+2. 	Identify and sort geometric shapes. (MATH)
+3. 	Write adjectives that express personal emotions to write compound sentences.
+(LANGUAGE ARTS)
+4. 	Provide personal information from the immediate environment using compound sentences
+with connectors but, and, or. (LANGUAGE ARTS)
+5. 	Match animals with their foods, homes, body parts, and place them within the world.
+(SCIENCE/SOCIAL STUDIES)
+6. 	Make connections between months, seasons and world holidays. (SOCIAL STUDIES)
+7. 	Invent and describe some ways to handle organic and inorganic waste within the school.
+(Environmental communication campaign). (SCIENCE/HEALTH)
+8. 	Explain how art reflects the target culture. (ART)
+9. 	Apply knowledge of language to analyze and derive meaning from contemporary songs.
+(MUSIC)
+10. Create pictures, lists, charts, and tables to identify the sequence of events in simple
+literacy texts. (LANGAUGE ARTS)
+11. Explain that nutritious food provides energy for physical activity, and then describe the
+role of water as an essential nutrient for the body. (HEALTH/SCIENCE)
+12. Demonstrate the characteristics of sharing in a physical activity and describe how
+positive social interaction can make physical activity with others more fun. (PHYSICAL
+EDUCATION)
+13. Give examples of honesty, courage, determination, individual responsibility, and patriotism
+in world history from stories and folklore from around the world. (SOCIAL STUDIES /
+LANGUAGE ARTS)
+14. Compare different national modes of transportation to those of the target language.
+(SOCIAL STUDIES)
+Sub-Level 7
+1. 	Solve story problems using numbers up to 1 million. (MATH)
+2. 	Compare metric system to inches, feet, pounds, etc. (MATH)
+3. 	Tell time according to the 24-hour clock. (MATH)
+4. 	Retell the main ideas from information in a speech. (LANGUAGE ARTS)
+5. 	Identify wildlife from various regions and briefly describe the climatic conditions of the
+region. (SCIENCE / SOCIAL STUDIES)
+6. 	Listen to and record weather forecasts. Present weather forecasts. (SOCIAL STUDIES /
+SCIENCE)
+7. 	Compare works of art from different cultures. (ART)
+8. 	Explain how music reflects the target culture. (MUSIC)
+9. 	Make a list of how literature reflects the target culture. (LANGUAGE ARTS)
+10. Recognize contemporary music in the target language (e.g. Selena, Celine Dion, etc).
+(MUSIC)
+11. Write responses to selected literature that exhibit understanding of the text, using detailed
+sentences and transitions. (LANGUAGE ARTS)
+12. Identify and independently use personal space, general space, and boundaries and
+discuss why they are important. (SOCIAL STUDIES)
+13. Label and/or create several types of maps of target countries (e.g., political, topographical,
+linguistic, products, natural resources, ethnic groups, etc). (SOCIAL STUDIES)
+
+-- 29 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+29
+1st - 9th
+Level
+Sub-Level 8
+1. 	Use authentic documents to compare costs of goods and services, wages/salaries, etc., in
+the home and target culture(s). (MATH / SOCIAL STUDIES /ECONOMICS)
+2. 	Use metric system to describe objects. (MATH)
+3. 	Read and set the clock in different regions time. (MATH / SOCIAL STUDIES)
+4. 	Produce independent writing with consistent use of standard grammatical forms.
+(LANGAUGE ARTS)
+5. 	Explain why a particular region is suited to various types of wildlife (e.g., climate,
+geography, etc). (SCIENCE / SOCIAL STUDIES)
+6. 	Examine and describe unusual weather patterns. (SCIENCE /SOCIAL STUDIES)
+7. 	Recognize world famous art work and architecture describing the pieces and their
+locations. (ART)
+8. 	Compare how music reflects the target culture and the national culture. (MUSIC)
+9. 	Explain how (a piece of) literature reflects the target culture and the national culture.
+(LANGAUGE ARTS)
+10. Identify and sing contemporary songs in the target language. (MUSIC)
+11. Write brief expository compositions (e.g., description, comparison and contrast, cause
+and effect, and problem and solution) that include a thesis and some points of support.
+(LANGAUGE ARTS)
+12. Explain that strong muscles help the body to climb, hang, push, and pull. (PHYSICAL
+EDUCATION / HEALTH)
+13. Describe how location, weather, and physical environment affect the way people live,
+including the effects on their food, clothing, shelter, transportation, and recreation.
+(SCIENCE /SOCIAL STUDIES)
+Sub-Level 9
+1. 	Use authentic documents to compare costs of goods and services, wages/salaries, etc.,
+in the home and target cultures(s) including the use of abbreviations (e.g., “W/D = washer
+and dryer,” LR = living room”). (MATH / SOCIAL STUDIES / ECOMONICS)
+2. 	Demonstrate ability to use large numbers in real life situations (e.g., buying a car, taking a
+trip, renting a house). (MATH)
+3. 	Write a schedule for a daily routine of the family members. (SOCIAL STUDIES / MATH)
+4. 	Write reflective compositions that explore the significance of events. (LANGUAGE ARTS /
+SOCIAL STUDIES)
+5. 	Describe a biome or ecosystem and include reasons why the conditions are ideal for the
+wildlife that live there. (SCIENCE)
+6. 	Listen to and analyze reports on causes of unusual weather (e.g., hurricanes, tornadoes,
+blizzards, earthquakes, etc.) and explain how to prevent disasters or what to do in the
+event of a disaster. (SCIENCE / HEALTH / SOCIAL STUDIES)
+7. 	Examine 20th century developments in the area of art in the target language. (ART)
+8. 	Describe 20th century developments in the area of music (e.g., jazz, hip hop, etc.) in the
+target culture. (MUSIC)
+9. 	Write a 3 paragraph essay about a person (e.g., author, character, etc). (LANGUAGE
+ARTS)
+10. Identify and sing contemporary songs in the target language then recognize and describe
+themes stated directly in a song. (MUSIC)
+11. Identify the use of English in the community and reflect on its presence; then write an
+essay. (SOCIAL STUDIES / LANGUAGE ARTS)
+12. Explain that strong muscles help the body to climb, hang, push, and pull, and then
+describe the role of muscles in moving the bones. (PHYSICAL EDUCATION / HEALTH)
+13. Explore and analyze how people in the target culture solve societal issues (e.g. terrorism,
+welfare, unemployment, and health care). (SOCIAL STUDIES)
+
+-- 30 of 64 --
+
+30
+English / Inglés
+Standard 2: Students acquire and use information from a variety of sources only available in the world language,
+using technology, print, audiovisual, media, data and human resources (Interdisciplinary).
+Sub-Level 1
+1. 	Acquire new vocabulary (memorize) through the use of flashcards, posters, pictures, etc.
+2. 	Identify key words in recorded information.
+3. 	Read and highlight key words and phrases.
+4. 	Retell stories using story elements from picture books or short stories.
+5. 	Find and reproduce number words (e.g., from 1-31) from an assortment of labeled visuals.
+6. 	Identify symbols, objects or people associated with classrooms or school areas, personnel
+or activities from pictures and oral statements (e.g., “Office” or “Exit”).
+7. 	Name everyday objects depicted visually in real-life contexts (e.g. “paper” in a classroom
+scene).
+Sub-Level 2
+1. 	Listen to short stories read aloud and answer comprehension questions (e.g., story books,
+magazines, CD player).
+2. 	Identify important details in a recorded session.
+3. 	Read and highlight key details.
+4. 	Describe settings or characters in illustrated folktales from phrase banks.
+5. 	Distinguish number words from other mathematics words using graphic or visual support
+and word banks.
+6. 	Locate school areas, personnel or activities from pictures and oral descriptive phrases
+(e.g., “corner of the room,” “washroom down the hall”).
+7. 	Tell primary function or use of everyday objects depicted visually (e.g., Show a piece of
+paper: “You write on it.”).
+Sub-Level 3
+1. 	Acquire new vocabulary by analyzing cognates from other content areas (math, science,
+health, art, etc.) through the use of flashcards, posters, interactive software, videos, etc.
+2. 	Listen to recorded information and identify main ideas, important details and concepts.
+3. 	Read and highlight main ideas, important details and concepts.
+4. 	Retell a modified version of an authentic story (fable, legend and/or folktale) using
+multimedia sources.
+5. 	Present (alone or with a group) numbers presented in graphs or visuals using phrases or
+short sentences (e.g., “This group has more than 40.”)
+6. 	Examine illustrated scenes and orally describe what they see, (e.g., school scenes depicting
+various activities and personnel; “The teacher is teaching the students in the class.”).
+7. 	Relate multiple functions or uses of everyday objects depicted visually (e.g., “I do
+homework on the table and eat dinner there.”).
+Sub-Level 4
+1. 	Use the internet, newspaper, or other sources, to read, take notes or record and graph
+Information (e.g., the weather in capital city or other town of target country for 1 week).
+2. 	Identify two- or three-dimensional shapes depicted in illustrations described orally (e.g.,
+“Find a shape like the sun.”).
+3. 	Interpret visual connections between characters, places, or objects in paragraphs or
+pages read aloud from illustrated pattern or predictable books.
+4. 	Match story sequence read aloud to a series of pictures (e.g., “Once upon a time…and
+they lived happily ever after.”).
+5. 	Recall persons (characters) or settings of stories from picture books.
+6. 	Express an opinion (e.g., about an artistic event such as concerts, drama, theater, movie,
+presentations, expositions, awards).
+Block 3: Connections.
+Component 1: Connect with other disciplines and acquire information. Students use their understanding
+of another language and culture to broaden and deepen their understanding of that language and culture
+and access and use information that would otherwise be unavailable.
+
+-- 31 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+31
+1st - 9th
+Level
+Sub-Level 5
+1. 	Compare/contrast uses of everyday objects depicted visually (e.g., “I wash myself with
+soap. I dry myself with a towel.”)
+2. 	Match attributes of two- or three-dimensional shapes described orally to objects.
+3. 	Draw conclusions about main ideas from patterned or predictable books read aloud.
+4. 	Narrate main events of plot sequences in given time frames of picture books or illustrated
+short stories.
+5. 	Describe characters of stories from picture books.
+6. 	Evaluate and give reasons for usefulness of everyday objects (e.g., “Pencils are better
+than crayons for writing. You can write neater with pencils.”).
+Sub-Level 6
+1. 	Use multimedia (and the dictionary) to learn the meaning of unknown words (e.g.,
+students create (vocabulary) displays (showcases or bulletin boards related to science,
+health, art, math, etc) of pictures from magazines, newspapers, and text from computer
+technology, library and/or realia from home or teacher).
+2. 	Identify objects composed of multiple two- or three-dimensional shapes described orally
+(e.g., “Put a sphere or ball on either side of a cylinder. What do you see?”).
+3. 	Listen to and select logical outcomes or endings to stories read aloud.
+4. 	Summarize features of places or objects from multiple compound sentences in nonfiction
+books.
+5. 	State main ideas or themes of stories, including characters or settings, from picture books
+or illustrated short stories.
+6. 	Connect illustrated features or photographs of places or objects with descriptive words or
+phrases in nonfiction books.
+Sub-Level 7
+1. 	Use tools to find the meaning of unknown words (thesaurus) (e.g., students create
+(vocabulary) displays (showcases or bulletin boards related to science, health, art, math,
+etc.) of pictures from magazines, newspapers, and text from computer technology, library
+and/or realia from home or teacher).
+2. 	Interpret visual connections between characters, places, or objects in paragraphs or
+pages read aloud from illustrated pattern or predictable books (e.g., predictable books).
+3. 	Make use of rhyme, repetition of words, phrases, sentences and refrains, and such
+patterns as cumulative structure, repeated scenes, familiar cultural sequences,
+interlocking structure and turn-around plots. (These stories invite students to make
+predictions or guesses about words, phrases, sentences, events and characters that
+could come next in the story.)
+4. 	List technological resources of communities or regions of the target language.
+5. 	List the sequence of events related to characters and settings in illustrated folktales using
+graphic organizers.
+6. 	Identify components of food chains or life cycles from diagrams or graphic organizers
+7. 	Explain the importance or impact of the iterative nature of food chains or life cycles.
+Sub-Level 8
+1. 	Use tools (e.g., dictionary, thesaurus, multimedia) to find the meaning of new words (e.g.,
+students create displays (showcases or bulletin boards) of figures (e.g., people in native
+costume, musical instruments, crafts, toys, children’s literature, etc.) May use pictures
+and text from computer technology, library and/or realia from home or teachers).
+2. 	Produce personal messages for friends or family using text, models and pictures.
+3. 	Compare technological resources of communities or regions of the target language.
+4. 	Give examples of components or functions of food chains or life cycles from diagrams or
+graphic organizers.
+5. 	Describe how food chains or life cycles within ecosystems are interdependent.
+
+-- 32 of 64 --
+
+32
+English / Inglés
+Sub-Level 9
+1. 	Review typical radio commercial clips and create a simplified advertisement for a product
+from the target language.
+2. 	Compose personal stories from pictures or illustrated scenes.
+3. 	Make a list and include a short description of technological resources of communities of
+the target language.
+4. 	Observe and record information about societal issues in the target culture through a
+variety of authentic texts and media.
+5. 	Tell the sequence within food chains or life cycles from diagrams or graphic organizers.
+6. 	Classify and compare how international food chains of cycles within ecosystems are
+interdependent.
+
+-- 33 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+33
+1st - 9th
+Level
+Standard 1: Students demonstrate an understanding of the nature of language through comparison of the
+language studied and their own.
+Sub-Level 1
+1. 	Compare names in English with closest equivalent in Mother language.
+2. 	Identify and use (in greetings) titles for school personnel (e.g. Mr., Mrs., Miss, Ms. for
+principal, librarian, etc).
+3. 	Recognize the writing system (alphabet and numbers of the mother tongue) and note
+similarities in the target language.
+4. 	Practice writing simple words in the mother tongue and in the target language (e.g.
+names, label for classroom objects, animals to label drawings, etc.
+5. 	Respond to alphabet cards in L1 and L2 identifying which are from L1 and which are from L2
+Sub-Level 2
+1. 	Address the classroom teacher appropriately in the mother language using courteous
+language and body language, following by addressing the classroom teacher
+appropriately and courteously in English.
+2. 	Review and recognize the writing system (alphabet and numbers) of the mother tongue
+and the target language.
+3. 	Recognize some differences in the sound systems of the English (target) language.
+4. 	Practice writing simple words in the target language (e.g. names, label for classroom
+objects, animals to label drawings, etc).
+Sub-Level 3
+1. 	Recognize root words in two languages and compare cognates.
+2. 	Recognize that languages are inter-related and belong to language family (s) (e.g., count
+to ten in two or three related languages and compare).
+3. 	Recognize simple cognates and identify through listening and reading which words, from
+a list, are cognates.
+4. 	Compare word order in simple phrase or expression (e.g., red car, car red, etc).
+Sub-Level 4
+1. 	Recognize differences in writing systems print, symbols, syllabic, alphabets, characters,
+orientations of written language, and punctuation conventions (e.g. read right to left).
+2. 	Recognize that letters/characters can represent different sounds in the mother tongue and
+in English (e.g., vowels, key consonants, etc).
+3. 	Read aloud simple monosyllabic and disyllabic words demonstrating capacity to closely reproduce
+sounds and comprehension of which letter /characters represent those specific sounds.
+Sub-Level 5
+1. 	Cite and use examples of words and roots borrowed from the mother language used in
+English and English words that are currently used in the mother language. Illustrate some
+of these words (e.g., rodeo, kindergarten, etc).
+2. 	Recognize that vocabulary conveys different meanings in various contexts within different
+cultures.
+3. 	Discuss false cognates and draw two different meanings (e.g., trampa in Spanish and
+tramp in English means a homeless person).
+4. 	Compare the concept of gender in the target language and the mother tongue.
+Sub-Level 6
+1. 	Compare and contrast differences and similarities in the pronunciation systems. Give
+examples that are more complicated than in earlier years (e.g., esdrujulas in Spanish
+diphthongs in many languages).
+2. 	Contrast language characteristics which may or not be present in English (e.g. formalities,
+levels of politeness, formal and informal language, different registers of language, etc).
+3. 	List proverbs and compare with the equivalent translation in English (e.g., It`s raining cats
+and dogs with Spanish version “Esta lloviendo a cantaros”).
+Block 4: Comparisons.
+Component 1: Develop insight into the nature of language and culture. Students demonstrate an
+understanding of the similarities, differences and interactions across languages.
+
+-- 34 of 64 --
+
+34
+English / Inglés
+Sub-Level 7
+1. 	Cite and use borrowed words from other languages and hypothesize why languages in
+general need to borrow words (e.g., Japanese uses “pan” for bread from the Portuguese).
+2. 	Identify the use different titles of address used in the home country and the countries where
+the target language is spoken.
+3. 	Demonstrate how idiomatic expressions work in general.
+4. 	Recognize that vocabulary conveys different meanings in various contexts (e.g., plant: can
+be a manufacturing plant, a living thing, a spy, or one can plant a tree or one’s foot).
+Sub-Level 8
+1. 	G8.4.1.1. Collect and list examples showing differences in the grammar structure of the
+two languages (e.g. word order gender, agreement, tense etc).
+2. 	G8.4.1.2. Initiate a telephone conversation and compare differences in telephone etiquette
+in the English and their own cultures (e.g. state one `s identity, ask to speak to someone,
+ask when someone will return, state that they will call again, conclude a call).
+3. 	G8.4.1.3. Generate idiomatic expressions in both the native language and the English
+language and discuss how idiomatic expressions work in general.
+4. 	G8.4.1.4. Compare grammatical structure between the native and the target language
+(e.g., word order, verb tenses, noun cases, number etc).
+Sub-Level 9
+1. 	Recognize noun and verb forms and how they function in the mother tongue in relation to
+comparable elements in English.
+2. 	Compare nuances of meaning and pronunciation of cognates.
+3. 	Recognize the existence of language varieties within cultures through dialect
+comparisons.
+4. 	List and compare corresponding words with their social meanings in their particular
+cultures.
+
+-- 35 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+35
+1st - 9th
+Level
+Standard 2: Students demonstrate an understanding of the concept of culture through comparisons of the
+cultures studied and their own.
+Sub-Level 1
+1. 	Identify customs from the target culture (e.g., role play bowing, hand shaking, kissing on the
+cheeks, etc).
+2. 	Compare customs of a holiday in the target culture to that of the home culture (e.g., celebrate
+a holiday or birthday according to the custom of home culture, and compare simple aspects
+with customs used in the target culture).
+3. 	Compare and contrast school dress (uniforms) in the home country and the countries where
+the target language is spoken.
+Sub-Level 2
+1. 	Identify dolls, pictures and /or photos of people in traditional/folkloric clothing in the
+Honduran culture and compare with costumes for traditions/folklore in countries where the
+target language is spoken (e.g., Maori of New Zealand, Navajo of USA, etc).
+2. 	Compare and contrast the taste of different food (i.e., fruit or deserts/pastries that are native to
+Honduran culture and with those from the target culture—alcitrones and apple pie in the USA).
+3. 	Identify toys and/or games of the home culture and compare with the toys and /or games
+of children from the target culture (e.g., el trompo , el enchute, la rayuela compared to
+robots or electronic games).
+Sub-Level 3
+1. 	Identify pictures of houses and stores typical of Honduran culture with the ones in the
+target culture (e.g., mercados compared to WalMart stores).
+2. 	Compare songs and instruments used during holiday celebrations in Honduran culture
+with those used in the target culture.
+3. 	Compare climatic differences in the home country and target language countries and the
+clothing in differences worn in each region.
+4. 	Recognize selected foods from target cultures related to holidays and seasons of the year
+and compare with food served in the target culture at similar occasions.
+5. 	Compare two versions of a folktale/song/game through pictures and through listening to
+text read aloud from the Honduran and the target culture.
+Sub-Level 4
+1. 	Compare weather and the implications (e.g., dress, sports, foods, houses) in the Honduran culture
+with the target culture.
+2. 	Indicate what people wear in hot and cold weather (e.g., make a collage/poster of weather
+highlighting a theme: in hot weather, people wear…).
+3. 	Write a menu (process writing) associated with two similar items (e.g., holidays in two cultures).
+(Students can cut and paste pictures for the project.)
+4. 	Compare and contrast dress in two cultures (e.g., urban, modern, clothing for special holidays).
+5. 	Compare daily living between both cultures (e.g., diet, schooling, leisure, shopping).
+6. 	Explain in very simple English, the roles of men, women and children in the target culture.
+Sub-Level 5
+1. 	List, identify and describe ten daily activities in two different cultures (e.g., times which
+people wake up, go to school, eat dinner, etc).
+2. 	Compare and contrast the roles of selected family members in two different cultures (e.g., a
+grandmother in other cultures lives far away, in Honduran culture she lives close to her family).
+3. 	Compare and contrast school and family life in two different cultures (e.g., extended family
+living under one roof or getting together every weekend, respect for parents, teachers, etc).
+4. 	Illustrate/write about how birthday, or Saint’s Day” or “coming of age” is celebrated
+in different cultures (compare the celebration of the fifteenth birthday to a girl in the
+Honduran culture with “Sweet Sixteen” in the target culture).
+Block 4: Comparisons.
+Component 1: Develop insight into the nature of language and culture. Students demonstrate an
+understanding of the similarities, differences and interactions across cultures.
+
+-- 36 of 64 --
+
+36
+English / Inglés
+Sub-Level 6
+1. 	Compare and contrast beliefs regarding sickness and treatment (e.g., the roles of doctors in
+the two cultures).
+2. 	Compare and contrast male and female heroes from the local and target cultures and how
+people celebrate their heroes, (statutes of heroes riding horses and the ones in the target
+culture, museums, naming buildings after a hero, etc).
+3. 	Compare and contrast cultural meaning of proverbs, jokes, riddles in target language /
+culture, (this may be carried out in partly in English (e.g., You move your feet and you lose
+your seat. /el que se va a sevilla pierde la silla).
+4. 	Identify cultural activities/ sports that take place according to seasons and compare with
+similar activities /sports in the target culture (e.g., skiing is done in the winter and hiking in the
+summer).
+Sub-Level 7
+1. 	Describe something orally and in written language (e.g., a holiday in Honduran culture and
+a similar celebration in the target culture explaining similarities and differences).
+2. 	Describe appropriate clothing and celebration activities for different holidays /ceremonies
+(e.g. gifts, etc).
+3. 	Choose a profession and tell about the career in both cultures.
+4. 	Describe a leisure activity in both native and target cultures.
+5. 	Compare and contrast literature, art, music, etc. in different cultures.
+Sub-Level 8
+1. 	Describe a particular myth associated with a celebration in two cultures that incorporates
+symbolism.
+2. 	Compare and contrast food and the concept of “snacks” in the home and target cultures.
+3. 	Compare nuances meaning of words idioms, and vocal inflections in the target language
+and their own.
+4. 	Identify and explain the relationship between weather and cultural activities / practices in
+different countries.
+Sub-Level 9
+1. 	Compare and contrast seasons and weather conditions of the target countries and the
+implications for travel and tourism.
+2. 	Discuss the similarities and differences between one`s own culture and the target culture as
+represented in the media and/or literature.
+3. 	Compare and contrast typical food at home and in the target language.
+4. 	Compare and contrast tangible products of the home and target cultures (e.g. dress, toys, sports,
+equipment).
+5. 	Compare and contrast career choices and social roles in the target culture and their own.
+
+-- 37 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+37
+1st - 9th
+Level
+Standard 1: Students use the world language both within and beyond the school setting.
+Sub-Level 1
+1. 	Introduce themselves in the target language to peers (e.g., in the classroom and throughout
+the school, and in the local area, online if possible).
+2. 	Listen to/ sing/ recite songs and nursery rhymes from the target culture.
+3. 	Recognize words in the target language commonly used heard/seen in the radio, TV. (e.g.,
+Hello, please, etc).
+4. 	Recognize the world areas where the target language is spoken.
+Sub-Level 2
+1. 	Participate in simple conversations with classmates and peers in the target language
+(e.g., Hello, how are you?, fine, thanks).
+2. 	Sing and perform songs and rhymes from the target culture.
+3. 	Identify words in the target language heard/seen outside of school, on T.V.,
+advertisements, etc).
+4. 	Identify some countries where the target language is spoken.
+Sub-Level 3
+1. 	Participate in dialogues using community helpers (e.g., fireman, police officers, etc.) and
+role play scenarios in the target language.
+2. 	Memorize and repeat phrases and rhymes from the target culture.
+3. 	Identify and use words in the target language heard/seen outside of school on a
+conversation, on T.V. advertisement, etc).
+4. 	Identify the regions on a map where the target language is spoken.
+5. 	Discuss with classmates how the target language benefits the area (e.g., tourism,
+environment, etc).
+Sub-Level 4
+1. 	Identify professions in Honduras which require proficiency in the target language studied.
+2. 	Research and list holidays and special celebrations from the target culture.
+3. 	Engage in simple conversation with classmates using basic target language introductions phrases
+(e.g., How are you? What is your name?).
+4. 	Identify and list the regions in Honduras where the target language is spoken (or can be used)
+and research basic information on how this benefits the area (e.g., tourism, environment, etc).
+Sub-Level 5
+1. 	Identify and briefly describe professions and occupations in Honduras which require
+proficiency in the target language studied.
+2. 	Describe, compare and contrast holidays from the target culture with the national culture.
+3. 	Engage in simple conversation with classmates using basic target language phrases to
+ask for something, (e.g., Could you please…, May I have…).
+4. 	Identify and list the countries in America where the target language is spoken (Belize,
+Puerto Rica, USA, Canada).
+Sub-Level 6
+1. 	Write to international corporations requesting information on job qualifications that include
+a second language.
+2. 	Organize a food festival from the target culture.
+3. 	Engage in simple conversation with classmates responding to questions and requests in
+the target language.
+4. 	Research basic information on the countries in America where the target language is
+spoken (Belize, Puerto Rico, USA, Canada).
+Block 5: Communities.
+Component 1: Participate in multilingual communities at home and around the world. Students use their
+knowledge of language and culture to enrich my life and broaden my opportunities.
+
+-- 38 of 64 --
+
+38
+English / Inglés
+Sub-Level 7
+1. 	Interview members of the community that have the common occupations and professions
+and be able to translate the conversation in the target language studied.
+2. 	Design a map placing food, arts and crafts, clothing, etc. (hamburgers, Hawaiian necklace,
+winter coat, scarf, etc.) from target culture.
+3. 	Exchange information about current issues with a classmate using the target language.
+4. 	Research basic information of the countries in the Americas where the target language is
+spoken (Belize, Puerto Rica, USA, Canada), make a presentation of the main characteristics.
+Sub-Level 8
+1. 	Write an executive summary to members of the school community after conducting an
+interview in the target language studied.
+2. 	Make a collage or display placing food, arts and crafts, clothing (e.g., hamburgers,
+Hawaiian necklace, winter coat, scarf, etc.) from target culture.
+3. 	Exchange information about current issues with a classmate using the target language.
+Write a small report about it.
+4. 	Research basic information of the countries in the world where the target language is
+spoken (Australia, United Kingdom, USA, Canada, etc.), make a presentation of the main
+characteristics including occupations which require multilingual proficiency.
+Sub-Level 9
+1. 	Write an essay about a person (e.g., any member of the school community, a famous
+person in the community, etc.) in the target language studied and give an oral
+presentation.
+2. 	Compare and contrast the food, arts and crafts (e.g., hamburgers, Hawaiian necklace,
+winter coat, scarf, etc.) in the target culture to regions in Honduras.
+3. 	Exchange information about current issues with a classmate using the target language.
+Write the main ideas about it.
+4. 	Exchange information with foreign pen-pal s or e-pals on topics of personal interest,
+community interest, and world concerns.
+
+-- 39 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+39
+1st - 9th
+Level
+Standard 2: Students show evidence of becoming life-long learners by using the language for personal
+enjoyment and enrichment.
+Sub-Level 1
+School and Community
+1. 	Introduce themselves in the target language to native – speaker peers in their school and
+community.
+2. 	Identify places where the language is spoken (through field trips, use of internet,
+photographs, etc).
+3. 	Recognize words in the target language heard/seen outside of school (e.g., on TV, on
+labels, advertisement, music etc).
+4. 	Interact/work/play through school projects (Science fairs, cards sales projects, etc.) with
+children/adults that speak the language.
+5. 	Celebrate special days with people from community where target language can be
+practiced (e.g., birthdays, dance performance, art, etc).
+Personal Enrichment
+1. 	Share favorite songs and nursery rhymes from different culture(s), (e.g., Christmas songs,
+lullabies, etc).
+2. 	Read simple text in authentic illustrated story book and/or picture dictionary.
+Sub-Level 2
+School and Community
+1. 	Introduce themselves and others in the target language to native speakers, peers in their
+schools and community.
+2. 	Exchange information by phone about themselves in the target language with relatives
+living in another country.
+3. 	Express likes and dislikes when talking about food, movies, TV programs, toys, pets, etc.
+4. 	Engage in simple conversations with native-speaker personnel at site visited (e.g., How
+are you? What is your name? Where do you come from?, etc).
+5. 	Use community resources to explore target cultures, (e.g., community cyber places,
+human resources working in ONG).
+Personal Enrichment
+1. 	Participate in multicultural celebrations such as festival song, recite poems, etc.
+2. 	Attend a children’s movie/theater/ sports event delivered in target language with elements
+from target culture.
+Sub-Level 3
+School and Community
+1. 	Exchange information about themselves in the target language with native/non-native
+speakers.
+2. 	Provide information by phone about themselves and others using the target language with
+relatives and friends living abroad.
+3. 	Expresses agreement or disagreement appropriately when interacting in games.
+4. 	Interview a native-speaker (preferably close to same age) in the target language.
+5. 	Understand and follow instructions, directions, warnings, descriptions and diagrams.
+Personal Enrichment
+1. 	Collect and read advertisements of products/video clips from target language.
+2. 	Explore cultural components of the Internet.
+3. 	Go with family to ethnic restaurants with menus in target language and speak to waiter in
+target language.
+Block 5: Communities.
+Component 1: Participate in multilingual communities at home and around the world. Students use their
+knowledge of language and culture to enrich my life and broaden my opportunities.
+
+-- 40 of 64 --
+
+40
+English / Inglés
+Sub-Level 4
+School and Community
+1. 	Exchange information about themselves, their relatives, and others in the target language
+with native/non-native speakers.
+2. 	Observe, take notes, and write a summary of an interview with a speaker of the target
+language.
+3. 	Expresses agreement or disagreement interacting appropriately in group cultural activities
+such as: games, storytelling, celebrations, and dramatizations.
+4. 	Exchange information about school, town and state with foreign pen pals.
+5. 	Understand and follow instructions, directions, and warnings, technical, product
+descriptions and diagrams, application forms, maps, signs, and symbols.
+Personal Enrichment
+1. 	Plan an imaginary trip to a country of the language that includes itinerary, budget,
+transportation, etc.
+2. 	Perform a story/play TV program in the target language to be presented to the community.
+3. 	Exchange information with foreign pen-pal on topics of personal interest, community
+interests, and world concerns.
+Sub-Level 5
+School and Community
+1. 	Use who, what, when, where, and how to make questions in the target language.
+2. 	Use the target language to elaborate and exchange drawings or photograph with relatives
+and peers of their community.
+3. 	Demonstrate an understanding of learned expressions, sentences, questions, and polite
+commands in oral messages.
+4. 	Recollect, talk, and write about books read during the school year.
+5. 	Understand and follow instructions, directions, warnings, descriptions, technical, product
+labels, diagrams, application forms, maps, signs, and symbols.
+Personal Enrichment
+1. 	Travel (true or vicarious trip) with family on vacation to a country where target language is
+spoken.
+2. 	Attend museum with target culture exhibit on display.
+3. 	Exchange oral reviews about a story, play, movie, or other form of literature.
+4. 	Establishing ongoing communication through correspondence, multiple interviews or
+conversations with native/non-native speakers.
+Sub-Level 6
+School and Community
+1. 	Respond to who, what, when, where, and how questions coherently in the target
+language.
+2. 	Use the target language to elaborate and exchange cards, drawings or photograph, and
+discuss them orally or in letters and e-mail with students in another community, Honduras
+or another country.
+3. 	State and support opinions to convince or persuade a listener or reader.
+4. 	Write e-mail correspondence with peers to compare and contrast interests.
+5. 	Prepare an article for school newspaper in target language about cultural aspects of target
+countries.
+Personal Enrichment
+1. 	Design/prepare thematic bulletin board/showcase display of an aspect of target culture
+with labels in target language (e.g., dolls, postcards, musical instruments, etc).
+2. 	Continue exploring an area of interest on the Internet (chat lines, sites, downloads, etc).
+
+-- 41 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+41
+1st - 9th
+Level
+Sub-Level 7
+School and Community
+1. 	Participate in a language immersion experience. (e.g., interviewing a person to get
+general information).
+2. 	Use the target language to welcome native speakers visiting their communities.
+3. 	Demonstrate an understanding of printed or recorded advice and suggestions.
+4. 	Use the target language to write greeting cards, notes, letters requesting specific
+information, and e-mails.
+5. 	Identify the main points and details in a radio or TV news program.
+Personal Enrichment
+1. 	Enroll in a community work program (e.g., a tutoring club for members of their
+communities).
+2. 	Use the country’s currency on an imaginary trip.
+Sub-Level 8
+School and Community
+1. 	Retell tales and stories from the target culture to younger students.
+2. 	Engage in activities to become tourist guides of native speakers.
+3. 	Establish and maintain communication with peers in the target culture.
+4. 	Create a portfolio showing involvement in at least 10 leisure activities where the target
+language was heard/ read/ spoken by the student.
+5. 	Write or give a review of a cultural event/ performance attended.
+Personal Enrichment
+1. 	Do volunteer work in the community using the target language (e.g., assisting visitors,
+missionaries, etc).
+2. 	Explore international shopping market on the Internet.
+Sub-Level 9
+School and Community
+1. 	Develop a resume in the target language studied.
+2. 	Write a cover letter and resume in the target language.
+3. 	Explore opportunities to live and study in a target language culture.
+4. 	Create a portfolio showing involvement in at least 20 leisure activities where the language
+studied was heard, read, or spoken by the student.
+5. 	Record audio or video material, or dramatize, for an audience.
+Personal Enrichment
+1. 	Use target language to request information about scholarships and career opportunities
+for bilingual speakers.
+2. 	Write to international corporations requesting information on job qualifications that include
+a second language.
+
+-- 42 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+43
+1st - 9th
+Level
+I n g l é s
+Estándares
+A continuación se presentan los
+Estándares Educativos Nacionales
+para Español desde Primer Subnivel
+hasta Tercer Subnivel.
+Se distribuyen por Bloques y
+Componentes en todos los grados.
+
+-- 43 of 64 --
+
+MAPA STÁNDARES INGLÉS
+BLOQUE
+1. 	Comunicación.
+2. 	Cultura.
+3. 	Conexiones.
+4. 	Comparaciones.
+5. 	Comunidades
+3
+2
+2
+2
+2
+1. Comunicarse en otra
+lengua.
+1. Obtienen conocimiento
+y comprensión de otras
+culturas
+1. Relacionan con otras
+disciplinas y adquieren
+información.
+1. Desarrollar un enfoque
+hacia la naturaleza del
+lenguaje y su cultura.
+1. Participan en
+comunidades multilingües
+en casa y en cualquier
+otro lugar del mundo.
+COMPONENTE 	ESTÁNDAR
+
+-- 44 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+47
+1st - 9th
+Level
+E
+s
+t
+á
+n
+d 	a
+r
+e
+s
+1er - 9no
+Nivel
+NIVEL PRINCIPIANTES
+ESTÁNDARES Y COMPONENTES
+BLOQUE 1: Comunicación.
+BLOQUE 2: Cultura.
+BLOQUE 3: Conexiones
+COMPONENTE 	ESTÁNDARES
+1. Comunicarse en otra lengua. 	Estándar 1: Participan en las conversaciones, proveen
+y obtienen información, expresan sentimientos y
+emociones, e intercambian opiniones. (Interpersonal)
+Estándar 2: Entienden e interpretan el lenguaje hablado y
+escrito sobre una variedad de temas (Interpretativo)
+Estándar 3: Presentan información, conceptos e ideas a
+una audiencia de oyentes o lectores en una variedad de
+temas (Presentacional)
+COMPONENTE 	ESTÁNDARES
+1. Obtienen conocimiento y comprensión de
+otras culturas
+Estándar 1: Demuestran comprensión de la relación
+entre productos y perspectivas de la cultura de la lengua
+extranjera.
+Estándar 2: Demuestran comprensión de la relación
+entre productos y perspectivas de la cultura de la lengua
+extranjera.
+COMPONENTE 	ESTÁNDARES
+1. Relacionan con otras disciplinas y adquieren
+información.
+Estándar 1: Demuestran comprensión de la naturaleza
+de la lengua a través de la comparación del lenguaje
+estudiado y el propio.
+Estándar 2: Adquieren y utilizan información de una
+variedad de fuentes solo disponibles en la lengua
+extranjera, usando tecnología, impresos, audiovisuales,
+medios de comunicación, datos y recursos humanos
+(Interdisciplinarios)
+I N GLÉS
+
+-- 45 of 64 --
+
+48
+English / Inglés	Inglés / English
+BLOQUE 4: Comparaciones.
+BLOQUE 5: Comunidades.
+COMPONENTE 	ESTÁNDARES
+1. Desarrollan un enfoque hacia la naturaleza
+del lenguaje y su cultura.
+Estándar 1: Demuestran comprensión de la naturaleza
+de la lengua a través de la comparación de la lengua
+extranjera y la propia.
+Estándar 2: Demuestran comprensión del concepto de la
+lengua a través de la comparación del lenguaje estudiado
+y el propio.
+COMPONENTE 	ESTÁNDARES
+1. Participan en comunidades multilingües en
+casa y en cualquier otro lugar del mundo.
+Estándar 1: Usan la lengua extranjera en ambos
+ambientes dentro y fuera de la escuela.
+Estándar 2: Muestran evidencias de ser aprendices de
+por vida mediante el uso de la lengua para el disfrute y
+enriquecimiento personal.
+
+-- 46 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+49
+1st - 9th
+Level
+E
+s
+t
+á
+n
+d 	a
+r
+e
+s
+1er - 9no
+Nivel
+ESTÁNDAR 1: Participan en las conversaciones, proveen y obtienen información, expresan sentimientos y
+emociones e intercambian opiniones. (Interpersonal)
+Subnivel 1
+1. 	Intercambian saludos y despedidas sencillas de acuerdo a la hora del día (por ejemplo,
+Buenos (as) días / tardes / noches) (puede ser una actividad representada visualmente).
+2. 	Responden a sencillos comandos orales (por ejemplo, hacer la línea, sentarse, abrir la
+libreta de notas, sacar su lápiz, etc.).
+3. 	Utilizan frases de cortesía para expresar sus necesidades y deseos (por ejemplo, ¿Puedo
+ir al baño? Por favor ¿Puedes prestarme tu lápiz /sacapuntas, goma de borrar, regla, por
+favor? / Gracias / De nada).
+4. 	Identifican colores, describiendo los alrededores de la escuela (por ejemplo, ¿De qué
+color es tu lápiz? Es de color amarillo).
+5. 	Identifican los días de la semana en un calendario hasta 31. Responden a preguntas
+como: ¿qué día es hoy?/ ¿cuántos días hay en la semana? (Números Cardinales).
+6. 	Identifican las fechas (por ejemplo, cumpleaños, fiestas nacionales, etc.). utilizando los
+números ordinales hasta el 31.
+7. 	Identifican y actúan las emociones, asociando correctamente con sentimientos en
+ilustraciones o fotos y preguntar cómo se sienten sus compañeros de clase (por ejemplo,
+¿cómo te sientes hoy? Estoy feliz, estoy triste, estoy bien, estoy enfermo).
+8. 	Presentan a los miembros de su familia y sus mascotas (por ejemplo, mi madre, mi padre
+y mi mascota, etc.).
+9. 	Responden a preguntas sencillas acerca de ellos (edad, sentimientos, cumpleaños, etc.).
+Subnivel 2
+1. 	Dan instrucciones u órdenes sencillas a compañeros y al maestro (por ejemplo, colocarse
+en pares, hacer grupos de tres, subrayen, hagan un circulo, resalten,..)..
+2. 	Identificarse en el teléfono. Preguntar cómo está alguien (por ejemplo, Julio hola. Habla
+María. ¿Cómo estás?).
+3. 	Expresan lo que gustan y lo que no en una variedad de temas (por ejemplo, animales,
+deportes, comidas, o pasatiempos).
+4. 	Describen rutinas (por ejemplo, al despertarse, ir a la escuela, ir a la iglesia, deportes,
+comidas). Dan el marco de tiempo (hora, día, mes, hoy, ayer, mañana) cuando se
+desarrollen las actividades.
+5. 	Preguntan y responden conversaciones sencillas a preguntas sobre sus compañeros y
+maestros (por ejemplo, ¿Cómo estás? ¿Dónde vives? ¿A qué hora almuerza? ¿Cuántos
+miembros tiene tu familia).
+6. 	Se identifican y describen ellos mismos y a miembros inmediatos de su familia (por
+ejemplo, soy alto, mi tío es bajo, mi tía es rubia).
+7. 	Preguntan y declaran la ubicación de lugares y cosas (por ejemplo, “¿dónde está el
+zoológico? El zoológico está detrás del parque”).
+Subnivel 3
+1. 	Expanden habilidades comunicativas basadas en información nueva (por ejemplo,
+vacaciones, actividades relacionadas con la familia, información acerca de la comunidad
+del estudiante), usando ahí es o ahí están.
+2. 	Participan en intercambios extendidos con otros usando interrogaciones (por ejemplo,
+Qué, Cuando, Cual, Donde, Quién, Cuantos, Cómo y Porqué, y pregunta acerca del
+gobierno de la escuela, grupos artísticos, deportes, músicos favoritos, películas, etc.).
+3. 	Se involucran en actividades que describen planes futuros (por ejemplo, La casa soñada,
+vacaciones ideales, el amigo ideal, etc.).
+4. 	Adquieren bienes y servicios a través de destrezas comunicativas básicas (por ejemplo,
+ordenando comida en un restaurante, comprando bienes en el supermercado, hacer
+compras en la farmacia, en librerías, y otros).
+5. 	Intercambian opiniones, sentimientos y emociones (por ejemplo, estoy orgulloso, admiro
+al héroe, odio las drogas, etc.).
+6. 	Aceptan y declinan invitaciones.
+BLOQUE, COMPONENTE, ESTÁNDAR E INDICADOR DE LOGRO
+BLOQUE 1: Comunicación.
+COMPONENTE 1: Comunicarse en otra lengua.
+
+-- 47 of 64 --
+
+50
+English / Inglés	Inglés / English
+ESTÁNDAR 2: Entienden e interpretan el lenguaje hablado y escrito sobre una variedad de temas
+(Interpretativo)
+Subnivel 1
+1. 	Escuchan y responden apropiadamente a saludos, despedidas y expresiones de
+sentimientos.
+2. 	Escuchan preguntas sencillas y comandos de temas del aula al responder correctamente
+oralmente o físicamente (por ejemplo, ¿dónde está el basurero? “el basurero está en la
+esquina” o señalar el basurero).
+3. 	Reconocen objetos del aula de manera oral y escrita (por ejemplo, reloj, puerta,
+sacapuntas, etc.).
+4. 	Suplen oralmente palabra(s) faltante(s) de canciones, rimas, juegos o cuento (Twinkle,
+twinkle little _____).
+5. 	Usan fotos o gráficas para contar la secuencia de cuentos sencillos.
+6. 	Escuchan, imitan y utilizan gestos en canciones, rimas y cuentos sencillos (cuando sea
+posible deberán ser auténticos culturalmente hablando).
+7. 	Identifican letras, símbolos o caracteres en el sistema alfabético, fonético o silábico.
+8. 	Identifican letras iniciales de las palabras en los afiches o carteles colocados en el aula.
+9. 	Comprenden las ideas principales de relatos orales de anécdotas, canciones, rimas,
+cuentos familiares y otras narraciones (familiar o culturalmente relacionadas) basados en
+temas propios de la edad estudiantil.
+10. Comprenden la idea principal en textos altamente ilustrados con cognados, repetición,
+predictabilidad y ritmos usados (cuentos, anuncios sencillos u otras fuentes literarias).
+11. Comparan diferencias entre opuestos (por ejemplo, alto/bajo, grande/pequeño, blanco/
+negro, etc.).
+12. Leen en voz alta palabras familiares demostrando conciencia de la pronunciación,
+interacción y entonación.
+13. Hacen conexiones entre ilustraciones y textos sencillos escritos (por ejemplo, usar la
+ilustración del diccionario, y relacionan la ilustración con el texto o frases cortas).
+14. Encuentran palabras claves en canciones, rimas o juegos.
+Subnivel 2
+1. 	Comprenden material basado en la cultura de estudio, escuchando e imitando canciones,
+rimas y cuentos sencillos.
+2. 	Entienden y usan interacción, pronunciación y entonación (por ejemplo, recita en voz
+alta).
+3. 	Descodifican el nuevo vocabulario usando pistas contextuales del conocimiento previo
+(por ejemplo, “El perro está dentro de la casa”).
+4. 	Elaboran un diccionario sencillo con imágenes.
+5. 	Leen en voz alta un cuento corto con la correcta entonación y pronunciación (por ejemplo,
+la escalera de lenguaje, o rimas sencillas).
+6. 	Parafrasean ideas importantes después de leer un texto narrativo corto (revistas,
+anuncios, libros, etc.).
+7. 	Escuchan un anuncio e identifican la idea principal utilizando pistas contextuales.
+8. 	Entienden y siguen instrucciones de cinco pasos para actividades del aula (por ejemplo,
+hacer origami, manualidades, etc.).
+9. 	Leen y demuestran comprensión al actuar una fábula utilizando creatividad usadas en
+escena, vestimentas, valores, etc., etc.
+BLOQUE 1: Comunicación.
+COMPONENTE 1: Comunicarse en otra lengua.
+
+-- 48 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+51
+1st - 9th
+Level
+E
+s
+t
+á
+n
+d 	a
+r
+e
+s
+1er - 9no
+Nivel
+Subnivel 3
+1. 	Leen en voz alta materiales auténticos (periódicos, revistas, anuncios, etc.). con la
+correcta entonación, pronunciación y fuerza de voz.
+2. 	Demuestran comprensión de textos escritos y orales al resumir o parafrasear (por
+ejemplo, entorno, personajes, trama, etc.).
+3. 	Leen textos sencillos en la lengua extranjera y responden preguntas sencillas (por
+ejemplo reporte del clima, láminas de viajes o panfletos, la guía de TV, etc.).
+4. 	Utilizan diccionarios bilingües primarios o glosario para accesar a información.
+5. 	Obtienen información de mensajes cortos (orales o escritos) (por ejemplo, invitaciones,
+direcciones, anuncios, citas, etc.).
+6. 	Predicen la trama de un cuento después de ver una secuencia de ilustraciones.
+7. 	Leen un texto e identifican partes tales como: título, tabla de contenidos, capítulos,
+encabezados, diagramas, tablas, glosarios e índices.
+8. 	Leen y preparan actividades sencillas que involucren una serie de pasos (por ejemplo,
+recetas, experimentos de Ciencias Naturales, etc.).
+9. 	Leen y ejecutan un cuento corto y sencillo usando su creatividad e imaginación en
+términos como la puesta en escena, disfraces, valores y caracterización.
+10. Utilizan una variedad de expresiones idiomáticas tanto habladas o por escrito.
+
+-- 49 of 64 --
+
+52
+English / Inglés	Inglés / English
+ESTÁNDAR 3: Presentan información, conceptos e ideas a una audiencia de oyentes o lectores en una
+variedad de temas (Presentacional)
+Subnivel 1
+1. 	Identifican y pronuncian nombres propios (por ejemplo, nombres propios y de sus
+compañeros)
+2. 	Identifican y etiquetan vocabulario relacionado con el tema de la lección (introducción
+personal y de artículos en el aula).
+3. 	Completan oraciones, frases sencillas y/o diálogos cortos acompañados de ilustraciones.
+4. 	Completan oraciones, frases sencillas y/o diálogos cortos (secuencia en un cuento).
+5. 	Predicen eventos de un cuento.
+6. 	Trazan, copian palabras o caracteres de varias fuentes (siga las estrategias de escritura
+de la lengua propia).
+7. 	Comienzan a escribir palabras conocidas, frases y oraciones sencillas en un contexto
+significativo (artículos escolares, los objetos en el aula y en casa).
+8. 	Realizan conversaciones cortas sobre temas relacionados a la escuela, a la comunidad y
+el hogar.
+9. 	Usan información de un texto o una historia oral para mostrar la secuencia.
+10. Etiquetan imágenes, diagramas o gráficos.
+11. Colaboran con el maestro creando un cuento.
+12. Escriben correctamente palabras comunes y tomar dictado por escrito.
+Subnivel 2
+1. 	Escriben correctamente palabras comunes y toma dictado por escrito.
+2. 	Hablan acerca de situaciones relacionadas con el tema de la lección.
+3. 	Escriben oraciones sencillas relacionadas con el tema de la lección.
+4. 	Ilustran y discuten el comienzo, el medio y el final de un cuento a través de fotos o
+imágenes con oraciones cortas.
+5. 	Dramatizan una fábula y escriben una oración de cada parte de la fábula.
+6. 	Predicen eventos usando imágenes de periódicos.
+7. 	Participan en la colocación de ilustraciones o fotos con comentarios para la pizarra de
+estudiantes.
+8. 	Utilizan diccionario de imágenes para crear un alfabeto basado en un tema (por ejemplo,
+alfabeto de comidas, alfabeto de animales, alfabeto cultural, etc.).
+9. 	Escriben oraciones descriptivas sencillas dadas determinadas situaciones (por ejemplo,
+Juan es alto, bajo).
+Subnivel 3
+1. 	Escriben correctamente palabras comunes y tomar dictado por escrito.
+2. 	Crean y realizan parodias cortas, presentación de marionetas y el juego de roles.
+3. 	Producen y utilizan impresiones básicas, utilizando las normativas del uso de mayúsculas
+y puntuación.
+4. 	Escriben un párrafo narrativo corto (por ejemplo, temas concretos acerca de ellos).
+5. 	Comienzan a escribir para diferentes propósitos (por Ejemplo, Escribir una carta).
+6. 	Escriben y graban mensaje (por ejemplo, un anuncio, reportes del clima, mensajes
+telefónicos, etc.).
+7. 	Resumen oralmente la trama de un cuento (por ejemplo, el comienzo, el medio, y el final).
+8. 	Completan texto basado en palabras de un banco de palabras de un relato o historia
+conocida.
+BLOQUE 1: Comunicación
+COMPONENTE 1: Comunicarse en otra lengua
+
+-- 50 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+53
+1st - 9th
+Level
+E
+s
+t
+á
+n
+d 	a
+r
+e
+s
+1er - 9no
+Nivel
+ESTÁNDAR 1: Demuestran comprensión de la relación entre productos y perspectivas de la cultura de la
+lengua extranjera.
+Subnivel 1
+1. 	Responden a expresiones culturales y gestos de saludos y despedidas en caso
+situaciones sociales (por ejemplo, buenos días, buenas tardes, buenas noches, buenas
+noches, adiós).
+2. 	Presentarse a sí mismo (por ejemplo, hola, ¿cómo te llamas? mi nombre es...) de manera
+culturalmente apropiada (por ejemplo, dando la mano).
+3. 	Participan en actividades culturales y tradiciones (por ejemplo, ferias, cumpleaños, Día de
+la Independencia, etc.).
+4. 	Juntan los animales con los sonidos percibidos por la cultura de destino (por ejemplo, el
+gallo dice “cocka doodle do” en Inglés y “quiquiriquí” en español).
+5. 	Nombran y experimentan alimentos y costumbres alimenticias de la cultura de la lengua
+extranjera (por ejemplo, comidas típicas, modales en la mesa, etc.).
+Subnivel 2
+1. 	Responden con fluidez a expresiones y gestos culturales para saludar y despedirse en
+situaciones sociales apropiadas (por ejemplo, Presentar a otra persona, ¿Cómo estás?
+Estoy bien, gracias. De nada).
+2. 	Hacen la presentación de uno mismo y de otros.
+3. 	Participan en las actividades culturales y tradiciones (por ejemplo, ferias, cumpleaños,
+Día de la Independencia, etc.).
+4. 	Escuchan y responden/reaccionan a cuentos,
+Subnivel 3
+1. 	Responden con gestos y expresiones culturalmente apropiadas para saludos y
+despedidas en situaciones socialmente apropiadas y utilizarlas en las rutinas del aula.
+2. 	Hacen un listado para planear y participan en actividades culturales establecidas en el
+calendario cívico.
+3. 	Leen y reescriben relatos, canciones y rimas de la cultura hondureña y de la lengua
+extranjera resaltando las similitudes y diferencias entre las culturas.
+4. 	Organizan y colocan en secuencia historias y cuentos de la cultura de la lengua
+extranjera a través de imágenes.
+5. 	Identifican responsabilidades de cada miembro de la familia en la cultura de la lengua
+extranjera.
+6. 	Nombran e identifican las capitales y las principales características topográficas de los
+países de la cultura de la lengua extranjera en mapas escritos en la lengua extranjera
+(por ejemplo, mapas de Centroamérica, ríos, puertos, volcanes, lagos, etc.).
+BLOQUE 2: Cultura.
+COMPONENTE 1: Obtiene conocimiento y comprensión de otras culturas
+
+-- 51 of 64 --
+
+54
+English / Inglés	Inglés / English
+ESTÁNDAR 2: Demuestran una comprensión de la relación entre productos y perspectivas de la cultura de la
+lengua extranjera.
+Subnivel 1
+1. 	Escuchan y responden/ reaccionan a historias, canciones y rimas de la cultura de la
+Lengua Extranjera.
+2. 	Participan en la creación de una historia de grupo en un tema cultural.
+3. 	Identifican las banderas y símbolos de la cultura de la Lengua Extranjera.
+4. 	Nombran algunos días de fiesta en Honduras y/o festivales que el país tiene en común
+con la cultura de estudio.
+5. 	Dramatizan cuentos simplificados, auténticos de la cultura de la lengua extranjera.
+Subnivel 2
+1. 	Escuchan y parafrasean cuentos de la cultura de la lengua extranjera.
+2. 	Participan en juegos infantiles tradicionales de la cultura de la lengua extranjera (por
+ejemplo, Duck, Duck Goose).
+3. 	Escuchan y responden/reaccionan a cuentos, canciones y rimas de la cultura de la
+lengua extranjera.
+4. 	Dramatizan cuentos sencillos, auténticos de la cultura de la lengua extranjera.
+5. 	Crean calendario con los días feriados de la cultura de la lengua extranjera y los
+hondureños.
+Subnivel 3
+1. 	Nombran y explican el significado de algunos feriados o días festivos de la cultura de la
+lengua extranjera.
+2. 	Dramatizan cuentos y relatos sencillos auténticos.
+3. 	Identifican trabajos de artes (visuales y en realización) como una reflexión de la cultura
+de la lengua extranjera.
+4. 	Celebran feriados selectos con juegos, bailes, comidas, canciones, etc.
+5. 	Reconocen y etiquetan comidas y artesanías de la cultura de la lengua extranjera.
+6. 	Identifican y nombran establecimientos comerciales selectos de la cultura de la lengua
+extranjera (por ejemplo, el papel a jugar cuando compras).
+BLOQUE 2: Cultura.
+COMPONENTE 1: Obtienen conocimiento y comprensión de otras culturas
+
+-- 52 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+55
+1st - 9th
+Level
+E
+s
+t
+á
+n
+d 	a
+r
+e
+s
+1er - 9no
+Nivel
+ESTÁNDAR 1: Demuestran comprensión de la naturaleza de la lengua a través de la comparación del lenguaje
+estudiado y el propio.
+Subnivel 1
+1. 	Cuentan hasta 100 de uno en uno, de cinco en cinco, y de diez en diez. (MATEMÁTICAS)
+2. 	Cuentan e identifican divisas extranjeras. (MATEMÁTICAS/ CIENCIAS SOCIALES)
+3. 	Clasifican comidas de acuerdo al color, forma, y grupos de comidas. (SALUD/
+MATEMÁTICAS/ CIENCIAS NATURALES)
+4. 	Dicen la hora en la lengua extranjera. (MATEMÁTICAS)
+5. 	Preguntan y proveen información personal y familiar tales como el nombre, la edad,
+dirección y números telefónicos. (ESPAÑOL/CIENCIAS SOCIALES)
+6. 	Asocian animales con sus alimentos, sus casas, partes del cuerpo, etc. (CIENCIAS
+NATURALES / CIENCIAS SOCIALES)
+7. 	Nombran los siete días de la semana y los doce meses del año en el orden correcto
+(MATEMÁTICAS).
+8. 	Identifican las estaciones climáticas relacionando las expresiones con cada estación
+(CIENCIAS NATURALES))
+9. 	Establecen conexiones entre meses, estaciones y feriados. ( CIENCIAS SOCIALES/
+CIENCIAS NATURALES)
+10. Clasifican animales por su tipo, dietas, hábitats, partes del cuerpo, etc. (CIENCIAS
+NATURALES).
+11. Describen diferentes tipos de casas o hábitats de escenas ilustradas utilizando frases u
+oraciones sencillas (CIENCIAS NATURALES/CIENCIAS SOCIALES).
+12. Describen en la lengua extrajera trabajos de arte originales (EDUCACIÓN ARTÍSTICA).
+13. Nombran por lo menos 10 diferentes instrumentos musicales de la lengua extranjera
+(EDUCACIÓN MUSICAL).
+14. Seleccionan la respuesta correcta a preguntas acerca de hechos ocurridos en un relato.
+(COMUNICACIÓN)
+15. Enlistan de cinco a ocho términos deportivos de la lengua extranjera (fútbol, basquetbol,
+beisbol, etc.). (EDUCACIÓN FÍSICA)
+16. Identifican y describen las partes del cuerpo: la cabeza, hombros, cuello, espalda, pecho,
+cintura, caderas, brazos, codos, muñecas, manos, dedos, piernas, rodillas, tobillos, y
+dedos de los pies. (SALUD/ EDUCACIÓN FÍSICA)
+17. Colocan en un mapa imágenes de personas de regiones específicas con sus respectivas
+ropas,, razas, estilos de vidas, etc.( CIENCIAS SOCIALES)
+18. Emparejan fotos o imágenes de las formas de transportarse con oraciones descriptivas
+de los mismos (por ejemplo, “Aviones viajan rápido.”) (CIENCIAS SOCIALES)
+19. Describen diferentes tipos de casas o hábitats de escenas ilustradas utilizando frases u
+oraciones sencillas (CIENCIAS NATURALES/CIENCIAS SOCIALES).
+BLOQUE 3: Conexiones
+COMPONENTE 1: Relacionan con otras disciplinas y adquieren información
+
+-- 53 of 64 --
+
+56
+English / Inglés	Inglés / English
+Subnivel 2
+1. 	Cuentan del 0- 31, identifica y coloca en pares los números en una línea de tiempo y en
+el calendario. (MATEMÁTICAS)
+2. 	Cuentan los números del 0 al número 50 y utilizarlos en operaciones aritméticas.
+(MATEMÁTICAS).
+3. 	Aparean las diferentes partes del reloj. (MATEMÁTICAS).
+4. 	Identificar y clasificar objetos por sus atributos (MATEMÁTICAS/CIENCIAS
+NATURALES).
+5. 	Preguntan y proveen información básica personal como nombre, la edad, dirección y el
+número de teléfono. (MATEMÁTICAS, CIENCIAS SOCIALES Y ESPAÑOL)
+6. 	Aparean animales con sus comidas, lugares en que viven, partes del cuerpo, etc.
+(CIENCIAS NATURALES/ CIENCIAS SOCIALES).
+7. 	Nombran los siete días de la semana y los doce meses del año en el orden correcto
+(MATEMÁTICAS).
+8. 	Identificar las estaciones climáticas relacionando las expresiones con cada estación
+(CIENCIAS NATURALES).
+9. 	Organizan los meses en las estaciones e incluyen los feriados (por ejemplo, “Navidad se
+celebra en Diciembre”) (CIENCIAS SOCIALES).
+10. Clasifican y describen en palabras sencillas las cosas vivientes y no vivientes del medio
+ambiente (CIENCIAS NATURALES).
+11. Colocan con el correspondiente hogar o hábitat de los animales en escenas ilustradas
+usando frases o piezas de la lengua extranjera (CIENCIAS NATURALES/ CIENCIAS
+SOCIALES).
+12. Identifican colores primarios y relatan cómo crear colores secundarios (EDUCACIÓN
+ARTÍSTICA).
+13. Identifican instrumentos auténticos de la cultura propia (pandereta, marimba, maracas,
+campanas) (EDUCACIÓN MUSICAL)
+14. Escriben unas pocas palabras o frases acerca de un evento o personaje de una historia
+leída por el maestro (ESPAÑOL).
+15. Siguen instrucciones complejas a través de una respuesta totalmente física para
+actividades típicas de la clase de Educación Física (por ejemplo, saltar alrededor de la
+cancha, correr a diferentes velocidades, saltar la cuerda, etc.). (EDUCACIÓN FÍSICA).
+16. Crean formas de los niveles altos, medios, y bajos utilizando manos, brazos, torso, pies, y
+piernas en una variedad de combinaciones (EDUCACIÓN ARTÍSTICA).
+17. Aparean formas del tipo de rompecabezas de cinco a seis regiones o países de la cultura
+de la lengua extranjera, en un mapa mundial.
+18. Identifican las maneras de transportarse de las rimas y cánticos apoyados visualmente
+(por ejemplo, “Las ruedas en el bus”) (CIENCIAS SOCIALES).
+19. Hablan y escriben acerca de situaciones relacionadas con los derechos de los niños
+(CIENCIAS SOCIALES).
+
+-- 54 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+57
+1st - 9th
+Level
+E
+s
+t
+á
+n
+d 	a
+r
+e
+s
+1er - 9no
+Nivel
+Subnivel 3
+1. 	Cuentan hasta 100 de uno en uno, de cinco en cinco, y de diez en diez. (MATEMÁTICAS)
+2. 	Cuentan e identifican divisa extranjera. (MATEMÁTICAS/ CIENCIAS SOCIALES)
+3. 	Clasifican comidas de acuerdo al color, forma, y grupos de comidas. (SALUD/
+MATEMÁTICAS/ CIENCIAS NATURALES)
+4. 	Dicen la hora en la lengua extranjera. (MATEMÁTICAS)
+5. 	Preguntan y proveen información personal y familiar tales como el nombre, la edad,
+dirección y números telefónicos. (ESPAÑOL/CIENCIAS SOCIALES)
+6. 	Asocian animales con sus alimentos, sus casas, partes del cuerpo, etc. (CIENCIAS
+NATURALES / CIENCIAS SOCIALES)
+7. 	Nombran los siete días de la semana y los doce meses del año en el orden correcto
+(MATEMÁTICAS).
+8. 	Identifican las estaciones climáticas relacionando las expresiones con cada estación
+(CIENCIAS NATURALES))
+9. 	Establecen conexiones entre los meses, estaciones y feriados. ( CIENCIAS SOCIALES/
+CIENCIAS NATURALES)
+10. Clasifican animales por su tipo, dietas, hábitats, partes del cuerpo, etc. (CIENCIAS
+NATURALES).
+11. Describen diferentes tipos de casas o hábitats de escenas ilustradas utilizando frases u
+oraciones sencillas (CIENCIAS NATURALES/CIENCIAS SOCIALES).
+12. Describen en la lengua extrajera trabajos de arte originales (EDUCACIÓN ARTÍSTICA).
+13. Nombran por lo menos 10 diferentes instrumentos musicales de la lengua extranjera
+(EDUCACIÓN MUSICAL).
+14. Seleccionan la respuesta correcta a preguntas acerca de hechos ocurridos en un relato.
+(COMUNICACIÓN)
+15. Enlistan de cinco a ocho términos deportivos de la lengua extranjera (fútbol, basquetbol,
+beisbol, etc.). (EDUCACIÓN FÍSICA)
+16. Identifican y describen las partes del cuerpo: la cabeza, hombros, cuello, espalda, pecho,
+cintura, caderas, brazos, codos, muñecas, manos, dedos, piernas, rodillas, tobillos, y
+dedos de los pies. (SALUD/ EDUCACIÓN FÍSICA)
+17. Colocan en un mapa imágenes de personas de regiones específicas con sus respectivas
+ropas,, razas, estilos de vidas, etc.( CIENCIAS SOCIALES)
+18. Emparejar fotos o imágenes de las formas de transportarse con oraciones descriptivas de
+los mismos (por ejemplo, “Aviones viajan rápido.”) (CIENCIAS SOCIALES)
+19. Describen diferentes tipos de casas o hábitats de escenas ilustradas utilizando frases u
+oraciones sencillas (CIENCIAS NATURALES/CIENCIAS SOCIALES).
+
+-- 55 of 64 --
+
+58
+English / Inglés	Inglés / English
+ESTÁNDAR 2: Adquieren y utilizan información de una variedad de fuentes solo disponibles en la lengua
+extranjera, usando tecnología, impresos, audiovisuales, medios de comunicación, datos y recursos humanos
+(Interdisciplinarios)
+Subnivel 1
+1. 	Adquieren vocabulario nuevo (memorizan) al hacer del uso de tarjetas, posters, fotos,
+etc.
+2. 	Identifican palabras claves en la información registrada.
+3. 	Leen y resaltan palabras claves y frases.
+4. 	Parafrasean historias con elementos de la historia en los libros con sus imágenes o
+cuentos cortos.
+5. 	Buscan y reproducen las palabras de los números (por ejemplo, del 1 al 31) a partir de un
+grupo de imágenes etiquetadas.
+6. 	Identifican símbolos, objetos o personas relacionadas con las aulas o áreas de escuelas,
+personal o actividades de imágenes y declaraciones orales (por ejemplo, “Oficina” o
+“Salida “).
+7. 	Nombran objetos cotidianos representados visualmente en el contexto de la vida-real (por
+ejemplo, “papel” dentro del escenario del aula).
+Subnivel 2
+1. 	Escuchan cuentos cortos, lee y responde en voz alta preguntas de compresión (por
+ejemplo, libros de cuentos, revistas, discos compactos).
+2. 	Identifican detalles importantes de una sesión grabada.
+3. 	Leen y resaltan detalles importantes.
+4. 	Describen los ambientes o personajes de un cuento ilustrado de un conjunto de frases
+previamente seleccionadas.
+5. 	Distinguen las palabras de los números de otras palabras utilizadas en Matemáticas
+usando gráficas o soporte visual y banco de palabras.
+6. 	Localizan áreas de la escuela, personal o actividades provenientes de imágenes y de
+frases descriptivas (por ejemplo, “en la esquina de la habitación”, “el sanitario está al final
+del pasillo”).
+7. 	Dicen la principal función de objetos de uso diario representados visualmente (por
+ejemplo, Mostrar una pieza de papel: “tú escribes en él”).
+Subnivel 3
+1. 	Adquieren nuevo vocabulario al analizar palabras cognadas de otras áreas (Matemáticas,
+Ciencias Naturales, Educación Artística, etc.). a través del uso de tarjetas didácticas,
+láminas, programas interactivos, videos, etc.
+2. 	Escuchan información grabada e identifican las ideas principales, detalles y conceptos
+importantes.
+3. 	Leen y resaltan las ideas principales, los detalles y conceptos importantes.
+4. 	Contar una versión modificada de una historia autentica (fábula, leyenda y/o cuento)
+utilizando fuentes de multimedia.
+5. 	Presentan (individualmente o en grupos) números presentados en gráficas o con soporte
+visual utilizando frases u oraciones cortas. (por ejemplo, “Este grupo tiene más de 40.”)
+6. 	Examinan ilustraciones y las describen oralmente lo que ven (por ejemplo, escenas de la
+escuela mostrando diversas actividades y personal; “el maestro enseña a los estudiantes
+en la clase.”
+7. 	Relatan las múltiples funciones o usos de objetos de uso diario representados
+visualmente (por ejemplo, “Yo hago la tarea en la mesa y como mi cena ahí.”)..”).
+BLOQUE 3: Conexiones
+COMPONENTE 1: Relaciona con otras disciplinas y adquieren información.
+
+-- 56 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+59
+1st - 9th
+Level
+E
+s
+t
+á
+n
+d 	a
+r
+e
+s
+1er - 9no
+Nivel
+ESTÁNDAR 1: Demuestran comprensión de la naturaleza de la lengua a través de la comparación de la lengua
+extranjera y la propia.
+Subnivel 1
+1. 	Comparan nombres en inglés con sus equivalentes más cercanos en español.
+2. 	Identifican y utilizan (en saludos) títulos para el personal del centro educativo (por
+ejemplo, Mr. Mrs. Miss, para el bibliotecario(a), director, etc.).
+3. 	Reconocen el sistema de escritura (el alfabeto y los números de la lengua materna) y
+tienen en consideración las similitudes con la lengua extranjera.
+4. 	Practican escritura de palabras sencillas en la lengua materna y en la lengua extranjera
+(por ejemplo, nombres, etiquetas para objetos del aula, etiquetar los dibujos de animales,
+etc.).
+5. 	Responden a las fichas del alfabeto en inglés y en español, identificando cual es en
+Inglés y cual es en Español.
+Subnivel 2
+1. 	Se dirigen al maestro del aula apropiadamente en la lengua materna utilizando lenguaje
+cortés y con gestos (lenguaje kinésico) acto seguido dirigirse al maestro cortés y
+apropiadamente en la lengua extranjera.
+2. 	Reconocen y revisan el sistema de escritura (alfabeto y números) de la lengua materna y
+del a lengua extranjera.
+3. 	Reconocen algunas diferencias en el sistema de sonidos de la lengua extranjera.
+4. 	Practican escribir palabras sencillas en la lengua extranjera (por ejemplo, etiquetar
+objetos del aula, o etiquetar dibujos de animales, etc.).
+Subnivel 3
+1. 	Reconocen raíces de las palabras en las dos lenguas y comparan palabras cognadas.
+2. 	Reconocen que las lenguas están inter-relacionadas y pertenecen a una familia
+de lenguas (por ejemplo, cuentan hasta diez en dos o tres lenguas relacionadas y
+comparan).
+3. 	Reconocen palabras cognadas sencillas y las identifican al escucharlas y leerlas, de una
+lista, y reconocer las cognadas.
+4. 	Comparan el orden de las palabras en frases sencillas o expresiones (por ejemplo, carro
+rojo, rojo carro, etc.).
+BLOQUE 4: Comparaciones.
+COMPONENTE 1: Desarrolla un enfoque hacia la naturaleza de la lengua extranjera y su cultura.
+
+-- 57 of 64 --
+
+60
+English / Inglés	Inglés / English
+ESTÁNDAR 2: Demuestran comprensión del concepto de la lengua a través de la comparación de la lengua
+extranjera y la propia.
+Subnivel 1
+1. 	Identifican costumbres de la cultura de extranjera (por ejemplo, cómo hacer una
+reverencia, estrechar las manos, besarse en las mejillas, etc.).
+2. 	Comparan costumbres de los feriados en la cultura estudiada y la nuestra. (por ejemplo,
+la celebración de feriados o cumpleaños de acuerdo con la costumbre de nuestra cultura,
+y comparar aspectos sencillos con las costumbres usadas en la cultura de la Lengua
+Extranjera).
+3. 	Comparan y contrastan uniformes en Honduras y los utilizados en países en donde se
+habla la lengua extranjera.
+Subnivel 2
+1. 	Identifican muñecas, fotos y/o dibujos de personas en ropas folklóricas de la cultura
+hondureña y compara con vestidos tradicionales/folklóricos en países donde se habla la
+lengua extranjera (por ejemplo, maori de Nueva Zelanda, navajos de Estados Unidos).
+2. 	Comparan y contrastan el sabor de diferentes comidas (por ejemplo, frutas o postres/
+pasteles que sean originarios de la cultura hondureña con los de la cultura de la lengua
+extranjera (alcitrones de Honduras y el pastel de manzana de los EUA).
+3. 	Identifican juguetes y/o juegos de la cultura propia y compararlos con los juguetes y/o
+juegos de la cultura de la lengua extranjera (por ejemplo el trompo, el enchute, la rayuela
+comparadas a los robots o los juegos electrónicos).
+Subnivel 3
+1. 	Identifican fotos de casas y tiendas típicas de la cultura hondureña con esas de la cultura
+de la lengua extranjera (por ejemplo, los mercados con los supermercados Wal-Mart).
+2. 	Comparan canciones e instrumentos usados durante las celebraciones en la cultura
+hondureña, con esos de la cultura de la lengua extranjera.
+3. 	Comparan las diferencias climáticas en el país y los países de la lengua extranjera y la
+ropa que se utiliza en cada región.
+4. 	Reconocen comidas selectas de la cultura de la lengua extranjera relacionadas con
+feriados y las estaciones del año, y las comparan con las comidas servidas en la cultura
+hondureña en ocasiones similares.
+5. 	Comparan dos versiones de cuentos/canciones/juegos a través de fotos y de escuchar el
+texto leído en voz alta tomado de las culturas, hondureña y de la lengua extranjera.
+BLOQUE 4: Comparaciones.
+COMPONENTE 1: Desarrollar un enfoque hacia la naturaleza del lenguaje y su cultura.
+
+-- 58 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+61
+1st - 9th
+Level
+E
+s
+t
+á
+n
+d 	a
+r
+e
+s
+1er - 9no
+Nivel
+ESTÁNDAR 1: Usan la lengua extranjera en ambos ambientes dentro y fuera de la escuela.
+Subnivel 1
+1. 	Se presentan ellos en la lengua extranjera a sus compañeros (por ejemplo, en el aula, a
+través de la escuela, y en el área local o en internet si es posible).
+2. 	Escuchan/cantan/recitan canciones o rimas infantiles de la cultura de la Lengua
+Extranjera.
+3. 	Reconocer palabras en el idioma extranjero que se escuchan o ven en la radio o
+televisión (por ejemplo, hello, please, etc.).
+4. 	Identifican lugares donde se habla la lengua (con mapas, el uso de Internet, fotografías,
+etc.).
+Subnivel 2
+1. 	Participan en conversaciones sencillas con compañeros y compañeros en la lengua
+extranjera (por ejemplo, hola, ¿cómo estás?, bien, gracias).
+2. 	Cantan e interpretan canciones y rimas de la cultura de la lengua extranjera.
+3. 	Identifican palabras en la lengua extranjera oídas/vistas fuera de la escuela, en la
+televisión, en anuncios, etc.).
+4. 	Identificar países donde se habla la lengua extranjera
+Subnivel 3
+1. 	Participan en diálogos usando ayuda de miembros de la comunidad (por ejemplo,
+bomberos, oficiales de la policía, etc.). y juegan el papel en escenarios, en la lengua
+extranjera.
+2. 	Memorizan y repiten frases y rimas de la lengua extranjera.
+3. 	Identifican y utilizan palabras en la lengua extranjera que escuchan/ven (por ejemplo, en
+conversaciones, en anuncios de TV, etc.).
+4. 	Identifican las regiones en un mapa donde se habla la lengua extranjera.
+5. 	Discuten con compañeros como la lengua extranjera beneficia el área (por ejemplo,
+turismo, medio ambiente, etc.).
+
+-- 59 of 64 --
+
+62
+English / Inglés	Inglés / English
+ESTÁNDAR 2: Muestran evidencias de ser aprendices de por vida mediante el uso de la lengua para el disfrute
+y enriquecimiento personal.
+Subnivel 1
+1. 	Se presentan ellos mismos en la lengua extranjera a sus compañeros o a hablantes
+nativos en su escuela y comunidad.
+2. 	Identifican los lugares donde se habla la lengua (con mapas, el uso de Internet,
+fotografías, etc.).
+3. 	Reconocen palabras en la lengua extranjera oído / vistos fuera de las escuela (por
+ejemplo, en la televisión, en etiquetas, publicidad, música, etc.).
+4. 	Interactúan / trabajan / juegan con proyectos de la escuela (ferias de ciencia, proyectos
+de venta de tarjetas, etc.). con niños/adultos que hablan el idioma.
+5. 	Celebran días especiales con personas de la comunidad donde la lengua extranjera
+puede ser practicada (por ejemplo, Cumpleaños, bailes, arte, etc.).Enriquecimiento
+Personal
+6. 	Comparten canciones favoritas y rimas infantiles de diferentes culturas (por ejemplo,
+Canciones navideñas, canciones de cuna, etc.).
+7. 	Leen texto sencillo de un libro auténtico de historias ilustradas y / o diccionario con
+imágenes.
+Subnivel 2
+1. 	Presentarse a sí mismos y otras personas en la lengua extranjera para hablantes nativos,
+a sus compañeros en la escuela y comunidad.
+2. 	Intercambian información por teléfono sobre sí mismos en la lengua extranjera con
+familiares que viven en otro país.
+3. 	Expresan lo que les gusta y no les gusta acerca de comidas, cine, programas de
+televisión, juguetes, mascotas, etc.
+4. 	Participan en conversaciones sencillas con personas que sean hablantes-nativos del
+lugar visitado (por ejemplo, ¿Cómo estás?, ¿Cuál es tu nombre?, ¿De dónde vienes?,
+etc.).
+5. 	Utilizan recursos en su comunidad para explorar la cultura de la lengua extranjera
+(por ejemplo, el internet de la comunidad, recursos humanos trabajando en ONG).
+Enriquecimiento Personal
+6. 	Participan en celebraciones multiculturales como el festival de la canción, recitar poemas,
+etc.
+7. 	Asisten a una película/ obra de teatro/ deporte infantil que se lleve a cabo en la lengua
+extrajera con elementos de la cultura extranjera.
+Subnivel 3
+1. 	Intercambian información acerca de ellos mismos en la lengua extranjera con hablantes
+nativos y no nativos.
+2. 	Proveen información por teléfono acerca de ellos mismos y otros usando la lengua
+extranjera con familiares y amigos que viven en el extranjero.
+3. 	Expresan conformidad o avenencia apropiadamente cuando interactúan en juegos.
+4. 	Entrevistan a un hablante-nativo (preferiblemente de la misma edad del estudiante) de la
+lengua extranjera.
+5. 	Entienden y siguen instrucciones, direcciones, advertencias, descripciones y diagramas.
+6. 	Colectan y leen anuncios de productos/videos cortos en la lengua extranjera.
+7. 	Explorar los componentes culturales del Internet.
+8. 	Van con la familia a restaurantes étnicos con menús en la lengua extranjera y hablarle al
+mesero en la lengua extranjera.
+BLOQUE 5: Comunidades.
+COMPONENTE 1: Participan en comunidades multilingües en casa y en cualquier otro lugar del mundo
+
+-- 60 of 64 --
+
+S
+t
+a
+n
+d 	a 	r
+d
+s
+63
+1st - 9th
+Level
+Agradecimiento
+Maestros, padres y madres de familia, alumnos,
+representantes de colegios magisteriales y autoridades
+educativas participantes en los procesos de la definición
+de las Programaciones Educativas Nacionales
+
+-- 61 of 64 --
+
+Adela Margarita Rodríguez
+Ana Betancourt Sierra
+Ana Lourdes López
+Cheryl Núñez
+Denia Maricia Nelson
+Dina Lagos
+Esmelí Sandoval
+Fernando Valladares
+Gloria Ulloa
+Graciela Rico
+Jacqueline Aguilera
+Joceline Ramírez
+José E. Machado
+Juan Carlos Martínez
+Karla Aguilar
+María Elena Alméndarez
+María Fátima Fuentes
+Marta Cruz Valladares
+Noé Arístides Oliva
+Omar Eliphaz Álvarez
+Reina Eduviges Iscoa
+Sandra Cristiana
+Aguilar
+Zoila Gloria Pinto
+EQUIPO TÉCNICO
+MIDEH-AIR
+Ramiro Sequeira
+CONSULTORES
+INTERNACIONALES
+Naomi Migliacci
+Edna Gaud
+Agradecimiento
+
+-- 62 of 64 --
+
+Estándares Educativos Nacionales-Ingles (1ro - 9no grado)
+Se imprimió en la imprenta (Nombre de la imprenta)
+Lugar ___________________________
+En el mes de _________ del año _____
+Su tiraje consta de _______ejemplares
+
+-- 63 of 64 --
+
+
+
+-- 64 of 64 --
+

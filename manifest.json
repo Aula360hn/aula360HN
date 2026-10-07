@@ -1,0 +1,144 @@
+{
+  "id": "com.wipin.aula360.hn",
+  "name": "Aula 360 HN",
+  "short_name": "Aula 360",
+  "description": "Aula 360 HN - Sistema Académico Profesional para Docentes. Gestión de estudiantes, asistencia y evaluación.",
+  "start_url": "index.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1A1D27",
+  "theme_color": "#0D9488",
+  "lang": "es",
+  "dir": "ltr",
+  "categories": [
+    "education",
+    "productivity"
+  ],
+  "display_override": [
+    "window-controls-overlay",
+    "tabbed",
+    "standalone",
+    "minimal-ui"
+  ],
+  "icons": [
+    {
+      "src": "logo-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "logo-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "logo-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "logo-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshot_desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Pantalla principal de Aula 360 HN"
+    },
+    {
+      "src": "screenshot_mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Vista móvil de Aula 360 HN"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Tomar Asistencia",
+      "short_name": "Asistencia",
+      "description": "Registrar la asistencia del día",
+      "url": "index.html",
+      "icons": [
+        {
+          "src": "logo-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Nueva Calificación",
+      "short_name": "Evaluar",
+      "description": "Añadir una nueva nota a los estudiantes",
+      "url": "index.html",
+      "icons": [
+        {
+          "src": "logo-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://celebrated-zuccutto-d90c0e.netlify.app/",
+      "id": "com.wipin.aula360.hn"
+    }
+  ],
+  "prefer_related_applications": false,
+  "iarc_rating_id": "e58c679a-e274-11e9-9a7f-0242ac130002",
+  "scope_extensions": [
+    {
+      "origin": "*.netlify.app"
+    }
+  ],
+  "file_handlers": [
+    {
+      "action": "index.html",
+      "accept": {
+        "application/pdf": [
+          ".pdf"
+        ],
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [
+          ".docx"
+        ]
+      }
+    }
+  ],
+  "share_target": {
+    "action": "index.html",
+    "method": "GET",
+    "enctype": "application/x-www-form-urlencoded",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "protocol_handlers": [
+    {
+      "protocol": "web+aula360",
+      "url": "index.html?token=%s"
+    },
+    {
+      "protocol": "mailto",
+      "url": "mailto:%s"
+    }
+  ],
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
+}

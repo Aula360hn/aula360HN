@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Estudio de Pizarra Digital - Aula 360</title>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            --bg-canvas: #090d16;
+            --bg-card: rgba(18, 24, 38, 0.85);
+            --border-card: rgba(255, 255, 255, 0.12);
+            --accent-primary: #00C853;
+            --accent-blue: #2979FF;
+            --accent-purple: #7C4DFF;
+            --accent-pink: #FF4081;
+            --accent-yellow: #FFC400;
+            --text-main: #FFFFFF;
+            --text-muted: #94A3B8;
+            --font-main: 'Outfit', -apple-system, system-ui, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body, html {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background-color: var(--bg-canvas);
+            font-family: var(--font-main);
+            color: var(--text-main);
+        }
+
+        /* ─── PANTALLA INICIAL (START SCREEN) ─── */
+        #start-screen {
+            position: absolute;
+            inset: 0;
+            z-index: 10000;
+            background: radial-gradient(circle at 50% 40%, #151d30 0%, #080c14 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        #start-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(1.05);
+        }
+
+        .start-logo {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .start-logo-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, var(--accent-primary), #00E676);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 30px rgba(0, 200, 83, 0.4);
+        }
+
+        .start-logo-icon i {
+            color: #fff;
+            width: 32px;
+            height: 32px;
+        }
+
+        .start-logo-text {
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .start-buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+            max-width: 360px;
+        }
+
+        .start-btn {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 24px;
+            border-radius: 16px;
+            border: 1px solid var(--border-card);
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(12px);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .start-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .start-btn-primary {
+            background: linear-gradient(135deg, var(--accent-primary), #00A843);
+            border: none;
+            box-shadow: 0 8px 24px rgba(0, 200, 83, 0.3);
+        }
+
+        .start-btn-primary:hover {
+            background: linear-gradient(135deg, #00E676, var(--accent-primary));
+            box-shadow: 0 12px 30px rgba(0, 200, 83, 0.5);
+        }
+
+        .start-btn i {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* ─── LIENZO INFINITO (CANVAS) ─── */
+        #studio-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+            background-size: 32px 32px;
+            overflow: hidden;
+        }
+
+        /* ─── WIDGETS Y ELEMENTOS DEL LIENZO ─── */
+        .studio-card {
+            position: absolute;
+            min-width: 220px;
+            min-height: 140px;
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-card);
+            border-radius: 18px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            cursor: move;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            touch-action: none;
+        }
+
+        .studio-card.selected {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 2px var(--accent-blue), 0 16px 40px rgba(41, 121, 255, 0.25);
+        }
+
+        .studio-card.locked {
+            cursor: default;
+            border-style: dashed;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .card-body {
+            flex: 1;
+            padding: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Resize Handle */
+        .resize-handle {
+            position: absolute;
+            right: 4px;
+            bottom: 4px;
+            width: 16px;
+            height: 16px;
+            cursor: se-resize;
+            opacity: 0.5;
+        }
+
+        /* ─── MENÚ CONTEXTUAL Y DE IA DE UN OBJETO ─── */
+        #context-toolbar {
+            position: absolute;
+            z-index: 9000;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 14px;
+            padding: 6px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            pointer-events: auto;
+        }
+
+        #context-toolbar.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(8px);
+        }
+
+        .ctx-btn {
+            background: transparent;
+            border: none;
+            color: #cbd5e1;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            white-space: nowrap;
+        }
+
+        .ctx-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .ctx-btn-ai {
+            background: linear-gradient(135deg, rgba(124, 77, 255, 0.25), rgba(255, 64, 129, 0.25));
+            border: 1px solid rgba(124, 77, 255, 0.4);
+            color: #e0e7ff;
+        }
+
+        .ctx-btn-ai:hover {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+            color: #fff;
+        }
+
+        /* ─── BARRA INFERIOR DE ESCENAS (MOMENTOS DE CLASE) ─── */
+        #scene-bar {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 8000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 8px 12px;
+            border-radius: 20px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .scene-pill {
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-muted);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .scene-pill:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .scene-pill.active {
+            color: #fff;
+            background: linear-gradient(135deg, var(--accent-primary), #00A843);
+            box-shadow: 0 4px 14px rgba(0, 200, 83, 0.35);
+        }
+
+        /* BOTÓN FLOTANTE INSERTAR RECURSO CONTEXTUAL */
+        #add-resource-trigger {
+            position: absolute;
+            bottom: 24px;
+            right: 24px;
+            z-index: 8000;
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--accent-blue), #1e40af);
+            border: none;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(41, 121, 255, 0.4);
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        #add-resource-trigger:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 12px 30px rgba(41, 121, 255, 0.6);
+        }
+
+        /* PALETA FLOTANTE DE RECURSOS */
+        #resource-palette {
+            position: absolute;
+            bottom: 88px;
+            right: 24px;
+            z-index: 8500;
+            width: 320px;
+            max-height: 440px;
+            overflow-y: auto;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 16px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            transition: opacity 0.25s, transform 0.25s;
+        }
+
+        #resource-palette.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(12px) scale(0.95);
+        }
+
+        .palette-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 8px;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 11px;
+            font-weight: 600;
+            color: #cbd5e1;
+            text-align: center;
+        }
+
+        .palette-item:hover {
+            background: rgba(255,255,255,0.12);
+            color: #fff;
+            transform: translateY(-2px);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .palette-item i {
+            width: 22px;
+            height: 22px;
+            color: var(--accent-blue);
+        }
+
+        /* MODO PRESENTACIÓN (UI OCULTA) */
+        body.presentation-mode #scene-bar,
+        body.presentation-mode #add-resource-trigger,
+        body.presentation-mode #resource-palette,
+        body.presentation-mode .card-header {
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        /* TOGGLE MODO PRESENTACIÓN */
+        #mode-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 8000;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 8px 16px;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        #mode-toggle:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ─── 1. PANTALLA INICIAL ─── -->
+    <div id="start-screen">
+        <div class="start-logo">
+            <div class="start-logo-icon">
+                <i data-lucide="sparkles"></i>
+            </div>
+            <div class="start-logo-text">Estudio de Clase</div>
+        </div>
+
+        <div class="start-buttons-container">
+            <button class="start-btn start-btn-primary" onclick="PizarraStudio.newClass()">
+                <i data-lucide="plus-circle"></i>
+                <span>+ Nueva Clase</span>
+            </button>
+            <button class="start-btn" onclick="PizarraStudio.openClass()">
+                <i data-lucide="folder-open"></i>
+                <span>Abrir Clase</span>
+            </button>
+            <button class="start-btn" onclick="PizarraStudio.continueClass()">
+                <i data-lucide="history"></i>
+                <span>Continuar Última Clase</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ─── 2. BOTÓN DE MODO PRESENTACIÓN ─── -->
+    <button id="mode-toggle" onclick="PizarraStudio.togglePresentationMode()">
+        <i data-lucide="tv"></i>
+        <span id="mode-text">Modo Presentación</span>
+    </button>
+
+    <!-- ─── 3. LIENZO INFINITO ─── -->
+    <div id="studio-canvas"></div>
+
+    <!-- ─── 4. MENÚ CONTEXTUAL / IA ─── -->
+    <div id="context-toolbar" class="hidden"></div>
+
+    <!-- ─── 5. BARRA DE ESCENAS (MOMENTOS DE CLASE) ─── -->
+    <div id="scene-bar">
+        <button class="scene-pill active" onclick="PizarraStudio.selectScene(0)">1. Bienvenida</button>
+        <button class="scene-pill" onclick="PizarraStudio.selectScene(1)">2. Motivación</button>
+        <button class="scene-pill" onclick="PizarraStudio.selectScene(2)">3. Explicación</button>
+        <button class="scene-pill" onclick="PizarraStudio.selectScene(3)">4. Ejemplo</button>
+        <button class="scene-pill" onclick="PizarraStudio.selectScene(4)">5. Actividad</button>
+        <button class="scene-pill" onclick="PizarraStudio.selectScene(5)">6. Evaluación</button>
+        <button class="scene-pill" onclick="PizarraStudio.selectScene(6)">7. Cierre</button>
+    </div>
+
+    <!-- ─── 6. PALETA DE RECURSOS (FLOTANTE) ─── -->
+    <button id="add-resource-trigger" onclick="PizarraStudio.toggleResourcePalette()" title="Añadir Recurso">
+        <i data-lucide="plus"></i>
+    </button>
+
+    <div id="resource-palette" class="hidden">
+        <div class="palette-item" onclick="PizarraStudio.addCard('pdf')"><i data-lucide="file-text"></i>PDF</div>
+        <div class="palette-item" onclick="PizarraStudio.addCard('image')"><i data-lucide="image"></i>Imagen</div>
+        <div class="palette-item" onclick="PizarraStudio.addCard('video')"><i data-lucide="video"></i>Video</div>
+        <div class="palette-item" onclick="PizarraStudio.addCard('audio')"><i data-lucide="music"></i>Audio</div>
+        <div class="palette-item" onclick="PizarraStudio.addCard('3d')"><i data-lucide="box"></i>Modelo 3D</div>
+        <div class="palette-item" onclick="PizarraStudio.addCard('map')"><i data-lucide="map-pin"></i>Mapa</div>
+        <div class="palette-item" onclick="PizarraStudio.addCard('text')"><i data-lucide="type"></i>Texto</div>
+        <div class="palette-item" onclick="PizarraStudio.addCard('note')"><i data-lucide="sticky-note"></i>Nota</div>
+        <div class="palette-item" onclick="PizarraStudio.addCard('ruleta')"><i data-lucide="disc"></i>Ruleta</div>
+        <div class="palette-item" onclick="PizarraStudio.addCard('timer')"><i data-lucide="timer"></i>Temporizador</div>
+        <div class="palette-item" onclick="PizarraStudio.addCard('semaforo')"><i data-lucide="traffic-light"></i>Semáforo</div>
+        <div class="palette-item" onclick="PizarraStudio.addCard('math')"><i data-lucide="binary"></i>Matemáticas</div>
+    </div>
+
+    <script src="pizarra_studio.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

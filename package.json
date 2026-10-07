@@ -1,0 +1,36 @@
+{
+    "name": "aula-360-hn",
+    "version": "1.4.8",
+    "description": "Aula 360 HN - Gestión Académica Profesional",
+    "main": "index.html",
+    "scripts": {
+        "start": "npx serve www",
+        "build": "node build_www.js",
+        "cap:init": "npx cap init \"Aula 360 HN\" com.wipin.aula360 --web-dir www",
+        "android:add": "npx cap add android",
+        "android:sync": "npm run build && npx cap sync android",
+        "android:open": "npx cap open android"
+    },
+    "keywords": [
+        "education",
+        "teacher",
+        "notebook"
+    ],
+    "author": "WIPIN",
+    "license": "ISC",
+    "dependencies": {
+        "@capacitor/android": "^6.2.1",
+        "@capacitor/camera": "^6.1.3",
+        "@capacitor/cli": "^6.2.1",
+        "@capacitor/clipboard": "^6.0.0",
+        "@capacitor/core": "^6.2.1",
+        "@capacitor/filesystem": "^6.0.4",
+        "@capacitor/share": "^6.0.4",
+        "xlsx": "^0.18.5"
+    },
+    "devDependencies": {
+        "@capacitor/assets": "^3.0.5",
+        "mammoth": "^1.11.0",
+        "pdf-parse": "^2.4.5"
+    }
+}

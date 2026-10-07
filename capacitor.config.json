@@ -1,0 +1,8 @@
+{
+    "appId": "com.wipin.aula360",
+    "appName": "Aula 360 HN",
+    "webDir": "www",
+    "server": {
+        "androidScheme": "capacitor"
+    }
+}
