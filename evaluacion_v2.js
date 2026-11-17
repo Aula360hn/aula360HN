@@ -4,39 +4,370 @@
 // =============================================================
 
 // ----------------------------------------------------------------
-//  BANCO DE ACTIVIDADES SIMPLIFICADO Y CATEGORIZADO
+//  BANCO DE ACTIVIDADES INTELIGENTE SEGÚN ESPACIO CURRICULAR (CNB HN)
 // ----------------------------------------------------------------
+const BancoCurricularInteligente = {
+    detectSubject(course) {
+        if (!course) return 'general';
+        const txt = `${course.asignatura || ''} ${course.materia || ''} ${course.nombre || ''}`.toLowerCase();
+        if (/ingl[eé]s|english|idioma|foreign|lengua extranjera/i.test(txt)) return 'ingles';
+        if (/matem[aá]t|geometr|algebra|álgebra|aritmet|c[aá]lculo/i.test(txt)) return 'matematicas';
+        if (/espa[nñ]ol|lectura|redacci|literatura|lenguaje|comunicaci/i.test(txt)) return 'espanol';
+        if (/educaci[oó]n\s+f[ií]sica|deport|recreac|atletis/i.test(txt)) return 'educacion_fisica';
+        if (/naturales|ciencias nat|f[ií]sica|qu[ií]mica|biolog|ambiente|ecolog/i.test(txt)) return 'ciencias_naturales';
+        if (/sociales|historia|geograf|c[ií]vica|ciudadan|sociolog|filosof/i.test(txt)) return 'ciencias_sociales';
+        if (/tecnolog|computac|inform[aá]t|rob[oó]tic|ofim[aá]t|programac/i.test(txt)) return 'tecnologia';
+        if (/art[ií]stic|m[uú]sica|pl[aá]stic|teatro|danza|dibujo/i.test(txt)) return 'artistica';
+        if (/valor|actitud|orientac|convivenc|religi/i.test(txt)) return 'valores';
+        return 'general';
+    },
+
+    getSubjectConfig(course) {
+        const key = this.detectSubject(course);
+        const configs = {
+            ingles: {
+                label: 'Inglés / Lengua Extranjera',
+                badge: 'Inglés',
+                icon: 'languages',
+                tipos: [
+                    'Speaking & Pronunciation',
+                    'Listening Comprehension',
+                    'Reading & Vocabulary',
+                    'Writing & Grammar',
+                    'Roleplay & Dialogue',
+                    'Project & Presentation',
+                    'Language Workshop / Games',
+                    'Quiz / Evaluation',
+                    'General'
+                ],
+                sugerencias: [
+                    { id: 'en_sp1', tipo: 'Speaking & Pronunciation', nombre: 'Oral Presentation / Short Speech', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'en_sp2', tipo: 'Speaking & Pronunciation', nombre: 'Pronunciation Drill & Reading Aloud', dimension: 'aula', puntajeMax: 5, tipoEval: 'directa' },
+                    { id: 'en_sp3', tipo: 'Speaking & Pronunciation', nombre: 'Picture Description & Vocabulary Drill', dimension: 'aula', puntajeMax: 5, tipoEval: 'directa' },
+                    
+                    { id: 'en_li1', tipo: 'Listening Comprehension', nombre: 'Listening Worksheet & Fill-in-the-Blanks', dimension: 'aula', puntajeMax: 10, tipoEval: 'directa' },
+                    { id: 'en_li2', tipo: 'Listening Comprehension', nombre: 'Audio Story / Podcast Comprehension', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'en_li3', tipo: 'Listening Comprehension', nombre: 'Song Lyrics & Grammar Analysis', dimension: 'extraAula', puntajeMax: 5, tipoEval: 'directa' },
+                    
+                    { id: 'en_re1', tipo: 'Reading & Vocabulary', nombre: 'Reading Comprehension & Questions', dimension: 'aula', puntajeMax: 10, tipoEval: 'directa' },
+                    { id: 'en_re2', tipo: 'Reading & Vocabulary', nombre: 'Vocabulary Flashcards & Definitions', dimension: 'extraAula', puntajeMax: 5, tipoEval: 'directa' },
+                    { id: 'en_re3', tipo: 'Reading & Vocabulary', nombre: 'Short Story Summary & Glossary', dimension: 'extraAula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    
+                    { id: 'en_wr1', tipo: 'Writing & Grammar', nombre: 'Descriptive Paragraph / Essay Writing', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'en_wr2', tipo: 'Writing & Grammar', nombre: 'Guided Dialogue Script Writing', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'en_wr3', tipo: 'Writing & Grammar', nombre: 'Grammar Exercises & Sentence Building', dimension: 'extraAula', puntajeMax: 10, tipoEval: 'directa' },
+                    { id: 'en_wr4', tipo: 'Writing & Grammar', nombre: 'Creative Writing Journal (Diario en Inglés)', dimension: 'extraAula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    
+                    { id: 'en_ro1', tipo: 'Roleplay & Dialogue', nombre: 'Pair Dialogue & Roleplay in Context', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'en_ro2', tipo: 'Roleplay & Dialogue', nombre: 'Interactive Interview & Simulation', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    
+                    { id: 'en_pr1', tipo: 'Project & Presentation', nombre: 'Visual English Poster & Exhibition', dimension: 'expresiones', puntajeMax: 5, tipoEval: 'rubrica' },
+                    { id: 'en_pr2', tipo: 'Project & Presentation', nombre: 'Cuaderno de Práctica - Inglés', dimension: 'extraAula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'en_pr3', tipo: 'Project & Presentation', nombre: 'Thematic Portfolio & Scrapbook', dimension: 'extraAula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'en_pr4', tipo: 'Project & Presentation', nombre: 'Illustrated Picture Dictionary', dimension: 'extraAula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    
+                    { id: 'en_ws1', tipo: 'Language Workshop / Games', nombre: 'Spelling Bee Contest & Review', dimension: 'aula', puntajeMax: 5, tipoEval: 'directa' },
+                    { id: 'en_ws2', tipo: 'Language Workshop / Games', nombre: 'Board Games & Vocabulary Trivia', dimension: 'aula', puntajeMax: 5, tipoEval: 'directa' },
+                    
+                    { id: 'en_qz1', tipo: 'Quiz / Evaluation', nombre: 'Grammar & Vocabulary Progress Quiz', dimension: 'examenes', puntajeMax: 20, tipoEval: 'directa' },
+                    { id: 'en_qz2', tipo: 'Quiz / Evaluation', nombre: 'English Term Exam', dimension: 'examenes', puntajeMax: 50, tipoEval: 'directa' },
+                    
+                    { id: 'en_gn1', tipo: 'General', nombre: 'Actividad General de Inglés', dimension: 'aula', puntajeMax: 10, tipoEval: 'directa' }
+                ]
+            },
+            matematicas: {
+                label: 'Matemáticas',
+                badge: 'Matemáticas',
+                icon: 'calculator',
+                tipos: [
+                    'Resolución de Problemas',
+                    'Ejercicios y Práctica',
+                    'Razonamiento Lógico',
+                    'Modelación y Gráficas',
+                    'Geometría y Construcciones',
+                    'Proyecto y Taller',
+                    'Prueba / Evaluación',
+                    'General'
+                ],
+                sugerencias: [
+                    { id: 'mat_rp1', tipo: 'Resolución de Problemas', nombre: 'Guía de problemas de aplicación contextual', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'mat_rp2', tipo: 'Resolución de Problemas', nombre: 'Resolución de problemas en equipo colaborativo', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    
+                    { id: 'mat_ej1', tipo: 'Ejercicios y Práctica', nombre: 'Taller de ejercicios y algoritmos', dimension: 'aula', puntajeMax: 10, tipoEval: 'directa' },
+                    { id: 'mat_ej2', tipo: 'Ejercicios y Práctica', nombre: 'Cuaderno de Práctica - Matemáticas', dimension: 'extraAula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'mat_ej3', tipo: 'Ejercicios y Práctica', nombre: 'Guía de trabajo extra-clase', dimension: 'extraAula', puntajeMax: 10, tipoEval: 'directa' },
+                    
+                    { id: 'mat_rl1', tipo: 'Razonamiento Lógico', nombre: 'Desafío de cálculo mental y rapidez', dimension: 'aula', puntajeMax: 5, tipoEval: 'directa' },
+                    { id: 'mat_rl2', tipo: 'Razonamiento Lógico', nombre: 'Acertijos y demostraciones lógicas', dimension: 'aula', puntajeMax: 5, tipoEval: 'directa' },
+                    
+                    { id: 'mat_mg1', tipo: 'Modelación y Gráficas', nombre: 'Análisis de datos estadísticos y gráficas', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'mat_mg2', tipo: 'Modelación y Gráficas', nombre: 'Tablas de frecuencias e histogramas', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    
+                    { id: 'mat_gm1', tipo: 'Geometría y Construcciones', nombre: 'Trazos geométricos con regla y compás', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'mat_gm2', tipo: 'Geometría y Construcciones', nombre: 'Cálculo de áreas, perímetros y volúmenes', dimension: 'aula', puntajeMax: 10, tipoEval: 'directa' },
+                    { id: 'mat_gm3', tipo: 'Geometría y Construcciones', nombre: 'Maqueta de cuerpos geométricos', dimension: 'expresiones', puntajeMax: 5, tipoEval: 'rubrica' },
+                    
+                    { id: 'mat_py1', tipo: 'Proyecto y Taller', nombre: 'Proyecto de presupuesto financiero / cotizaciones', dimension: 'extraAula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'mat_py2', tipo: 'Proyecto y Taller', nombre: 'Portafolio de ejercicios matemáticos', dimension: 'extraAula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    
+                    { id: 'mat_ev1', tipo: 'Prueba / Evaluación', nombre: 'Prueba formativa de matemáticas', dimension: 'examenes', puntajeMax: 20, tipoEval: 'directa' },
+                    { id: 'mat_ev2', tipo: 'Prueba / Evaluación', nombre: 'Examen de parcial escrito', dimension: 'examenes', puntajeMax: 50, tipoEval: 'directa' },
+                    
+                    { id: 'mat_gn1', tipo: 'General', nombre: 'Actividad General de Matemáticas', dimension: 'aula', puntajeMax: 10, tipoEval: 'directa' }
+                ]
+            },
+            espanol: {
+                label: 'Español / Lengua y Literatura',
+                badge: 'Español',
+                icon: 'book-open',
+                tipos: [
+                    'Comprensión Lectora',
+                    'Producción Textual y Redacción',
+                    'Expresión Oral y Declamación',
+                    'Ortografía y Gramática',
+                    'Dramatización y Debate',
+                    'Proyecto y Portafolio Literario',
+                    'Prueba / Evaluación',
+                    'General'
+                ],
+                sugerencias: [
+                    { id: 'esp_cl1', tipo: 'Comprensión Lectora', nombre: 'Diario de lectura guiado', dimension: 'extraAula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'esp_cl2', tipo: 'Comprensión Lectora', nombre: 'Análisis de texto narrativo / lírico', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'esp_cl3', tipo: 'Comprensión Lectora', nombre: 'Ficha de lectura y comentario crítico', dimension: 'aula', puntajeMax: 5, tipoEval: 'rubrica' },
+                    
+                    { id: 'esp_pt1', tipo: 'Producción Textual y Redacción', nombre: 'Redacción de texto narrativo (Cuento / Fábula)', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'esp_pt2', tipo: 'Producción Textual y Redacción', nombre: 'Ensayo argumentativo sobre tema actual', dimension: 'aula', puntajeMax: 15, tipoEval: 'rubrica' },
+                    { id: 'esp_pt3', tipo: 'Producción Textual y Redacción', nombre: 'Informe de investigación documental', dimension: 'extraAula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    
+                    { id: 'esp_eo1', tipo: 'Expresión Oral y Declamación', nombre: 'Exposición oral individual o grupal', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'esp_eo2', tipo: 'Expresión Oral y Declamación', nombre: 'Declamación poética / Discurso', dimension: 'expresiones', puntajeMax: 5, tipoEval: 'rubrica' },
+                    
+                    { id: 'esp_og1', tipo: 'Ortografía y Gramática', nombre: 'Taller de ortografía, acentuación y puntuación', dimension: 'aula', puntajeMax: 10, tipoEval: 'directa' },
+                    { id: 'esp_og2', tipo: 'Ortografía y Gramática', nombre: 'Análisis sintáctico y categorías gramaticales', dimension: 'aula', puntajeMax: 10, tipoEval: 'directa' },
+                    
+                    { id: 'esp_dd1', tipo: 'Dramatización y Debate', nombre: 'Debate estructurado en aula', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'esp_dd2', tipo: 'Dramatización y Debate', nombre: 'Representación teatral / Sociodrama', dimension: 'expresiones', puntajeMax: 5, tipoEval: 'rubrica' },
+                    
+                    { id: 'esp_py1', tipo: 'Proyecto y Portafolio Literario', nombre: 'Proyecto Integrador de Español', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'esp_py2', tipo: 'Proyecto y Portafolio Literario', nombre: 'Antología de textos y portafolio de evidencias', dimension: 'extraAula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'esp_py3', tipo: 'Proyecto y Portafolio Literario', nombre: 'Mural literario / Periódico escolar', dimension: 'expresiones', puntajeMax: 5, tipoEval: 'rubrica' },
+                    
+                    { id: 'esp_ev1', tipo: 'Prueba / Evaluación', nombre: 'Prueba Formativa Mensual', dimension: 'examenes', puntajeMax: 20, tipoEval: 'pruebas_formativas_acumulativo' },
+                    { id: 'esp_ev2', tipo: 'Prueba / Evaluación', nombre: 'Examen de Parcial de Español', dimension: 'examenes', puntajeMax: 50, tipoEval: 'directa' },
+                    
+                    { id: 'esp_gn1', tipo: 'General', nombre: 'Actividad General de Español', dimension: 'aula', puntajeMax: 10, tipoEval: 'directa' }
+                ]
+            },
+            ciencias_naturales: {
+                label: 'Ciencias Naturales / Biología / Química / Física',
+                badge: 'Ciencias Naturales',
+                icon: 'flask-conical',
+                tipos: [
+                    'Laboratorio y Experimentación',
+                    'Informe Científico y Método',
+                    'Modelos, Maquetas y Esquemas',
+                    'Investigación y Campo',
+                    'Proyecto Ecológico / Huerto',
+                    'Prueba / Evaluación',
+                    'General'
+                ],
+                sugerencias: [
+                    { id: 'cn_lb1', tipo: 'Laboratorio y Experimentación', nombre: 'Práctica experimental de laboratorio', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'cn_lb2', tipo: 'Laboratorio y Experimentación', nombre: 'Experimento casero con materiales reciclados', dimension: 'extraAula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    
+                    { id: 'cn_ic1', tipo: 'Informe Científico y Método', nombre: 'Informe de práctica de laboratorio con método científico', dimension: 'extraAula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'cn_ic2', tipo: 'Informe Científico y Método', nombre: 'Registro de observaciones y bitácora científica', dimension: 'aula', puntajeMax: 5, tipoEval: 'rubrica' },
+                    
+                    { id: 'cn_mm1', tipo: 'Modelos, Maquetas y Esquemas', nombre: 'Maqueta de estructura celular / anatómica', dimension: 'expresiones', puntajeMax: 5, tipoEval: 'rubrica' },
+                    { id: 'cn_mm2', tipo: 'Modelos, Maquetas y Esquemas', nombre: 'Esquema ilustrado de ciclos biogeoquímicos', dimension: 'aula', puntajeMax: 5, tipoEval: 'directa' },
+                    
+                    { id: 'cn_in1', tipo: 'Investigación y Campo', nombre: 'Álbum botánico / Herbario escolar', dimension: 'extraAula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'cn_in2', tipo: 'Investigación y Campo', nombre: 'Investigación sobre conservación ambiental y recursos', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    
+                    { id: 'cn_py1', tipo: 'Proyecto Ecológico / Huerto', nombre: 'Huerto Escolar y Cuidado de Plantas', dimension: 'expresiones', puntajeMax: 5, tipoEval: 'rubrica' },
+                    { id: 'cn_py2', tipo: 'Proyecto Ecológico / Huerto', nombre: 'Campaña escolar de reciclaje y sustentabilidad', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    
+                    { id: 'cn_ev1', tipo: 'Prueba / Evaluación', nombre: 'Prueba formativa de ciencias', dimension: 'examenes', puntajeMax: 20, tipoEval: 'directa' },
+                    { id: 'cn_ev2', tipo: 'Prueba / Evaluación', nombre: 'Examen de parcial de ciencias', dimension: 'examenes', puntajeMax: 50, tipoEval: 'directa' },
+                    
+                    { id: 'cn_gn1', tipo: 'General', nombre: 'Actividad General de Ciencias', dimension: 'aula', puntajeMax: 10, tipoEval: 'directa' }
+                ]
+            },
+            ciencias_sociales: {
+                label: 'Ciencias Sociales / Historia / Geografía / Cívica',
+                badge: 'Ciencias Sociales',
+                icon: 'globe',
+                tipos: [
+                    'Cartografía y Mapas',
+                    'Análisis Histórico y Fuentes',
+                    'Debate y Foro Ciudadano',
+                    'Líneas de Tiempo e Infografías',
+                    'Proyecto Cívico y Comunitario',
+                    'Investigación e Informe Social',
+                    'Prueba / Evaluación',
+                    'General'
+                ],
+                sugerencias: [
+                    { id: 'cs_mp1', tipo: 'Cartografía y Mapas', nombre: 'Elaboración y rotulación de mapa geográfico / temático', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'cs_mp2', tipo: 'Cartografía y Mapas', nombre: 'Álbum cartográfico de Honduras y el mundo', dimension: 'extraAula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    
+                    { id: 'cs_ah1', tipo: 'Análisis Histórico y Fuentes', nombre: 'Análisis de texto histórico y fuentes primarias', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'cs_ah2', tipo: 'Análisis Histórico y Fuentes', nombre: 'Álbum ilustrado de próceres y símbolos patrios', dimension: 'extraAula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    
+                    { id: 'cs_db1', tipo: 'Debate y Foro Ciudadano', nombre: 'Debate de derechos humanos y ciudadanía', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'cs_db2', tipo: 'Debate y Foro Ciudadano', nombre: 'Mesa redonda sobre problemáticas comunitarias', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    
+                    { id: 'cs_lt1', tipo: 'Líneas de Tiempo e Infografías', nombre: 'Línea de tiempo ilustrada de periodos históricos', dimension: 'expresiones', puntajeMax: 5, tipoEval: 'rubrica' },
+                    { id: 'cs_lt2', tipo: 'Líneas de Tiempo e Infografías', nombre: 'Infografía sobre culturas prehispánicas de Honduras', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    
+                    { id: 'cs_py1', tipo: 'Proyecto Cívico y Comunitario', nombre: 'Mural histórico y cívico', dimension: 'expresiones', puntajeMax: 5, tipoEval: 'rubrica' },
+                    { id: 'cs_py2', tipo: 'Proyecto Cívico y Comunitario', nombre: 'Investigación de historia y patrimonio local', dimension: 'extraAula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    
+                    { id: 'cs_ev1', tipo: 'Prueba / Evaluación', nombre: 'Prueba formativa de ciencias sociales', dimension: 'examenes', puntajeMax: 20, tipoEval: 'directa' },
+                    { id: 'cs_ev2', tipo: 'Prueba / Evaluación', nombre: 'Examen de parcial de ciencias sociales', dimension: 'examenes', puntajeMax: 50, tipoEval: 'directa' },
+                    
+                    { id: 'cs_gn1', tipo: 'General', nombre: 'Actividad General de Ciencias Sociales', dimension: 'aula', puntajeMax: 10, tipoEval: 'directa' }
+                ]
+            },
+            tecnologia: {
+                label: 'Tecnología / Informática / Computación',
+                badge: 'Tecnología',
+                icon: 'cpu',
+                tipos: [
+                    'Práctica en Computadora / Software',
+                    'Ofimática y Documentos Digitales',
+                    'Proyectos Tecnológicos y Diseño',
+                    'Algoritmos y Lógica de Programación',
+                    'Portafolio Digital',
+                    'Prueba / Evaluación',
+                    'General'
+                ],
+                sugerencias: [
+                    { id: 'tec_pc1', tipo: 'Práctica en Computadora / Software', nombre: 'Práctica guiada en procesador de textos / hojas de cálculo', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'tec_pc2', tipo: 'Práctica en Computadora / Software', nombre: 'Creación de presentación multimedia interactiva', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    
+                    { id: 'tec_of1', tipo: 'Ofimática y Documentos Digitales', nombre: 'Elaboración de documento formal formateado', dimension: 'extraAula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'tec_of2', tipo: 'Ofimática y Documentos Digitales', nombre: 'Tabla de datos con fórmulas y gráficos', dimension: 'aula', puntajeMax: 10, tipoEval: 'directa' },
+                    
+                    { id: 'tec_ds1', tipo: 'Proyectos Tecnológicos y Diseño', nombre: 'Construcción de prototipo tecnológico con material reciclado', dimension: 'expresiones', puntajeMax: 5, tipoEval: 'rubrica' },
+                    { id: 'tec_ds2', tipo: 'Proyectos Tecnológicos y Diseño', nombre: 'Diseño de diagrama de procesos e infografía digital', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    
+                    { id: 'tec_al1', tipo: 'Algoritmos y Lógica de Programación', nombre: 'Diagramas de flujo y pseudocódigo paso a paso', dimension: 'aula', puntajeMax: 10, tipoEval: 'directa' },
+                    { id: 'tec_al2', tipo: 'Algoritmos y Lógica de Programación', nombre: 'Práctica de programación en bloques / lógica computacional', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    
+                    { id: 'tec_pd1', tipo: 'Portafolio Digital', nombre: 'Portafolio digital de evidencias tecnológicas', dimension: 'extraAula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    
+                    { id: 'tec_ev1', tipo: 'Prueba / Evaluación', nombre: 'Prueba teórico-práctica de tecnología', dimension: 'examenes', puntajeMax: 20, tipoEval: 'directa' },
+                    { id: 'tec_ev2', tipo: 'Prueba / Evaluación', nombre: 'Examen de parcial de tecnología', dimension: 'examenes', puntajeMax: 50, tipoEval: 'directa' },
+                    
+                    { id: 'tec_gn1', tipo: 'General', nombre: 'Actividad General de Tecnología', dimension: 'aula', puntajeMax: 10, tipoEval: 'directa' }
+                ]
+            },
+            artistica: {
+                label: 'Educación Artística / Música / Plástica',
+                badge: 'Artística',
+                icon: 'palette',
+                tipos: [
+                    'Expresión Plástica y Dibujo',
+                    'Apreciación y Ejecución Musical',
+                    'Expresión Corporal y Teatro',
+                    'Manualidades y Modelado',
+                    'Galería y Portafolio Artístico',
+                    'General'
+                ],
+                sugerencias: [
+                    { id: 'art_pl1', tipo: 'Expresión Plástica y Dibujo', nombre: 'Composición pictórica con técnica de témperas/acuarelas', dimension: 'expresiones', puntajeMax: 5, tipoEval: 'rubrica' },
+                    { id: 'art_pl2', tipo: 'Expresión Plástica y Dibujo', nombre: 'Dibujo con cuadrícula y perspectiva', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    
+                    { id: 'art_mu1', tipo: 'Apreciación y Ejecución Musical', nombre: 'Ejecución rítmica con flauta / percusión', dimension: 'expresiones', puntajeMax: 5, tipoEval: 'rubrica' },
+                    { id: 'art_mu2', tipo: 'Apreciación y Ejecución Musical', nombre: 'Canto coral e himno nacional', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    
+                    { id: 'art_te1', tipo: 'Expresión Corporal y Teatro', nombre: 'Dramatización y expresión corporal en grupo', dimension: 'expresiones', puntajeMax: 5, tipoEval: 'rubrica' },
+                    
+                    { id: 'art_mn1', tipo: 'Manualidades y Modelado', nombre: 'Modelado en plastilina / arcilla / papel maché', dimension: 'expresiones', puntajeMax: 5, tipoEval: 'rubrica' },
+                    { id: 'art_mn2', tipo: 'Manualidades y Modelado', nombre: 'Collage creativo con texturas naturales', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    
+                    { id: 'art_gl1', tipo: 'Galería y Portafolio Artístico', nombre: 'Portafolio / Álbum de obras artísticas', dimension: 'extraAula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'art_gn1', tipo: 'General', nombre: 'Actividad General de Artística', dimension: 'aula', puntajeMax: 10, tipoEval: 'directa' }
+                ]
+            },
+            educacion_fisica: {
+                label: 'Educación Física / Deportes',
+                badge: 'Ed. Física',
+                icon: 'activity',
+                tipos: [
+                    'Acondicionamiento Físico',
+                    'Fundamentos Técnicos Deportivos',
+                    'Juegos Motores y Cooperativos',
+                    'Salud, Higiene y Nutrición',
+                    'Test y Circuitos de Habilidades',
+                    'General'
+                ],
+                sugerencias: [
+                    { id: 'ef_ac1', tipo: 'Acondicionamiento Físico', nombre: 'Circuito de resistencia y flexibilidad', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'ef_ft1', tipo: 'Fundamentos Técnicos Deportivos', nombre: 'Práctica de fundamentos de fútbol / básquetbol / vóleibol', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'ef_jm1', tipo: 'Juegos Motores y Cooperativos', nombre: 'Dinámicas grupales de trabajo en equipo y juego limpio', dimension: 'actitudes', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'ef_sh1', tipo: 'Salud, Higiene y Nutrición', nombre: 'Ficha de registro de hábitos de vida saludable', dimension: 'extraAula', puntajeMax: 10, tipoEval: 'directa' },
+                    { id: 'ef_ts1', tipo: 'Test y Circuitos de Habilidades', nombre: 'Test de valoración motriz y aptitud física', dimension: 'examenes', puntajeMax: 20, tipoEval: 'directa' },
+                    { id: 'ef_gn1', tipo: 'General', nombre: 'Actividad General de Ed. Física', dimension: 'aula', puntajeMax: 10, tipoEval: 'directa' }
+                ]
+            },
+            valores: {
+                label: 'Valores / Orientación y Convivencia',
+                badge: 'Valores',
+                icon: 'heart-handshake',
+                tipos: [
+                    'Cuaderno de Valores y Reflexión',
+                    'Acción Solidaria y Convivencia',
+                    'Dilemas Morales y Diálogo',
+                    'Autoevaluación de Hábitos y Puntualidad',
+                    'General'
+                ],
+                sugerencias: [
+                    { id: 'val_cv1', tipo: 'Cuaderno de Valores y Reflexión', nombre: 'Cuaderno de Valores mensual', dimension: 'actitudes', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'val_as1', tipo: 'Acción Solidaria y Convivencia', nombre: 'Campaña comunitaria / Escolar de respeto y empatía', dimension: 'actitudes', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'val_dm1', tipo: 'Dilemas Morales y Diálogo', nombre: 'Análisis y debate de dilemas éticos cotidianos', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'val_ae1', tipo: 'Autoevaluación de Hábitos y Puntualidad', nombre: 'Ficha de seguimiento de hábitos, puntualidad y disciplina', dimension: 'actitudes', puntajeMax: 10, tipoEval: 'directa' },
+                    { id: 'val_gn1', tipo: 'General', nombre: 'Actividad General de Valores', dimension: 'actitudes', puntajeMax: 10, tipoEval: 'directa' }
+                ]
+            },
+            general: {
+                label: 'General / Tronco Común',
+                badge: 'General',
+                icon: 'layers',
+                tipos: [
+                    'Comprensión',
+                    'Producción',
+                    'Aplicación',
+                    'Proyecto',
+                    'Experimental',
+                    'Interacción',
+                    'Investigación',
+                    'Prueba / Evaluación',
+                    'General'
+                ],
+                sugerencias: [
+                    { id: 'gen_cp1', tipo: 'Comprensión', nombre: 'Análisis e interpretación de texto / documento', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'gen_pd1', tipo: 'Producción', nombre: 'Redacción de síntesis o informe', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'gen_ap1', tipo: 'Aplicación', nombre: 'Guía práctica de ejercicios', dimension: 'aula', puntajeMax: 10, tipoEval: 'directa' },
+                    { id: 'gen_py1', tipo: 'Proyecto', nombre: 'Proyecto formativo integrador', dimension: 'aula', puntajeMax: 15, tipoEval: 'rubrica' },
+                    { id: 'gen_in1', tipo: 'Interacción', nombre: 'Exposición y sustentación oral', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
+                    { id: 'gen_ex1', tipo: 'Prueba / Evaluación', nombre: 'Evaluación formativa', dimension: 'examenes', puntajeMax: 20, tipoEval: 'directa' },
+                    { id: 'gen_ex2', tipo: 'Prueba / Evaluación', nombre: 'Examen de parcial', dimension: 'examenes', puntajeMax: 50, tipoEval: 'directa' },
+                    { id: 'gen_gn1', tipo: 'General', nombre: 'Actividad General', dimension: 'aula', puntajeMax: 10, tipoEval: 'directa' }
+                ]
+            }
+        };
+
+        return configs[key] || configs.general;
+    }
+};
+
 const TiposActividad = ['Comprensión', 'Producción', 'Aplicación', 'Proyecto', 'Experimental', 'Interacción', 'General'];
 
-const BancoActividadesInteligente = [
-    { id: 'ca1', tipo: 'Proyecto', nombre: 'Diario de lectura', dimension: 'extraAula', puntajeMax: 15, tipoEval: 'rubrica' },
-    { id: 'ca2', tipo: 'Comprensión', nombre: 'Prueba de comprensión lectora', dimension: 'examenes', puntajeMax: 20, tipoEval: 'directa' },
-    { id: 'ca3', tipo: 'Comprensión', nombre: 'Análisis de documento', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
-    
-    { id: 'pa1', tipo: 'Producción', nombre: 'Redacción de texto', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
-    { id: 'pa2', tipo: 'Producción', nombre: 'Ensayo argumentativo', dimension: 'aula', puntajeMax: 20, tipoEval: 'rubrica' },
-    { id: 'pa3', tipo: 'Producción', nombre: 'Mural histórico', dimension: 'expresiones', puntajeMax: 5, tipoEval: 'rubrica' },
-
-    { id: 'ap1', tipo: 'Aplicación', nombre: 'Resolución de problemas', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
-    { id: 'ap2', tipo: 'Aplicación', nombre: 'Cuaderno de práctica', dimension: 'extraAula', puntajeMax: 10, tipoEval: 'rubrica' },
-    { id: 'ap3', tipo: 'Aplicación', nombre: 'Construcciones geométricas', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
-
-    { id: 'py1', tipo: 'Proyecto', nombre: 'Proyecto integrador', dimension: 'aula', puntajeMax: 20, tipoEval: 'rubrica' },
-    { id: 'py2', tipo: 'Proyecto', nombre: 'Huerto escolar', dimension: 'expresiones', puntajeMax: 5, tipoEval: 'rubrica' },
-    { id: 'py3', tipo: 'Proyecto', nombre: 'Portafolio de evidencias', dimension: 'extraAula', puntajeMax: 10, tipoEval: 'rubrica' },
-    { id: 'py4', tipo: 'Proyecto', nombre: 'Cuaderno de Valores', dimension: 'actitudes', puntajeMax: 10, tipoEval: 'rubrica' },
-    { id: 'py5', tipo: 'Proyecto', nombre: 'Cuaderno de Práctica', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
-
-    { id: 'ex1', tipo: 'Experimental', nombre: 'Práctica de laboratorio', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
-    { id: 'ex2', tipo: 'Experimental', nombre: 'Informe de laboratorio', dimension: 'extraAula', puntajeMax: 10, tipoEval: 'rubrica' },
-
-    { id: 'in1', tipo: 'Interacción', nombre: 'Exposición oral', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
-    { id: 'in2', tipo: 'Interacción', nombre: 'Debate estructurado', dimension: 'aula', puntajeMax: 10, tipoEval: 'rubrica' },
-    { id: 'in3', tipo: 'Interacción', nombre: 'Participación activa en clase', dimension: 'actitudes', puntajeMax: 5, tipoEval: 'rubrica' },
-];
+const BancoActividadesInteligente = BancoCurricularInteligente.getSubjectConfig(null).sugerencias;
 
 window.EvalSmartSettings = {
-    // Almacena el ID de la actividad sugerida seleccionada
     currentSuggestionId: '',
     selectedTipoActividad: ''
 };
@@ -132,50 +463,184 @@ window.NivelesRubrica = [
     { id: 'lvl_excelente', nombre: 'Excelente' }
 ];
 
-window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
-    const tpl = window.BancoRubricasProyectos.find(t => t.id === templateId);
-    if (!tpl) return null;
-    
-    let criteriosTpl = JSON.parse(JSON.stringify(tpl.criteria));
-    if (criteriosTpl.length === 0) {
-        criteriosTpl = [{ name: 'Criterio 1', maxPoints: totalMaxPts }];
+window._buildCriteriosRubrica = function(items, totalMaxPts) {
+    const safeTotal = Math.max(0.5, parseFloat(totalMaxPts) || 10);
+    let list = Array.isArray(items) && items.length > 0
+        ? items
+        : [{ name: 'Criterio 1', weight: 1, desc: {} }];
+
+    const sumW = list.reduce((acc, c) => acc + (parseFloat(c.weight ?? c.maxPoints) || 0), 0) || 1;
+    const factor = safeTotal / sumW;
+
+    const pesos = list.map(c => Math.round(((parseFloat(c.weight ?? c.maxPoints) || 0) * factor) * 10) / 10);
+    const sumPesos = Math.round(pesos.reduce((a, b) => a + b, 0) * 10) / 10;
+    const diff = Math.round((safeTotal - sumPesos) * 10) / 10;
+    if (diff !== 0 && pesos.length > 0) {
+        pesos[0] = Math.max(0.1, Math.round((pesos[0] + diff) * 10) / 10);
     }
 
-    let sumTpl = criteriosTpl.reduce((acc, c) => acc + c.maxPoints, 0) || 1;
-    let factor = totalMaxPts / sumTpl;
+    const now = Date.now();
+    return list.map((c, i) => {
+        const pts = pesos[i];
+        const p3 = pts;
+        const p2 = Math.round((pts * 0.75) * 10) / 10;
+        const p1 = Math.round((pts * 0.5) * 10) / 10;
+        const desc = c.desc || {};
+        const d0 = desc.inicial || 'No evidencia el criterio o requiere apoyo completo';
+        const d1 = desc.basico || 'Cumple parcialmente con errores notorios';
+        const d2 = desc.avanzado || 'Cumple satisfactoriamente con detalles menores';
+        const d3 = desc.excelente || 'Cumple con excelencia y dominio completo';
 
-    const criterios = criteriosTpl.map((c, i) => {
-        let pts = Math.round((c.maxPoints * factor) * 10) / 10;
-        let p3 = pts;
-        let p2 = Math.round((pts * 0.75) * 10) / 10;
-        let p1 = Math.round((pts * 0.5) * 10) / 10;
-        let p0 = 0;
-        
         return {
-            id: 'crit_' + i + '_' + Date.now(),
-            nombre: c.name,
+            id: 'crit_' + i + '_' + now,
+            nombre: c.name || c.nombre || ('Criterio ' + (i + 1)),
             peso: pts,
             niveles: [
-                { id: 'lvl_inicial', nombre: 'Inicial', valor: p0, descriptor: 'Nivel Inicial' },
-                { id: 'lvl_basico', nombre: 'Básico', valor: p1, descriptor: 'Nivel Básico' },
-                { id: 'lvl_avanzado', nombre: 'Avanzado', valor: p2, descriptor: 'Nivel Avanzado' },
-                { id: 'lvl_excelente', nombre: 'Excelente', valor: p3, descriptor: 'Nivel Excelente' }
+                { id: 'lvl_inicial', nombre: 'Inicial', valor: 0, descriptor: d0 },
+                { id: 'lvl_basico', nombre: 'Básico', valor: p1, descriptor: d1 },
+                { id: 'lvl_avanzado', nombre: 'Avanzado', valor: p2, descriptor: d2 },
+                { id: 'lvl_excelente', nombre: 'Excelente', valor: p3, descriptor: d3 }
             ],
             descripciones: {
-                'lvl_inicial': 'Nivel Inicial',
-                'lvl_basico': 'Nivel Básico',
-                'lvl_avanzado': 'Nivel Avanzado',
-                'lvl_excelente': 'Nivel Excelente'
+                'lvl_inicial': d0,
+                'lvl_basico': d1,
+                'lvl_avanzado': d2,
+                'lvl_excelente': d3
             }
         };
     });
+};
+
+window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
+    const tpl = window.BancoRubricasProyectos.find(t => t.id === templateId);
+    if (!tpl) return null;
 
     return {
         id: 'usr_rub_' + Date.now(),
         nombre: tpl.name,
         tipoRubrica: 'analitica',
         puntajeTotal: totalMaxPts,
-        criterios: criterios,
+        criterios: window._buildCriteriosRubrica(tpl.criteria, totalMaxPts),
+        niveles: window.NivelesRubrica.map(n => ({ id: n.id, nombre: n.nombre, puntos: 0 }))
+    };
+};
+
+window.generarRubricaAsistida = function(course, tipoActividad, nombreActividad, totalMaxPts) {
+    const subjKey = (typeof BancoCurricularInteligente !== 'undefined')
+        ? BancoCurricularInteligente.detectSubject(course)
+        : 'general';
+    const texto = `${tipoActividad || ''} ${nombreActividad || ''}`.toLowerCase();
+
+    let modalidad = 'general';
+    if (/speaking|oral|exposi|debate|roleplay|dialogue|presenta|poster|exhibi|discurso|dramat/i.test(texto)) {
+        modalidad = 'oral';
+    } else if (/writing|escrit|ensayo|redac|diario|lectura|reading|resumen|cuento|comprens/i.test(texto)) {
+        modalidad = 'escrita';
+    } else if (/laborat|experim|huerto|pr[aá]ctica|taller|circuito|maqueta|producto|dibujo|obra/i.test(texto)) {
+        modalidad = 'practica';
+    } else if (/ejercic|problema|gu[ií]a|c[aá]lculo|ecuaci|resoluci|worksheet/i.test(texto)) {
+        modalidad = 'problemas';
+    } else if (/portafolio|cuaderno|carpeta|[aá]lbum/i.test(texto)) {
+        modalidad = 'portafolio';
+    }
+
+    const matrices = {
+        lenguas_oral: [
+            { name: 'Uso del idioma y vocabulario pertinente', weight: 35 },
+            { name: 'Contenido y claridad del mensaje', weight: 30 },
+            { name: 'Pronunciación, tono y fluidez oral', weight: 25 },
+            { name: 'Apoyo visual y presentación', weight: 10 }
+        ],
+        lenguas_escrita: [
+            { name: 'Comprensión y desarrollo de ideas', weight: 35 },
+            { name: 'Coherencia y estructura textual', weight: 30 },
+            { name: 'Ortografía, gramática y vocabulario', weight: 25 },
+            { name: 'Presentación y puntualidad', weight: 10 }
+        ],
+        lenguas_portafolio: [
+            { name: 'Evidencias y actividades completas', weight: 45 },
+            { name: 'Corrección y dominio del contenido', weight: 30 },
+            { name: 'Orden y organización', weight: 15 },
+            { name: 'Actualización y entrega puntual', weight: 10 }
+        ],
+        matematicas_problemas: [
+            { name: 'Procedimiento lógico y operaciones', weight: 45 },
+            { name: 'Planteamiento del problema y datos', weight: 25 },
+            { name: 'Resultado correcto y unidades', weight: 20 },
+            { name: 'Orden y legibilidad', weight: 10 }
+        ],
+        matematicas_oral: [
+            { name: 'Fundamentación matemática del modelo', weight: 35 },
+            { name: 'Exactitud en cálculos y demostración', weight: 35 },
+            { name: 'Claridad al explicar el proceso', weight: 20 },
+            { name: 'Presentación de recursos', weight: 10 }
+        ],
+        ciencias_practica: [
+            { name: 'Ejecución del procedimiento y seguridad', weight: 35 },
+            { name: 'Registro de datos y observaciones', weight: 25 },
+            { name: 'Fundamento teórico / Hipótesis', weight: 20 },
+            { name: 'Conclusiones científicas', weight: 20 }
+        ],
+        ciencias_teorica: [
+            { name: 'Rigor y precisión científica', weight: 40 },
+            { name: 'Explicación de fenómenos y evidencias', weight: 30 },
+            { name: 'Uso de vocabulario científico', weight: 20 },
+            { name: 'Presentación y fuentes', weight: 10 }
+        ],
+        sociales: [
+            { name: 'Rigor de datos y fuentes consultadas', weight: 35 },
+            { name: 'Análisis crítico y contextualización', weight: 35 },
+            { name: 'Argumentación y postura fundamentada', weight: 20 },
+            { name: 'Organización y presentación', weight: 10 }
+        ],
+        tecnologia: [
+            { name: 'Dominio técnico y uso de herramienta', weight: 40 },
+            { name: 'Funcionalidad y acabado del producto', weight: 30 },
+            { name: 'Solución creativa al problema', weight: 20 },
+            { name: 'Seguridad, orden y entrega', weight: 10 }
+        ],
+        artistica: [
+            { name: 'Aplicación de la técnica', weight: 40 },
+            { name: 'Expresión y creatividad', weight: 35 },
+            { name: 'Acabado y limpieza', weight: 15 },
+            { name: 'Participación en aula', weight: 10 }
+        ],
+        educacion_fisica: [
+            { name: 'Ejecución motriz y técnica', weight: 40 },
+            { name: 'Esfuerzo y participación activa', weight: 30 },
+            { name: 'Juego limpio y trabajo en equipo', weight: 20 },
+            { name: 'Indumentaria e higiene', weight: 10 }
+        ],
+        general: [
+            { name: 'Dominio y desarrollo del contenido', weight: 40 },
+            { name: 'Calidad y rigor del trabajo', weight: 30 },
+            { name: 'Organización y claridad', weight: 20 },
+            { name: 'Puntualidad y presentación', weight: 10 }
+        ]
+    };
+
+    let selectedKey = 'general';
+    if (subjKey === 'ingles' || subjKey === 'espanol') {
+        if (modalidad === 'oral') selectedKey = 'lenguas_oral';
+        else if (modalidad === 'portafolio') selectedKey = 'lenguas_portafolio';
+        else selectedKey = 'lenguas_escrita';
+    } else if (subjKey === 'matematicas') {
+        selectedKey = (modalidad === 'oral' || modalidad === 'practica') ? 'matematicas_oral' : 'matematicas_problemas';
+    } else if (subjKey === 'ciencias_naturales') {
+        selectedKey = (modalidad === 'escrita' || modalidad === 'oral') ? 'ciencias_teorica' : 'ciencias_practica';
+    } else if (subjKey === 'ciencias_sociales' || subjKey === 'valores') {
+        selectedKey = 'sociales';
+    } else if (matrices[subjKey]) {
+        selectedKey = subjKey;
+    }
+
+    const safeTotal = Math.max(0.5, parseFloat(totalMaxPts) || 10);
+    return {
+        id: 'usr_rub_' + Date.now(),
+        nombre: (nombreActividad || tipoActividad || 'Rúbrica de Actividad').trim(),
+        tipoRubrica: 'analitica',
+        puntajeTotal: safeTotal,
+        criterios: window._buildCriteriosRubrica(matrices[selectedKey], safeTotal),
         niveles: window.NivelesRubrica.map(n => ({ id: n.id, nombre: n.nombre, puntos: 0 }))
     };
 };
@@ -338,55 +803,7 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
         const dimPct = dim ? parseFloat(dim.porcentaje) : 10;
         const isCuadernoValores = (act.dimensionKey === 'actitudes') || (act.nombre && act.nombre.toLowerCase().includes('valores'));
 
-        // Auto-reparación: si es Cuaderno de Valores o dimensión actitudes y tiene puntajeMax < dimPct (ej. 5 en vez de 10)
         let maxPts = parseFloat(act.puntajeMax || 0);
-        if (isCuadernoValores && maxPts < dimPct) {
-            const oldMax = maxPts;
-            act.puntajeMax = dimPct;
-            maxPts = dimPct;
-            
-            // Escalar customFollowups proporcionalmente al nuevo puntajeMax
-            if (act.customFollowups && act.customFollowups.length > 0) {
-                const currentSum = act.customFollowups.reduce((s, f) => s + (parseFloat(f.puntaje) || 0), 0) || 1;
-                const scale = maxPts / currentSum;
-                act.customFollowups.forEach(f => {
-                    f.puntaje = Math.round((f.puntaje * scale) * 10) / 10;
-                });
-                let sumF = act.customFollowups.reduce((s, f) => s + f.puntaje, 0);
-                let diffF = maxPts - sumF;
-                if (Math.abs(diffF) > 0.01) {
-                    act.customFollowups[act.customFollowups.length - 1].puntaje = Math.round((act.customFollowups[act.customFollowups.length - 1].puntaje + diffF) * 10) / 10;
-                }
-            }
-            
-            // Escalar también las notas de los alumnos ya calificadas
-            const califs = Store.get('calificaciones') || [];
-            califs.forEach(c => {
-                if (c.actividadId === actId) {
-                    if (c.followups) {
-                        let sumCalif = 0;
-                        act.customFollowups.forEach(f => {
-                            if (c.followups[f.id] && c.followups[f.id].nota !== undefined && c.followups[f.id].nota !== '') {
-                                let oldVal = parseFloat(c.followups[f.id].nota) || 0;
-                                if (oldMax > 0) {
-                                    c.followups[f.id].nota = Math.round(((oldVal / oldMax) * maxPts) * 10) / 10;
-                                }
-                                sumCalif += parseFloat(c.followups[f.id].nota) || 0;
-                            }
-                        });
-                        c.puntajeObtenido = Math.round(sumCalif * 10) / 10;
-                        c.nota = c.puntajeObtenido;
-                        c.porcentajeObtenido = Math.round((c.puntajeObtenido / maxPts) * 100);
-                    } else if (c.puntajeObtenido !== undefined) {
-                        if (oldMax > 0 && c.puntajeObtenido <= oldMax) {
-                            c.puntajeObtenido = Math.round(((c.puntajeObtenido / oldMax) * maxPts) * 10) / 10;
-                            c.nota = c.puntajeObtenido;
-                        }
-                    }
-                }
-            });
-            Store.save();
-        }
 
         // Inicializar si no existen seguimientos por defecto
         const PF_MESES = ['Febrero/Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre/Noviembre'];
@@ -460,7 +877,7 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
 
         const course = Store.getActiveCourse();
         if (!course) return;
-        const students = Store.getStudentsByCourse(course.id) || [];
+        const students = (Store.getStudentsByCourse(course.id) || []).filter(s => s.estadoMatricula !== 'Traslado' && s.estadoMatricula !== 'Desertor' && s.estadoMatricula !== 'Inactivo');
         const dimIdx = dims.findIndex(d => d.key === act.dimensionKey);
         const theme = Utils.getDimensionTheme(dims[dimIdx]?.nombre, dimIdx);
 
@@ -654,7 +1071,7 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
                 ${act.customFollowups.map((f, i) => {
                     const isActivo = f.activo !== false;
                     return `
-                <th style="padding: 8px 4px; font-weight:800; color:#475569; text-align:center; border-bottom:2px solid #e2e8f0; min-width:${esPFAcumulativo ? '70px' : '90px'}; max-width:${esPFAcumulativo ? '75px' : '110px'}; ${!isActivo ? 'opacity: 0.5; background: #f8fafc;' : ''}" ${f.criterio ? `title="Criterio: ${f.criterio.replace(/"/g, '&quot;')}"` : ''}>
+                <th style="padding: 8px 4px; font-weight:800; color:#475569; text-align:center; border-bottom:2px solid #e2e8f0; min-width:${esPFAcumulativo ? '70px' : '106px'}; max-width:${esPFAcumulativo ? '75px' : '130px'}; ${!isActivo ? 'opacity: 0.5; background: #f8fafc;' : ''}" ${f.criterio ? `title="Criterio: ${f.criterio.replace(/"/g, '&quot;')}"` : ''}>
                     <div style="font-size:11px; color:#0f172a; font-weight:900; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;">
                         ${esPFAcumulativo ? `
                             <input type="checkbox" 
@@ -718,36 +1135,59 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
                 ${act.customFollowups.map(f => {
                     const isActivo = f.activo !== false;
                     const fVal = (followupsGrades[f.id] && followupsGrades[f.id].nota !== undefined) ? followupsGrades[f.id].nota : '';
+                    const fNum = parseFloat(fVal);
+                    const isMax = !isNaN(fNum) && fNum >= parseFloat(f.puntaje) && parseFloat(f.puntaje) > 0;
                     return `
                 <td style="padding: 4px; text-align:center; border-bottom:1px solid #f1f5f9; ${!isActivo ? 'opacity: 0.5; background: #f8fafc;' : ''}">
-                    ${isCuadernoValores ? `
-                      <div style="display:flex; justify-content:center; align-items:center;">
-                          <button class="followup-cell-btn ${fVal == f.puntaje ? 'active' : ''}" 
-                                  data-student-id="${s.id}" 
-                                  data-followup-id="${f.id}" 
-                                  onclick="Views.Evaluacion.toggleFollowupCell(this, '${actId}', '${s.id}', '${f.id}', ${f.puntaje}, '${act.puntajeMax}')"
-                                  title="Marcar / Desmarcar Seguimiento"
-                                  ${!isActivo ? 'disabled' : ''}
-                                  style="width: 40px; height: 30px; border-radius: 7px; border: 2px solid ${fVal == f.puntaje ? '#16a34a' : '#e2e8f0'}; background: ${fVal == f.puntaje ? '#22c55e' : '#f8fafc'}; color: ${fVal == f.puntaje ? '#fff' : '#cbd5e1'}; cursor: ${!isActivo ? 'not-allowed' : 'pointer'}; display: flex; align-items: center; justify-content: center; transition: all 0.2s; padding: 0;">
-                              <i data-lucide="check" style="width: 16px; stroke-width: 3.5px;"></i>
-                          </button>
-                      </div>
-                    ` : `
+                    ${esPFAcumulativo ? `
                       <input type="number" 
                              class="followup-input"
                              data-student-id="${s.id}" 
                              data-followup-id="${f.id}" 
-                             data-max="${esPFAcumulativo ? 68 : f.puntaje}" 
+                             data-max="68" 
                              value="${fVal}" 
                              placeholder="-"
                              min="0"
-                             max="${esPFAcumulativo ? 68 : f.puntaje}"
-                             step="${esPFAcumulativo ? 1 : 0.1}"
+                             max="68"
+                             step="1"
                              ${!isActivo ? 'disabled' : ''}
                              onchange="Views.Evaluacion.saveFollowupGrade('${actId}', '${s.id}', '${f.id}', this.value, '${act.puntajeMax}')"
-                             style="width:${esPFAcumulativo ? '48px' : '72px'}; height:30px; text-align:center; border-radius:6px; border:1.5px solid ${!isActivo ? '#e2e8f0' : '#cbd5e1'}; font-weight:800; font-size:${esPFAcumulativo ? '12px' : '13px'}; color:${!isActivo ? '#94a3b8' : '#0f172a'}; background:${!isActivo ? '#f1f5f9' : '#fff'}; transition:all 0.2s; padding: 0; outline: none;"
+                             style="width:48px; height:30px; text-align:center; border-radius:6px; border:1.5px solid ${!isActivo ? '#e2e8f0' : '#cbd5e1'}; font-weight:800; font-size:12px; color:${!isActivo ? '#94a3b8' : '#0f172a'}; background:${!isActivo ? '#f1f5f9' : '#fff'}; transition:all 0.2s; padding: 0; outline: none;"
                              onfocus="this.style.borderColor='#7c3aed'; this.style.boxShadow='0 0 0 3px rgba(124,58,237,0.15)';"
                              onblur="this.style.borderColor='#cbd5e1'; this.style.boxShadow='none';">
+                    ` : `
+                      <div style="display:inline-flex; align-items:center; justify-content:center; gap:4px; padding:1px 0;">
+                          <!-- Opción 1: Marca como Logrado (asigna el 100% de puntos del seguimiento) -->
+                          <button type="button" 
+                                  class="followup-cell-btn ${isMax ? 'active' : ''}" 
+                                  data-student-id="${s.id}" 
+                                  data-followup-id="${f.id}" 
+                                  onclick="Views.Evaluacion.toggleFollowupCell(this, '${actId}', '${s.id}', '${f.id}', ${f.puntaje}, '${act.puntajeMax}')"
+                                  title="${isMax ? `Logrado (${f.puntaje} pts completos). Clic para desmarcar` : `Marcar como logrado (asigna ${f.puntaje} pts)`}"
+                                  ${!isActivo ? 'disabled' : ''}
+                                  style="width:28px; height:28px; min-width:28px; border-radius:6px; border:1.5px solid ${isMax ? '#16a34a' : '#cbd5e1'}; background:${isMax ? '#22c55e' : '#f8fafc'}; color:${isMax ? '#ffffff' : '#94a3b8'}; cursor:${!isActivo ? 'not-allowed' : 'pointer'}; display:inline-flex; align-items:center; justify-content:center; padding:0; transition:all 0.15s; flex-shrink:0;">
+                              <i data-lucide="check" style="width:14px; height:14px; stroke-width:3.2px;"></i>
+                          </button>
+                          <!-- Opción 2: Ingreso Manual de Calificación (no mayor a la configurada) -->
+                          <input type="number" 
+                                 inputmode="decimal"
+                                 class="followup-input"
+                                 data-student-id="${s.id}" 
+                                 data-followup-id="${f.id}" 
+                                 data-max="${f.puntaje}" 
+                                 value="${fVal !== '' && fVal !== null && fVal !== undefined ? fVal : ''}" 
+                                 placeholder="-"
+                                 min="0"
+                                 max="${f.puntaje}"
+                                 step="any"
+                                 ${!isActivo ? 'disabled' : ''}
+                                 oninput="Views.Evaluacion.handleFollowupManualInput(this, '${actId}', '${s.id}', '${f.id}', ${f.puntaje}, '${act.puntajeMax}')"
+                                 onchange="Views.Evaluacion.saveFollowupGrade('${actId}', '${s.id}', '${f.id}', this.value, '${act.puntajeMax}')"
+                                 style="width:48px; height:28px; min-width:44px; text-align:center; border-radius:6px; border:1.5px solid ${!isActivo ? '#e2e8f0' : (isMax ? '#86efac' : '#cbd5e1')}; font-weight:800; font-size:12px; color:${!isActivo ? '#94a3b8' : '#0f172a'}; background:${!isActivo ? '#f1f5f9' : '#ffffff'}; transition:all 0.2s; padding:0 2px; outline:none; -moz-appearance:textfield;"
+                                 onfocus="this.select(); this.style.borderColor='#7c3aed'; this.style.boxShadow='0 0 0 2px rgba(124,58,237,0.18)';"
+                                 onblur="this.style.borderColor='${isMax ? '#86efac' : '#cbd5e1'}'; this.style.boxShadow='none';"
+                                 title="Ingreso manual: 0 a ${f.puntaje} pts">
+                      </div>
                     `}
                 </td>
                     `;
@@ -779,19 +1219,36 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
     };
 
     Views.Evaluacion.toggleFollowupCell = function(btn, actId, studentId, followupId, fPuntaje, actPuntajeMax) {
-        const isActive = btn.classList.contains('active');
-        const newVal = isActive ? '' : fPuntaje;
+        const input = document.querySelector(`input.followup-input[data-student-id="${studentId}"][data-followup-id="${followupId}"]`);
+        const maxLimit = parseFloat(fPuntaje || 0);
+        const currentVal = input && input.value !== '' ? parseFloat(input.value) : (btn.classList.contains('active') ? maxLimit : 0);
+        const isCurrentlyMax = !isNaN(currentVal) && currentVal >= maxLimit && maxLimit > 0;
         
-        if (!isActive) {
+        let newVal;
+        if (isCurrentlyMax) {
+            // Desmarcar: pasar a vacío
+            newVal = '';
+            btn.classList.remove('active');
+            btn.style.background = '#f8fafc';
+            btn.style.borderColor = '#cbd5e1';
+            btn.style.color = '#94a3b8';
+            btn.title = `Marcar como logrado (asigna ${maxLimit} pts)`;
+            if (input) {
+                input.value = '';
+                input.style.borderColor = '#cbd5e1';
+            }
+        } else {
+            // Marcar como logrado: el sistema detecta esta marca como que el alumno tiene todos los puntos asignados
+            newVal = maxLimit;
             btn.classList.add('active');
             btn.style.background = '#22c55e';
             btn.style.borderColor = '#16a34a';
-            btn.style.color = '#fff';
-        } else {
-            btn.classList.remove('active');
-            btn.style.background = '#f8fafc';
-            btn.style.borderColor = '#e2e8f0';
-            btn.style.color = '#cbd5e1';
+            btn.style.color = '#ffffff';
+            btn.title = `Logrado (puntaje completo: ${maxLimit} pts). Clic para desmarcar`;
+            if (input) {
+                input.value = maxLimit;
+                input.style.borderColor = '#86efac';
+            }
         }
 
         Views.Evaluacion.saveFollowupGrade(actId, studentId, followupId, newVal, actPuntajeMax);
@@ -810,6 +1267,62 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
                 });
                 const quickFill = document.getElementById(`quick-fill-${studentId}`);
                 if (quickFill) quickFill.value = completedCount > 0 ? completedCount : '';
+            }
+        }
+    };
+
+    Views.Evaluacion.handleFollowupManualInput = function(input, actId, studentId, followupId, fPuntaje, actPuntajeMax) {
+        const maxLimit = parseFloat(fPuntaje || input.dataset.max || 0);
+        let val = input.value;
+        const btn = document.querySelector(`button.followup-cell-btn[data-student-id="${studentId}"][data-followup-id="${followupId}"]`);
+        
+        if (val === '' || val === null || val === undefined) {
+            if (btn) {
+                btn.classList.remove('active');
+                btn.style.background = '#f8fafc';
+                btn.style.borderColor = '#cbd5e1';
+                btn.style.color = '#94a3b8';
+                btn.title = `Marcar como logrado (asigna ${maxLimit} pts)`;
+            }
+            return;
+        }
+
+        let parsedVal = parseFloat(val);
+        if (isNaN(parsedVal)) return;
+
+        // Validación estricta: la nota no debe ser mayor a la configurada
+        if (parsedVal > maxLimit && maxLimit > 0) {
+            parsedVal = maxLimit;
+            input.value = maxLimit;
+            input.style.borderColor = '#ef4444';
+            input.style.boxShadow = '0 0 0 2px rgba(239, 68, 68, 0.25)';
+            if (window.UI && typeof UI.toast === 'function') {
+                UI.toast(`⚠️ La calificación manual no puede superar el máximo configurado (${maxLimit} pts).`, 'warning');
+            }
+            setTimeout(() => {
+                input.style.borderColor = '#86efac';
+                input.style.boxShadow = 'none';
+            }, 1800);
+        } else if (parsedVal < 0) {
+            parsedVal = 0;
+            input.value = 0;
+        }
+
+        // Sincronización inmediata con el botón de logro
+        if (btn) {
+            const isFull = parsedVal >= maxLimit && maxLimit > 0;
+            if (isFull) {
+                btn.classList.add('active');
+                btn.style.background = '#22c55e';
+                btn.style.borderColor = '#16a34a';
+                btn.style.color = '#ffffff';
+                btn.title = `Logrado (puntaje completo: ${maxLimit} pts). Clic para desmarcar`;
+            } else {
+                btn.classList.remove('active');
+                btn.style.background = '#f8fafc';
+                btn.style.borderColor = '#cbd5e1';
+                btn.style.color = '#94a3b8';
+                btn.title = `Marcar como logrado (asigna ${maxLimit} pts)`;
             }
         }
     };
@@ -1421,68 +1934,103 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
         Views.Evaluacion.importSharedActivityGrades(sourceActId, targetActId);
     };
 
-    Views.Evaluacion.saveValoresTemplate = function(actId) {
+    Views.Evaluacion.openFollowupTemplateModal = function(actId, customFollowupsList) {
         const act = (Store.get('actividades') || []).find(a => a.id === actId);
-        if(!act || !act.customFollowups) return;
-        
+        if (!act) return;
+
+        const fList = customFollowupsList || act.customFollowups;
+        if (!fList || fList.length === 0) {
+            UI.toast('No hay seguimientos para guardar como plantilla', 'warning');
+            return;
+        }
+
         Store.data.config = Store.data.config || {};
-        const parciales = Store.getCourseParciales ? Store.getCourseParciales(act.cursoId) : (Store.get('parciales')||[]).filter(p=>p.cursoId===act.cursoId);
+        const parciales = Store.getCourseParciales ? Store.getCourseParciales(act.cursoId) : (Store.get('parciales') || []).filter(p => p.cursoId === act.cursoId);
         let optionsHtml = '';
-        parciales.sort((a,b)=>a.numero-b.numero).forEach(p => {
+        parciales.sort((a, b) => a.numero - b.numero).forEach(p => {
             optionsHtml += `<option value="${p.id}" ${p.id === act.parcialId ? 'selected' : ''}>Parcial ${p.numero}</option>`;
         });
 
+        const previewItems = fList.map((f, i) => `<span style="display:inline-block; background:#f1f5f9; border:1px solid #cbd5e1; border-radius:6px; padding:3px 8px; font-size:11px; font-weight:700; color:#334155; margin:2px;">${f.nombre} (${f.puntaje} pts)</span>`).join('');
+
         const html = `
             <div style="padding:16px;">
-                <p style="margin-bottom:16px; font-size:14px; color:var(--text-main);">Seleccione el parcial para el cual será útil esta plantilla. ESTO SOBRESCRIBIRÁ la estructura de todas las actividades de Cuaderno de Valores existentes en el parcial seleccionado.</p>
-                <select id="modal-parcial-tpl" class="form-control" style="margin-bottom:20px;">
+                <div style="background:#eef2ff; border:1px solid #c7d2fe; border-radius:10px; padding:12px; margin-bottom:16px;">
+                    <div style="font-weight:800; font-size:13px; color:#3730a3; margin-bottom:4px;">📌 Estructura a guardar como plantilla:</div>
+                    <div style="display:flex; flex-wrap:wrap; gap:4px; max-height:100px; overflow-y:auto; margin-top:6px;">
+                        ${previewItems}
+                    </div>
+                </div>
+
+                <p style="margin-bottom:10px; font-size:13px; color:#475569;">Selecciona el parcial para el cual deseas establecer esta plantilla general:</p>
+                <select id="modal-parcial-tpl" class="form-control" style="margin-bottom:14px; height:38px; border-radius:8px;">
                     ${optionsHtml}
                 </select>
-                <div style="display:flex; justify-content:flex-end; gap:12px;">
+
+                <div style="margin-bottom:18px;">
+                    <label style="display:flex; align-items:center; gap:8px; font-size:12.5px; color:#334155; cursor:pointer;">
+                        <input type="checkbox" id="modal-tpl-apply-existing" checked style="width:16px; height:16px;">
+                        <span>Aplicar también esta estructura a las demás actividades similares en este parcial</span>
+                    </label>
+                </div>
+
+                <div style="display:flex; justify-content:flex-end; gap:10px;">
                     <button class="btn btn-secondary" onclick="UI.closeModal()">Cancelar</button>
-                    <button class="btn btn-primary" onclick="Views.Evaluacion.executeSaveValoresTemplate('${act.id}')">Guardar</button>
+                    <button class="btn btn-primary" onclick="Views.Evaluacion.executeSaveValoresTemplate('${act.id}')" style="background:#4338ca; border-color:#4338ca; font-weight:800;">
+                        Guardar Plantilla Global
+                    </button>
                 </div>
             </div>
         `;
-        UI.modal('Guardar Plantilla Global', html);
+        UI.modal('Guardar Plantilla Global de Seguimientos', html);
+    };
+
+    Views.Evaluacion.saveValoresTemplate = function(actId) {
+        Views.Evaluacion.openFollowupTemplateModal(actId);
     };
 
     Views.Evaluacion.executeSaveValoresTemplate = function(actId) {
         const act = (Store.get('actividades') || []).find(a => a.id === actId);
-        if(!act || !act.customFollowups) return;
+        if (!act || !act.customFollowups) return;
         
         const selParcialId = document.getElementById('modal-parcial-tpl').value;
+        const applyToOthers = document.getElementById('modal-tpl-apply-existing')?.checked;
         const key = 'valoresTemplate_' + selParcialId;
+        const keyGlobal = 'followupTemplate_' + selParcialId;
         
         const newTpl = act.customFollowups.map(f => ({ nombre: f.nombre, puntaje: f.puntaje }));
         Store.data.config[key] = newTpl;
+        Store.data.config[keyGlobal] = newTpl;
         
-        let actsActualizadas = 0;
-        const actividades = Store.get('actividades') || [];
-        actividades.forEach(a => {
-            const isValores = (a.dimensionKey === 'actitudes') || (a.nombre && a.nombre.toLowerCase().includes('valores'));
-            if (isValores && a.parcialId === selParcialId) {
-                const aMax = parseFloat(a.puntajeMax || 10);
-                const tplSum = newTpl.reduce((s, t) => s + (parseFloat(t.puntaje) || 0), 0) || 1;
-                const factor = aMax / tplSum;
-                a.customFollowups = newTpl.map((t, i) => {
-                    const oldF = (a.customFollowups || []).find(of => of.id === 'f' + (i + 1));
-                    return {
-                        id: 'f' + (i + 1),
-                        nombre: t.nombre,
-                        puntaje: Math.round((t.puntaje * factor) * 10) / 10,
-                        fecha: oldF ? oldF.fecha : '',
-                        criterio: oldF ? oldF.criterio : ''
-                    };
-                });
-                let cSum = a.customFollowups.reduce((s, f) => s + f.puntaje, 0);
-                let diff = aMax - cSum;
-                if (Math.abs(diff) > 0.01 && a.customFollowups.length > 0) {
-                    a.customFollowups[a.customFollowups.length - 1].puntaje = Math.round((a.customFollowups[a.customFollowups.length - 1].puntaje + diff) * 10) / 10;
+        let actsActualizadas = 1;
+        if (applyToOthers) {
+            const actividades = Store.get('actividades') || [];
+            actividades.forEach(a => {
+                if (a.id === actId) return;
+                const isMatching = (a.dimensionKey === act.dimensionKey) || (a.tipoEval === 'proyecto_acumulativo') || (a.nombre && a.nombre.toLowerCase().includes('valores'));
+                if (isMatching && a.parcialId === selParcialId) {
+                    const aMax = parseFloat(a.puntajeMax || 10);
+                    const tplSum = newTpl.reduce((s, t) => s + (parseFloat(t.puntaje) || 0), 0) || 1;
+                    const factor = aMax / tplSum;
+                    a.customFollowups = newTpl.map((t, i) => {
+                        const oldF = (a.customFollowups || []).find(of => of.id === 'f' + (i + 1));
+                        return {
+                            id: 'f' + (i + 1),
+                            nombre: t.nombre,
+                            puntaje: Math.round((t.puntaje * factor) * 10) / 10,
+                            fecha: oldF ? oldF.fecha : '',
+                            criterio: oldF ? oldF.criterio : ''
+                        };
+                    });
+                    let cSum = a.customFollowups.reduce((s, f) => s + f.puntaje, 0);
+                    let diff = aMax - cSum;
+                    if (Math.abs(diff) > 0.01 && a.customFollowups.length > 0) {
+                        a.customFollowups[a.customFollowups.length - 1].puntaje = Math.round((a.customFollowups[a.customFollowups.length - 1].puntaje + diff) * 10) / 10;
+                    }
+                    actsActualizadas++;
                 }
-                actsActualizadas++;
-            }
-        });
+            });
+        }
         
         Store.save();
         UI.closeModal();
@@ -1490,11 +2038,10 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
     };
 
     Views.Evaluacion.saveFollowupGrade = function(actId, studentId, followupId, val, actPuntajeMax) {
-        const input = document.querySelector(`input[data-student-id="${studentId}"][data-followup-id="${followupId}"]`);
+        const input = document.querySelector(`input.followup-input[data-student-id="${studentId}"][data-followup-id="${followupId}"]`);
         
         let maxLimit = parseFloat(input ? input.dataset.max : 0);
-        
-        if (!input) {
+        if (!input || !maxLimit) {
             const act = (Store.get('actividades') || []).find(a => a.id === actId);
             if (act && act.customFollowups) {
                 const f = act.customFollowups.find(x => x.id === followupId);
@@ -1512,29 +2059,38 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
             } else {
                 finalVal = parsedVal;
                 if (finalVal < 0) finalVal = 0;
-                // En vez de truncar silenciosamente, alertar y cancelar si supera el máximo
+                // Si la nota manual es mayor a la configurada, se ajusta al límite configurado
                 if (finalVal > maxLimit && maxLimit > 0) {
-                    if (input) {
-                        input.style.borderColor = '#ef4444';
-                        input.style.boxShadow = '0 0 0 3px rgba(239,68,68,0.25)';
-                        input.style.color = '#ef4444';
-                        setTimeout(() => {
-                            input.style.borderColor = '';
-                            input.style.boxShadow = '';
-                            input.style.color = '';
-                        }, 3000);
+                    finalVal = maxLimit;
+                    if (window.UI && typeof UI.toast === 'function') {
+                        UI.toast(`⚠️ La calificación no puede superar el valor configurado (${maxLimit} pts). Se ajustó a ${maxLimit}.`, 'warning');
                     }
-                    UI.toast(
-                        `⚠️ Nota inválida: ingresaste ${finalVal} pero el máximo permitido para este ítem es ${maxLimit}. La nota NO fue guardada.`,
-                        'error'
-                    );
-                    return;
                 }
             }
         }
         
         if (input) {
             input.value = finalVal;
+            input.style.borderColor = (finalVal !== '' && parseFloat(finalVal) >= maxLimit && maxLimit > 0) ? '#86efac' : '#cbd5e1';
+        }
+
+        // Sincronizar estado del botón de logrado
+        const btn = document.querySelector(`button.followup-cell-btn[data-student-id="${studentId}"][data-followup-id="${followupId}"]`);
+        if (btn) {
+            const isFull = (finalVal !== '' && parseFloat(finalVal) >= maxLimit && maxLimit > 0);
+            if (isFull) {
+                btn.classList.add('active');
+                btn.style.background = '#22c55e';
+                btn.style.borderColor = '#16a34a';
+                btn.style.color = '#ffffff';
+                btn.title = `Logrado (puntaje completo: ${maxLimit} pts). Clic para desmarcar`;
+            } else {
+                btn.classList.remove('active');
+                btn.style.background = '#f8fafc';
+                btn.style.borderColor = '#cbd5e1';
+                btn.style.color = '#94a3b8';
+                btn.title = `Marcar como logrado (asigna ${maxLimit} pts)`;
+            }
         }
 
         const califs = Store.get('calificaciones') || [];
@@ -1617,7 +2173,6 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
         }
         
         Store.save();
-        UI.toast('Nota guardada ✓', 'success');
     };
 
     Views.Evaluacion.toggleMonthActive = function(actId, followupId, active) {
@@ -1674,29 +2229,46 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
         const act = (Store.get('actividades') || []).find(a => a.id === actId);
         if (!act) return;
 
-        const isCuadernoValores = (act.dimensionKey === 'actitudes') || (act.nombre && act.nombre.toLowerCase().includes('valores'));
-        const dims = (Store.data.configAcademica && Store.data.configAcademica.dimensions) || [];
-        const dim = dims.find(d => d.key === act.dimensionKey || d.key === 'actitudes');
-        const dimPct = dim ? parseFloat(dim.porcentaje) : 10;
+        const followups = JSON.parse(JSON.stringify(act.customFollowups || []));
 
-        if (isCuadernoValores && parseFloat(act.puntajeMax || 0) < dimPct) {
-            act.puntajeMax = dimPct;
-            Store.save();
+        // Extrae del DOM en vivo los valores actuales para que nunca se pierda nada
+        function syncDOMToFollowups() {
+            const listContainer = document.getElementById('followup-config-list');
+            if (!listContainer) return;
+            const rows = listContainer.querySelectorAll('[data-index]');
+            rows.forEach(r => {
+                const idx = parseInt(r.getAttribute('data-index'), 10);
+                if (isNaN(idx) || !followups[idx]) return;
+                const nameInp = r.querySelector('input[data-field="nombre"]');
+                const ptsInp = r.querySelector('input[data-field="puntaje"]');
+                const dateInp = r.querySelector('input[data-field="fecha"]');
+                if (nameInp) {
+                    const val = nameInp.value.trim();
+                    followups[idx].nombre = val || `Seguimiento ${idx + 1}`;
+                }
+                if (ptsInp) {
+                    followups[idx].puntaje = Math.round((parseFloat(ptsInp.value) || 0) * 10) / 10;
+                }
+                if (dateInp) {
+                    followups[idx].fecha = dateInp.value;
+                }
+            });
         }
 
-        const followups = JSON.parse(JSON.stringify(act.customFollowups || []));
+        function updateTotalPointsDisplay() {
+            let totalPoints = followups.reduce((sum, f) => sum + (parseFloat(f.puntaje) || 0), 0);
+            totalPoints = Math.round(totalPoints * 10) / 10;
+            const totalDisplay = document.getElementById('followup-total-points-display');
+            if (totalDisplay) {
+                totalDisplay.innerHTML = `Suma actual: <strong style="color: ${Math.abs(totalPoints - parseFloat(act.puntajeMax)) < 0.01 ? '#00C853' : '#ef4444'}; font-size:14px;">${totalPoints} / ${act.puntajeMax} pts</strong>`;
+            }
+        }
 
         function renderConfigList() {
             const listContainer = document.getElementById('followup-config-list');
             if (!listContainer) return;
 
-            let totalPoints = followups.reduce((sum, f) => sum + (parseFloat(f.puntaje) || 0), 0);
-            totalPoints = Math.round(totalPoints * 10) / 10;
-            
-            const totalDisplay = document.getElementById('followup-total-points-display');
-            if (totalDisplay) {
-                totalDisplay.innerHTML = `Suma actual: <strong style="color: ${Math.abs(totalPoints - parseFloat(act.puntajeMax)) < 0.01 ? '#00C853' : '#ef4444'}; font-size:14px;">${totalPoints} / ${act.puntajeMax} pts</strong>`;
-            }
+            updateTotalPointsDisplay();
 
             listContainer.innerHTML = followups.map((f, index) => `
 <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:12px; margin-bottom:10px; display:grid; grid-template-columns: 2fr 1fr 1.5fr 1fr; gap:10px; align-items:center;" data-index="${index}">
@@ -1704,29 +2276,32 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
         <label style="font-size:10px; font-weight:800; color:#64748b; text-transform:uppercase;">Nombre / Rótulo</label>
         <input type="text" 
                class="form-control" 
-               value="${f.nombre}" 
+               data-field="nombre"
+               value="${(f.nombre || '').replace(/"/g, '&quot;')}" 
                placeholder="Ej: Portada"
-               onchange="Views.Evaluacion.updateFollowupLocal('${actId}', ${index}, 'nombre', this.value)"
+               oninput="Views.Evaluacion.onFollowupFieldInput(${index}, 'nombre', this.value)"
                style="height:36px; border-radius:8px; font-weight:700; font-size:13px; padding: 0 10px;">
     </div>
     <div>
         <label style="font-size:10px; font-weight:800; color:#64748b; text-transform:uppercase;">Puntaje</label>
         <input type="number" 
                class="form-control" 
+               data-field="puntaje"
                value="${f.puntaje}" 
                placeholder="0"
                min="0"
                max="${act.puntajeMax}"
                step="0.1"
-               onchange="Views.Evaluacion.updateFollowupLocal('${actId}', ${index}, 'puntaje', this.value)"
+               oninput="Views.Evaluacion.onFollowupFieldInput(${index}, 'puntaje', this.value)"
                style="height:36px; border-radius:8px; font-weight:700; text-align:center; font-size:13px; padding: 0 5px;">
     </div>
     <div>
         <label style="font-size:10px; font-weight:800; color:#64748b; text-transform:uppercase;">Fecha (Opcional)</label>
         <input type="date" 
                class="form-control" 
+               data-field="fecha"
                value="${f.fecha || ''}" 
-               onchange="Views.Evaluacion.updateFollowupLocal('${actId}', ${index}, 'fecha', this.value)"
+               onchange="Views.Evaluacion.onFollowupFieldInput(${index}, 'fecha', this.value)"
                style="height:36px; border-radius:8px; font-size:12px; padding: 0 6px;">
     </div>
     <div style="display:flex; align-items:center; gap:8px; margin-top: 14px;">
@@ -1759,21 +2334,27 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
             if (window.lucide) window.lucide.createIcons();
         }
 
-        Views.Evaluacion.updateFollowupLocal = function(aId, idx, field, val) {
+        // Actualización fluida sin destruir el DOM
+        Views.Evaluacion.onFollowupFieldInput = function(idx, field, val) {
+            if (!followups[idx]) return;
             if (field === 'puntaje') {
-                followups[idx][field] = Math.round((parseFloat(val) || 0) * 10) / 10;
+                followups[idx].puntaje = Math.round((parseFloat(val) || 0) * 10) / 10;
+                updateTotalPointsDisplay();
+            } else if (field === 'nombre') {
+                followups[idx].nombre = val;
             } else {
                 followups[idx][field] = val;
             }
-            renderConfigList();
         };
 
         Views.Evaluacion.deleteFollowupLocal = function(aId, idx) {
+            syncDOMToFollowups();
             followups.splice(idx, 1);
             renderConfigList();
         };
 
         Views.Evaluacion.addFollowupLocal = function() {
+            syncDOMToFollowups();
             if (followups.length >= 20) {
                 UI.toast('Límite de 20 seguimientos alcanzado', 'warning');
                 return;
@@ -1789,6 +2370,7 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
         };
 
         Views.Evaluacion.recalculateEquitableLocal = function() {
+            syncDOMToFollowups();
             const count = followups.length;
             if (count === 0) return;
             const maxPts = parseFloat(act.puntajeMax || 0);
@@ -1805,6 +2387,7 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
         };
 
         Views.Evaluacion.openFollowupDetailsLocal = function(aId, idx) {
+            syncDOMToFollowups();
             const item = followups[idx];
             let prevDisplay = document.querySelector('.modal') ? document.querySelector('.modal').style.display : '';
             if (document.querySelector('.modal')) {
@@ -1841,7 +2424,9 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
             };
         };
 
+        // ACCIÓN 1: Guardar configuración EXCLUSIVAMENTE para la actividad actual
         Views.Evaluacion.saveFollowupConfig = function() {
+            syncDOMToFollowups();
             let totalPoints = followups.reduce((sum, f) => sum + (parseFloat(f.puntaje) || 0), 0);
             totalPoints = Math.round(totalPoints * 10) / 10;
             const maxPts = parseFloat(act.puntajeMax);
@@ -1852,7 +2437,15 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
             }
 
             const persistConfig = () => {
-                act.customFollowups = followups;
+                const cleanFollowups = JSON.parse(JSON.stringify(followups));
+                
+                // Actualizar en el Store global de actividades
+                const actividades = Store.get('actividades') || [];
+                const storeAct = actividades.find(a => a.id === actId);
+                if (storeAct) {
+                    storeAct.customFollowups = cleanFollowups;
+                }
+                act.customFollowups = cleanFollowups;
                 
                 let califs = Store.get('calificaciones') || [];
                 califs.forEach(calif => {
@@ -1860,7 +2453,7 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
                         if (!calif.followups) calif.followups = {};
                         
                         let sum = 0;
-                        followups.forEach(f => {
+                        cleanFollowups.forEach(f => {
                             let grade = (calif.followups[f.id] && calif.followups[f.id].nota !== undefined) ? calif.followups[f.id].nota : 0;
                             if (grade > f.puntaje) {
                                 grade = f.puntaje;
@@ -1880,7 +2473,8 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
 
                 Store.save();
                 UI.closeModal();
-                UI.toast('Configuración de seguimientos guardada ✓', 'success');
+                UI.toast('Configuración guardada para esta actividad ✓', 'success');
+                // Re-renderizar planilla con los nombres actualizados
                 Views.Evaluacion.gradeFollowupActivity(actId);
             };
 
@@ -1891,6 +2485,24 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
             } else {
                 persistConfig();
             }
+        };
+
+        // ACCIÓN 2: Guardar como Plantilla General/Global opcionalmente
+        Views.Evaluacion.saveFollowupAsGlobalTemplate = function() {
+            syncDOMToFollowups();
+            const cleanFollowups = JSON.parse(JSON.stringify(followups));
+            
+            // Primero aseguramos que la actividad actual tenga estos datos
+            const actividades = Store.get('actividades') || [];
+            const storeAct = actividades.find(a => a.id === actId);
+            if (storeAct) {
+                storeAct.customFollowups = cleanFollowups;
+            }
+            act.customFollowups = cleanFollowups;
+            Store.save();
+
+            // Abrir selector de parcial para guardar la plantilla
+            Views.Evaluacion.openFollowupTemplateModal(actId, cleanFollowups);
         };
 
         UI.modal(`📈 Configurar Seguimientos: ${act.nombre}`, `
@@ -1913,11 +2525,9 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
     
     <div class="modal-footer" style="display:flex; justify-content:flex-end; gap:10px; margin-top:14px; padding-top:10px; border-top:1.5px dashed #e2e8f0; flex-shrink:0; height: 50px;">
         <button type="button" class="btn btn-secondary" onclick="UI.closeModal()" style="height:36px; border-radius:8px;">Cancelar</button>
-        ${act.nombre.toLowerCase().includes('valores') ? `
-        <button type="button" class="btn btn-secondary" onclick="Views.Evaluacion.saveValoresTemplate('${actId}')" style="height:36px; border-radius:8px; display:flex; align-items:center; gap:6px;">
+        <button type="button" class="btn btn-secondary" onclick="Views.Evaluacion.saveFollowupAsGlobalTemplate()" title="Guardar estos nombres y ponderaciones como plantilla general reutilizable" style="height:36px; border-radius:8px; display:flex; align-items:center; gap:6px; font-weight:700; color:#4338ca; background:#eef2ff; border-color:#c7d2fe;">
             <i data-lucide="bookmark" style="width:16px;"></i> Guardar Plantilla Global
         </button>
-        ` : ''}
         <button type="button" class="btn btn-primary" onclick="Views.Evaluacion.saveFollowupConfig()" style="height:36px; border-radius:8px; background:#7c3aed; border-color:#7c3aed; font-weight:800; display:flex; align-items:center; gap:6px;">
             <i data-lucide="save" style="width:16px;"></i> Guardar Configuración
         </button>
@@ -1938,7 +2548,8 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
     // Función interna para renderizar el modal
     function renderSmartModal(dimKey, parcialId, actToEdit = null) {
         const c = Store.getActiveCourse();
-        const parciales = Store.getParcialByCourse(c.id);
+        const subjConfig = BancoCurricularInteligente.getSubjectConfig(c);
+        const parciales = c ? Store.getParcialByCourse(c.id) : [];
         const dims = (Store.data.configAcademica && Store.data.configAcademica.dimensions) || [];
         const rubricas = (Store.get('rubricas') || []).filter(r => r.estado !== 'archivada');
 
@@ -1956,50 +2567,62 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
 
         let tipoAct = isEdit ? (actToEdit.tipo || '') : '';
         if (isEdit && !tipoAct && actToEdit.nombre) {
-            const banco = (Views.Evaluacion && Views.Evaluacion.getBancoDinamico) ? Views.Evaluacion.getBancoDinamico() : BancoActividadesInteligente;
+            const banco = (Views.Evaluacion && Views.Evaluacion.getBancoDinamico) ? Views.Evaluacion.getBancoDinamico() : subjConfig.sugerencias;
             const match = banco.find(b => (b.nombre || '').trim().toLowerCase() === actToEdit.nombre.trim().toLowerCase());
             if (match) {
                 tipoAct = match.tipo;
             }
         }
 
+        const tiposDisponibles = subjConfig.tipos || TiposActividad;
+
         // UI Builder
         UI.modal(title, `
             <form id="smart-act-form" onsubmit="event.preventDefault(); Views.Evaluacion.saveSmartActivity('${isEdit ? actToEdit.id : ''}', this)">
                 
                 <!-- BOTONES SUPERIORES -->
-                <div style="margin-bottom:20px; padding-bottom:16px; border-bottom:1.5px dashed #e2e8f0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-                    <button type="button" class="btn btn-secondary" style="background:transparent; border:none; font-size:12px; color: #64748b; font-weight: 700; display:flex; align-items:center; gap:6px; cursor:pointer;" onclick="Views.Evaluacion.resetForm()">
-                        <i data-lucide="rotate-ccw" style="width:14px;"></i> Resetear IA
-                    </button>
-                    <div style="display:flex; gap:12px; align-items:center;">
-                        <button type="button" class="btn btn-secondary" onclick="UI.closeModal()" style="border-radius: 12px; height: 42px; padding: 0 20px; font-weight: 700; cursor:pointer;">Cancelar</button>
-                        <button type="button" class="btn btn-primary" onclick="Views.Evaluacion.saveSmartActivity('${isEdit ? actToEdit.id : ''}')" style="background: linear-gradient(135deg, #00C853 0%, #00E676 100%); border: none; border-radius: 12px; height: 42px; padding: 0 22px; font-weight: 800; display:flex; align-items:center; gap:8px; box-shadow: 0 4px 12px rgba(0,200,83,0.3); cursor:pointer;">
-                             <i data-lucide="save" style="width:18px;"></i> ${isEdit ? 'Actualizar' : 'Crear'} Actividad
+                <div style="margin-bottom:12px; padding-bottom:10px; border-bottom:1.5px dashed #cbd5e1; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                    <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                        ${isEdit
+                            ? `<button type="button" class="btn btn-secondary" onclick="UI.closeModal(); Views.Evaluacion.deleteActivity('${actToEdit.id}', '${dKey}');" style="background:#fee2e2; border:1.5px solid #ef4444; color:#991b1b; font-size:12px; font-weight:700; border-radius:10px; height:36px; padding:0 13px; display:inline-flex; align-items:center; gap:6px; cursor:pointer;" title="Eliminar esta actividad y sus notas"><i data-lucide="trash-2" style="width:14px;"></i> Eliminar</button>`
+                            : `<button type="button" class="btn btn-secondary" onclick="Views.Evaluacion.resetForm()" style="background:#ffffff; border:1.5px solid #64748b; color:#0f172a; font-size:12px; font-weight:700; border-radius:10px; height:36px; padding:0 13px; display:inline-flex; align-items:center; gap:6px; cursor:pointer;" title="Limpiar todos los campos"><i data-lucide="rotate-ccw" style="width:14px;"></i> Limpiar</button>`}
+                    </div>
+                    <div style="display:flex; gap:8px; align-items:center;">
+                        <button type="button" class="btn btn-secondary" onclick="UI.closeModal()" style="background:#ffffff; border:1.5px solid #64748b; color:#0f172a; border-radius:10px; height:36px; padding:0 16px; font-weight:700; font-size:12.5px; cursor:pointer;">Cancelar</button>
+                        <button type="button" class="btn btn-primary" onclick="Views.Evaluacion.saveSmartActivity('${isEdit ? actToEdit.id : ''}')" style="background:#047857; border:1.5px solid #065f46; color:#ffffff; border-radius:10px; height:36px; padding:0 16px; font-weight:800; font-size:12.5px; display:flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(4,120,87,0.22); cursor:pointer;">
+                             <i data-lucide="save" style="width:16px;"></i> ${isEdit ? 'Actualizar' : 'Crear'} Actividad
                         </button>
                     </div>
                 </div>
 
-                <!-- SECCIÓN 1: INTELIGENCIA -->
-                <div style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); border: 1.5px solid #e2e8f0; border-radius: 16px; padding: 20px; margin-bottom: 24px; box-shadow: var(--shadow-sm);">
-                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
-                        <div style="background: #00C853; border-radius: 8px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,200,83,0.3);">
-                            <i data-lucide="brain-circuit" style="width: 18px; color: #fff;"></i>
+                <!-- SECCIÓN 1: INTELIGENCIA SEGÚN ESPACIO CURRICULAR -->
+                <div style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 12px 14px; margin-bottom: 12px; box-shadow: var(--shadow-sm);">
+                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; flex-wrap: wrap;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <div style="background: #00C853; border-radius: 8px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(0,200,83,0.28);">
+                                <i data-lucide="brain-circuit" style="width: 16px; color: #fff;"></i>
+                            </div>
+                            <div style="display:flex; align-items:baseline; gap:8px; flex-wrap:wrap;">
+                                <span style="font-size: 12.5px; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 0.04em;">Inteligencia Aula 360</span>
+                                <span style="font-size: 11px; color: #64748b;">Currículo Nacional Básico Adaptativo</span>
+                            </div>
                         </div>
-                        <span style="font-size: 13px; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em;">Inteligencia Aula 360</span>
+                        <span style="background: rgba(0, 200, 83, 0.12); color: #007E33; font-size: 11px; font-weight: 800; padding: 3px 9px; border-radius: 8px; border: 1px solid rgba(0, 200, 83, 0.25); display: inline-flex; align-items: center; gap: 5px;">
+                            <i data-lucide="${subjConfig.icon || 'sparkles'}" style="width: 13px; height: 13px;"></i> ${subjConfig.badge || subjConfig.label}
+                        </span>
                     </div>
                     
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px;">
                         <div class="form-group" style="margin: 0;">
-                            <label class="form-label" style="font-size: 11px; color: #64748b;">TIPO DE ACTIVIDAD</label>
-                            <select id="sel-tipo-act" class="form-control" onchange="Views.Evaluacion.onTipoChanged(this.value)" style="height: 42px; border-radius: 10px;">
+                            <label class="form-label" style="font-size: 10.5px; color: #64748b; font-weight: 700; margin-bottom:4px;">TIPO DE ACTIVIDAD (${subjConfig.badge || 'ÁREA'})</label>
+                            <select id="sel-tipo-act" class="form-control" onchange="Views.Evaluacion.onTipoChanged(this.value)" style="height: 38px; border-radius: 9px; font-weight: 600; font-size:13px;">
                                 <option value="">Selecciona tipo...</option>
-                                ${TiposActividad.map(t => `<option value="${t}" ${tipoAct === t ? 'selected' : ''}>${t}</option>`).join('')}
+                                ${tiposDisponibles.map(t => `<option value="${t}" ${tipoAct === t ? 'selected' : ''}>${t}</option>`).join('')}
                             </select>
                         </div>
                         <div class="form-group" style="margin: 0;">
-                            <label class="form-label" style="font-size: 11px; color: #64748b;">SUGERENCIA INTELIGENTE</label>
-                            <select id="sel-sug-act" class="form-control" ${!tipoAct ? 'disabled' : ''} onchange="Views.Evaluacion.onSugChanged(this.value)" style="height: 42px; border-radius: 10px;">
+                            <label class="form-label" style="font-size: 10.5px; color: #64748b; font-weight: 700; margin-bottom:4px;">SUGERENCIA INTELIGENTE</label>
+                            <select id="sel-sug-act" class="form-control" ${!tipoAct ? 'disabled' : ''} onchange="Views.Evaluacion.onSugChanged(this.value)" style="height: 38px; border-radius: 9px; font-weight: 600; font-size:13px;">
                                 <option value="">${tipoAct ? 'Elige una actividad...' : 'Primero elige un tipo...'}</option>
                             </select>
                         </div>
@@ -2007,47 +2630,59 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
                 </div>
 
                 <!-- SECCIÓN 2: DATOS -->
-                <div style="display:grid; gap:12px;">
-                    <div class="form-group">
-                        <label class="form-label">Nombre de la actividad</label>
-                        <input id="inp-nombre" name="nombre" class="form-control" required value="${n}" placeholder="Ej: Redacción de texto">
-                    </div>
-
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-                        <div class="form-group">
-                            <label class="form-label">Puntaje Máximo</label>
-                            <input id="inp-max" type="number" name="puntajeMax" class="form-control" required max="100" min="1" value="${pm}">
+                <div style="display:grid; gap:10px;">
+                    <div style="display:flex; flex-wrap:wrap; gap:10px;">
+                        <div class="form-group" style="margin:0; flex:2 1 240px; min-width:0;">
+                            <label class="form-label" style="font-size:11.5px; margin-bottom:4px;">Nombre de la actividad</label>
+                            <input id="inp-nombre" name="nombre" class="form-control" required value="${n}" placeholder="Ej: Redacción de texto" style="height:38px; font-size:13px;">
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">Fecha</label>
-                            <input type="date" name="fecha" class="form-control" value="${f}">
+                        <div class="form-group" style="margin:0; flex:1 1 130px; min-width:0;">
+                            <label class="form-label" style="font-size:11.5px; margin-bottom:4px;">Puntaje Máximo</label>
+                            <input id="inp-max" type="number" name="puntajeMax" class="form-control" required max="100" min="1" value="${pm}" style="height:38px; font-size:13px;">
                         </div>
                     </div>
 
                     <input type="hidden" id="inp-dim" name="dimensionKey" value="${dKey}">
 
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-                        <div class="form-group">
-                            <label class="form-label">Parcial</label>
-                            <select id="inp-parcial" name="parcialId" class="form-control" required>
+                    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(175px, 1fr)); gap:10px;">
+                        <!-- SELECTOR DE FECHA ESTÉTICO Y MODERNO AULA 360 -->
+                        <div class="form-group" style="margin:0;">
+                            <label class="form-label" style="display:flex; justify-content:space-between; align-items:center; font-size:11.5px; margin-bottom:4px;">
+                                <span>Fecha</span>
+                                <span style="font-size:10.5px; color:#00C853; font-weight:700;"><i data-lucide="calendar" style="width:11px; height:11px; display:inline;"></i> Calendario</span>
+                            </label>
+                            <div class="a360-date-trigger-box" onclick="UI.openDatePicker(document.getElementById('inp-fecha-act'))" style="cursor:pointer; display:flex; align-items:center; justify-content:space-between; height:38px; padding:0 10px; background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:9px; transition:all 0.2s ease;">
+                                <div style="display:flex; align-items:center; gap:6px; overflow:hidden;">
+                                    <i data-lucide="calendar-days" style="width:15px; height:15px; color:#00C853; flex-shrink:0;"></i>
+                                    <span id="lbl-fecha-act" style="font-size:12px; font-weight:700; color:#1e293b; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;">${UI.formatDateEs(f)}</span>
+                                </div>
+                                <input type="hidden" id="inp-fecha-act" name="fecha" value="${f}">
+                                <i data-lucide="chevron-down" style="width:13px; height:13px; color:#94a3b8; flex-shrink:0;"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin:0;">
+                            <label class="form-label" style="font-size:11.5px; margin-bottom:4px;">Parcial</label>
+                            <select id="inp-parcial" name="parcialId" class="form-control" required style="height:38px; font-size:13px;">
                                 <option value="">Seleccionar...</option>
                                 ${parciales.map(p => `<option value="${p.id}" ${pId===p.id ? 'selected' : ''}>${p.nombre}</option>`).join('')}
-                                <option value="recuperacion" ${pId==='recuperacion' ? 'selected' : ''}>⚡ Recuperación</option>
+                                <option value="recuperacion" ${pId==='recuperacion' ? 'selected' : ''}>Recuperación</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">Tipo de evaluación</label>
-                            <select id="inp-tipo-eval" name="tipoEval" class="form-control" onchange="Views.Evaluacion.toggleRubricaField()">
-                                <option value="directa" ${tEval==='directa'?'selected':''}>✏️ Calificación Directa</option>
-                                <option value="proyecto_acumulativo" ${tEval==='proyecto_acumulativo'?'selected':''}>📈 Proyecto Acumulativo</option>
+
+                        <div class="form-group" style="margin:0;">
+                            <label class="form-label" style="font-size:11.5px; margin-bottom:4px;">Tipo de evaluación</label>
+                            <select id="inp-tipo-eval" name="tipoEval" class="form-control" onchange="Views.Evaluacion.toggleRubricaField()" style="height:38px; font-size:13px;">
+                                <option value="directa" ${tEval==='directa'?'selected':''}>Calificación Directa</option>
+                                <option value="proyecto_acumulativo" ${tEval==='proyecto_acumulativo'?'selected':''}>Proyecto Acumulativo</option>
                                 ${(function(){
                                     const _c = Store.getActiveCourse();
                                     const _materia = (_c && (_c.materia||_c.nombre||_c.asignatura||''));
                                     const _isEsp = /espa[nñ]ol/i.test(_materia);
                                     const _isExam = /examen/i.test(dKey||'');
-                                    return (_isEsp && _isExam) ? `<option value="pruebas_formativas_acumulativo" ${tEval==='pruebas_formativas_acumulativo'?'selected':''}>📊 Pruebas Formativas (Acumulativo)</option>` : '';
+                                    return (_isEsp && _isExam) ? `<option value="pruebas_formativas_acumulativo" ${tEval==='pruebas_formativas_acumulativo'?'selected':''}>Pruebas Formativas (Acumulativo)</option>` : '';
                                 })()}
-                                <option value="rubrica" ${tEval==='rubrica'?'selected':''}>🧩 Con Rúbrica</option>
+                                <option value="rubrica" ${tEval==='rubrica'?'selected':''}>Con Rúbrica</option>
                             </select>
                         </div>
                     </div>
@@ -2057,14 +2692,21 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
                 <div id="sec-rubrica" style="margin-top:12px; padding:16px; background:#f5f3ff; border:1px solid #ddd6fe; border-radius:12px; display:${tEval==='rubrica'?'block':'none'};">
                     <div id="container-rubrica-global" style="display:${(isEdit ? actToEdit.tipo : (document.getElementById('sel-tipo-act')?.value)) === 'Proyecto' ? 'none' : 'block'};">
                         <div class="form-group" style="margin:0;">
-                            <label class="form-label" style="color:#6d28d9;">Seleccionar Rúbrica</label>
-                            <div style="display:flex; gap:8px;">
-                                <select id="inp-rubrica" name="rubricaId" class="form-control" style="flex:1;">
-                                    <option value="">Seleccione una rúbrica de su banco...</option>
-                                    ${rubricas.map(r => `<option value="${r.id}" ${rId===r.id?'selected':''}>${r.nombre}</option>`).join('')}
+                            <label class="form-label" style="color:#6d28d9; display:flex; justify-content:space-between; align-items:center;">
+                                <span>Rúbrica de Evaluación</span>
+                                <span style="font-size:11px; font-weight:700; color:#7c3aed;">
+                                    <i data-lucide="sparkles" style="width:12px; height:12px; display:inline;"></i> Asistente por Campo del Conocimiento
+                                </span>
+                            </label>
+                            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                                <select id="inp-rubrica" name="rubricaId" class="form-control" style="flex:1; min-width:200px;">
+                                    <!-- Las opciones se inyectan y actualizan dinámicamente con getRubricasOpcionesHtml -->
                                 </select>
                                 <button type="button" class="btn btn-secondary" onclick="Views.Evaluacion.previewRubricaBtn()" title="Ver Rúbrica" style="padding:0 12px;">
                                     <i data-lucide="eye" style="width:16px;"></i>
+                                </button>
+                                <button type="button" class="btn btn-primary" onclick="Views.Evaluacion.activarAsistenteRubrica()" style="padding:0 14px; background:#7c3aed; border-color:#7c3aed; white-space:nowrap;">
+                                    ✨ Crear con Asistente
                                 </button>
                             </div>
                         </div>
@@ -2077,15 +2719,25 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
                                 ${window.BancoRubricasProyectos.map(t => `<option value="${t.id}">${t.name}</option>`).join('')}
                             </select>
                         </div>
-                        <div id="rubrica-proyecto-editor" style="display:none; background:#fff; padding:12px; border-radius:8px; border:1px solid #e2e8f0;">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                                <strong>Criterios de Evaluación</strong>
+                    </div>
+                    <div id="rubrica-proyecto-editor" style="display:none; margin-top:10px; background:#fff; padding:12px; border-radius:8px; border:1px solid #ddd6fe;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+                            <strong style="color:#5b21b6;">Criterios de Evaluación</strong>
+                            <div style="display:flex; align-items:center; gap:8px;">
                                 <span id="rubrica-proyecto-suma" style="font-size:12px; font-weight:bold;">Suma: 0 / 0</span>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="Views.Evaluacion.reajustarPesosRubrica()" title="Recalcular pesos proporcionalmente al puntaje máximo">⚖️ Ajustar pesos</button>
+                                <button type="button" id="btn-volver-banco-rubrica" class="btn btn-secondary btn-sm" onclick="Views.Evaluacion.cancelarAsistenteRubrica()" style="display:none;">← Usar banco</button>
                             </div>
-                            <div id="rubrica-proyecto-criterios" style="max-height:250px; overflow-y:auto; margin-bottom:8px;">
-                                <!-- Criterios inyectados dinámicamente -->
-                            </div>
+                        </div>
+                        <div id="rubrica-proyecto-criterios" style="max-height:250px; overflow-y:auto; margin-bottom:8px;">
+                            <!-- Criterios inyectados dinámicamente -->
+                        </div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
                             <button type="button" class="btn btn-secondary btn-sm" onclick="Views.Evaluacion.addCriterioProyecto()">+ Añadir Criterio</button>
+                            <label style="font-size:12px; color:#475569; display:flex; align-items:center; gap:6px; margin:0; cursor:pointer;">
+                                <input type="checkbox" id="chk-guardar-rubrica-banco">
+                                Guardar también en mi banco personal
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -2134,32 +2786,45 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
             }
             if (tipoAct) {
                 Views.Evaluacion.onTipoChanged(tipoAct);
-                const banco = (Views.Evaluacion && Views.Evaluacion.getBancoDinamico) ? Views.Evaluacion.getBancoDinamico() : BancoActividadesInteligente;
-                const match = banco.find(b => b.tipo === tipoAct && b.nombre.trim().toLowerCase() === (actToEdit?.nombre || '').trim().toLowerCase());
+                const banco = (Views.Evaluacion && Views.Evaluacion.getBancoDinamico) ? Views.Evaluacion.getBancoDinamico() : subjConfig.sugerencias;
+                const match = banco.find(b => b.tipo === tipoAct && (b.nombre || '').trim().toLowerCase() === (actToEdit?.nombre || '').trim().toLowerCase());
                 const selSug = document.getElementById('sel-sug-act');
                 if (selSug && match) {
                     selSug.value = match.id;
                 }
             }
+
+            // Poblar las opciones de rúbrica contextualizadas desde el inicio
+            const selRub = document.getElementById('inp-rubrica');
+            if (selRub) {
+                selRub.innerHTML = Views.Evaluacion.getRubricasOpcionesHtml(rId, tipoAct, n);
+            }
         }, 100);
         
-        // Al abrir para editar un proyecto con rúbrica integrada
-        if (actToEdit && actToEdit.tipo === 'Proyecto' && actToEdit.tipoEval === 'rubrica' && actToEdit.rubricaPersonalizada) {
+        // Al abrir para editar una actividad con rúbrica integrada (Proyecto o Asistente)
+        if (actToEdit && actToEdit.tipoEval === 'rubrica' && actToEdit.rubricaPersonalizada) {
             Views.Evaluacion.currentProyectoRubrica = JSON.parse(JSON.stringify(actToEdit.rubricaPersonalizada));
-            setTimeout(() => Views.Evaluacion.renderRubricaProyectoEditor(), 200);
+            setTimeout(() => {
+                Views.Evaluacion.toggleRubricaField();
+                Views.Evaluacion.renderRubricaProyectoEditor();
+            }, 200);
         } else {
             Views.Evaluacion.currentProyectoRubrica = null;
         }
     }
 
-    // Banco dinámico (combina el hardcoded con los aprendidos del usuario)
+    // Banco dinámico (combina el banco del espacio curricular con los aprendidos del usuario)
     Views.Evaluacion.getBancoDinamico = function() {
+        const c = Store.getActiveCourse();
+        const subjConfig = BancoCurricularInteligente.getSubjectConfig(c);
+        const base = (subjConfig && subjConfig.sugerencias) ? subjConfig.sugerencias : BancoActividadesInteligente;
+        
         const guardados = [];
         try {
             const extra = localStorage.getItem('aula360_banco_personalizado');
             if (extra) guardados.push(...JSON.parse(extra));
         } catch (e) {}
-        return [...BancoActividadesInteligente, ...guardados];
+        return [...base, ...guardados];
     };
 
     Views.Evaluacion.aprenderActividad = function(data) {
@@ -2194,6 +2859,109 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
         }
     };
 
+    // Generador de opciones de rúbrica con categorización inteligente por materia y tipo
+    Views.Evaluacion.getRubricasOpcionesHtml = function(selectedRubricaId = '', tipoActividad = '', nombreActividad = '') {
+        const c = Store.getActiveCourse();
+        const detectedSubjKey = BancoCurricularInteligente.detectSubject(c);
+        const subjConfig = BancoCurricularInteligente.getSubjectConfig(c);
+        let allRubricas = (Store.get('rubricas') || []).filter(r => r.estado !== 'archivada');
+        if (allRubricas.length === 0 && window.BancoRubricasOficial && window.BancoRubricasOficial.length > 0) {
+            allRubricas = window.BancoRubricasOficial.map(r => ({
+                id: r.id,
+                nombre: r.nombre,
+                categoria: r.categoria,
+                asignatura: r.asignatura,
+                puntajeTotal: r.puntajeTotal
+            }));
+        }
+
+        if (allRubricas.length === 0) {
+            return `<option value="">No hay rúbricas en el banco</option>`;
+        }
+
+        // Mapeo amigable de asignatura detectada a nombres comunes de asignatura
+        const subjMatchRegex = {
+            ciencias_sociales: /social|historia|geograf|c[ií]vic|ciudadan/i,
+            ciencias_naturales: /natural|ciencias nat|f[ií]sic|qu[ií]mic|biolog/i,
+            matematicas: /matem|geometr|[aá]lgebra|c[aá]lcul/i,
+            espanol: /espa[nñ]ol|lengua|literatura|lectura|redacc/i,
+            ingles: /ingl[eé]s|english|foreign/i,
+            tecnologia: /tecnolog|computac|inform[aá]t/i,
+            artistica: /art[ií]stic|m[uú]sic|pl[aá]stic/i,
+            educacion_fisica: /f[ií]sic|deport/i,
+            valores: /valor|actitud|orientac/i
+        }[detectedSubjKey] || null;
+
+        const normalizar = s => (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        const normTipo = normalizar(tipoActividad);
+        const normNom = normalizar(nombreActividad);
+
+        // Clasificar rúbricas
+        const recomendadas = [];
+        const deMateria = [];
+        const otrasOpciones = [];
+
+        allRubricas.forEach(r => {
+            const rAsig = r.asignatura || 'General';
+            const rCat = r.categoria || '';
+            const rNom = r.nombre || '';
+            const normRCat = normalizar(rCat);
+            const normRNom = normalizar(rNom);
+
+            // ¿Pertenece a la materia actual?
+            const esMateria = (subjMatchRegex && subjMatchRegex.test(rAsig)) || 
+                              (subjConfig && subjConfig.badge && normalizar(subjConfig.badge).includes(normalizar(rAsig)));
+
+            // ¿Coincide específicamente con el tipo de actividad o nombre de la actividad?
+            let esMatchActividad = false;
+            if (normTipo && (normRCat.includes(normTipo) || normTipo.includes(normRCat) || normRNom.includes(normTipo))) {
+                esMatchActividad = true;
+            }
+            if (normNom && (normRNom.includes(normNom) || normNom.includes(normRNom))) {
+                esMatchActividad = true;
+            }
+
+            if (esMatchActividad) {
+                recomendadas.push(r);
+            } else if (esMateria) {
+                deMateria.push(r);
+            } else {
+                otrasOpciones.push(r);
+            }
+        });
+
+        let html = `<option value="">Seleccione una rúbrica de su banco...</option>`;
+
+        if (recomendadas.length > 0) {
+            html += `<optgroup label="⭐ Recomendadas para esta actividad (${recomendadas.length})">`;
+            recomendadas.forEach(r => {
+                const sel = (String(r.id) === String(selectedRubricaId)) ? 'selected' : '';
+                html += `<option value="${r.id}" ${sel}>⭐ ${r.nombre} (${r.asignatura || 'General'})</option>`;
+            });
+            html += `</optgroup>`;
+        }
+
+        if (deMateria.length > 0) {
+            html += `<optgroup label="📚 ${subjConfig.badge || 'Materia Actual'} (${deMateria.length})">`;
+            deMateria.forEach(r => {
+                const sel = (String(r.id) === String(selectedRubricaId)) ? 'selected' : '';
+                html += `<option value="${r.id}" ${sel}>${r.nombre}</option>`;
+            });
+            html += `</optgroup>`;
+        }
+
+        if (otrasOpciones.length > 0) {
+            html += `<optgroup label="🌐 Otras Asignaturas y Generales (${otrasOpciones.length})">`;
+            otrasOpciones.forEach(r => {
+                const sel = (String(r.id) === String(selectedRubricaId)) ? 'selected' : '';
+                html += `<option value="${r.id}" ${sel}>${r.nombre} (${r.asignatura || 'General'})</option>`;
+            });
+            html += `</optgroup>`;
+        }
+
+        return html;
+    };
+
     // Funciones dinámicas del modal
     Views.Evaluacion.onTipoChanged = function(tipo) {
         EvalSmartSettings.selectedTipoActividad = tipo;
@@ -2201,13 +2969,23 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
         const sugerencias = banco.filter(a => a.tipo === tipo);
         const selSug = document.getElementById('sel-sug-act');
         
-        if (sugerencias.length > 0) {
-            selSug.disabled = false;
-            selSug.innerHTML = `<option value="">Elige una actividad...</option>` + 
-                               sugerencias.map(a => `<option value="${a.id}">${a.nombre}</option>`).join('');
-        } else {
-            selSug.disabled = true;
-            selSug.innerHTML = `<option value="">Sin opciones</option>`;
+        if (selSug) {
+            if (sugerencias.length > 0) {
+                selSug.disabled = false;
+                selSug.innerHTML = `<option value="">Elige una actividad (${sugerencias.length} disponibles)...</option>` + 
+                                   sugerencias.map(a => `<option value="${a.id}">${a.nombre} (${a.puntajeMax} pts)</option>`).join('');
+            } else {
+                selSug.disabled = true;
+                selSug.innerHTML = `<option value="">Sin sugerencias predeterminadas</option>`;
+            }
+        }
+
+        // Actualizar selector de rúbricas priorizando el tipo seleccionado
+        const selRub = document.getElementById('inp-rubrica');
+        if (selRub) {
+            const currentVal = selRub.value;
+            const inpNom = document.getElementById('inp-nombre');
+            selRub.innerHTML = this.getRubricasOpcionesHtml(currentVal, tipo, inpNom ? inpNom.value : '');
         }
     };
 
@@ -2220,24 +2998,40 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
         EvalSmartSettings.currentSuggestionId = actId;
 
         // Autocompletar
-        document.getElementById('inp-nombre').value = act.nombre;
-        document.getElementById('inp-max').value = act.puntajeMax;
+        const inpNom = document.getElementById('inp-nombre');
+        if (inpNom) inpNom.value = act.nombre;
+        
+        const inpMax = document.getElementById('inp-max');
+        if (inpMax) {
+            inpMax.value = act.puntajeMax;
+            inpMax.dispatchEvent(new Event('input'));
+        }
         
         // Tipo de eval
         const evalSelect = document.getElementById('inp-tipo-eval');
-        evalSelect.value = act.tipoEval;
+        if (evalSelect && act.tipoEval) {
+            evalSelect.value = act.tipoEval;
+        }
         
-        // Rúbrica inteligente (si hay alguna en el banco que sea de esta categoría)
-        if (act.tipoEval === 'rubrica') {
-            const rubricas = Store.get('rubricas');
-            const rubSelect = document.getElementById('inp-rubrica');
-            // Busca la que mejor coincida
-            const sugerida = rubricas.find(r => r.nombre.toLowerCase().includes(act.nombre.toLowerCase()) || 
-                                              (r.categoria && r.categoria.toLowerCase().includes(act.tipo.toLowerCase())));
-            if (sugerida) {
-                rubSelect.value = sugerida.id;
+        // Actualizar opciones de rúbrica alineadas a la sugerencia y auto-seleccionar si es adecuada
+        const selRub = document.getElementById('inp-rubrica');
+        if (selRub) {
+            const rubricas = Store.get('rubricas') || [];
+            let sugeridaId = '';
+            
+            // Buscar rúbrica más afín por nombre o categoría
+            const matchExacto = rubricas.find(r => r.nombre.toLowerCase().includes(act.nombre.toLowerCase()) || 
+                                                  (act.nombre && r.nombre && act.nombre.toLowerCase().includes(r.nombre.toLowerCase())));
+            if (matchExacto) {
+                sugeridaId = matchExacto.id;
             } else {
-                rubSelect.value = ''; // Reset si no hay match
+                const matchCat = rubricas.find(r => r.categoria && act.tipo && (r.categoria.toLowerCase().includes(act.tipo.toLowerCase()) || act.tipo.toLowerCase().includes(r.categoria.toLowerCase())));
+                if (matchCat) sugeridaId = matchCat.id;
+            }
+
+            selRub.innerHTML = this.getRubricasOpcionesHtml(sugeridaId, act.tipo, act.nombre);
+            if (sugeridaId) {
+                selRub.value = sugeridaId;
             }
         }
 
@@ -2347,22 +3141,72 @@ window.generarRubricaDesdePlantilla = function(templateId, totalMaxPts) {
         Views.Evaluacion.renderRubricaProyectoEditor();
     };
     
+    Views.Evaluacion.activarAsistenteRubrica = function() {
+        const course = Store.getActiveCourse();
+        const tipo = document.getElementById('sel-tipo-act')?.value || '';
+        const nombre = document.getElementById('inp-nombre')?.value || '';
+        const maxPts = parseFloat(document.getElementById('inp-max')?.value) || 10;
+
+        Views.Evaluacion.currentProyectoRubrica = window.generarRubricaAsistida(course, tipo, nombre, maxPts);
+        Views.Evaluacion.toggleRubricaField();
+        Views.Evaluacion.renderRubricaProyectoEditor();
+    };
+
+    Views.Evaluacion.cancelarAsistenteRubrica = function() {
+        Views.Evaluacion.currentProyectoRubrica = null;
+        Views.Evaluacion.toggleRubricaField();
+    };
+
+    Views.Evaluacion.reajustarPesosRubrica = function() {
+        const rub = Views.Evaluacion.currentProyectoRubrica;
+        if (!rub || !Array.isArray(rub.criterios) || rub.criterios.length === 0) return;
+        const maxPts = Math.max(0.5, parseFloat(document.getElementById('inp-max')?.value) || 10);
+        const items = rub.criterios.map(c => ({
+            name: c.nombre,
+            weight: parseFloat(c.peso) || 1,
+            desc: {
+                inicial: c.descripciones?.lvl_inicial,
+                basico: c.descripciones?.lvl_basico,
+                avanzado: c.descripciones?.lvl_avanzado,
+                excelente: c.descripciones?.lvl_excelente
+            }
+        }));
+        rub.puntajeTotal = maxPts;
+        rub.criterios = window._buildCriteriosRubrica(items, maxPts);
+        Views.Evaluacion.renderRubricaProyectoEditor();
+    };
+
     // Toggle hook
     const _oldToggle = Views.Evaluacion.toggleRubricaField;
 Views.Evaluacion.toggleRubricaField = function() {
         const t = document.getElementById('inp-tipo-eval').value;
         const sec = document.getElementById('sec-rubrica');
         const sel = document.getElementById('inp-rubrica');
+        const cGlobal = document.getElementById('container-rubrica-global');
+        const cProy = document.getElementById('container-rubrica-proyecto');
+        const editor = document.getElementById('rubrica-proyecto-editor');
+        const btnVolver = document.getElementById('btn-volver-banco-rubrica');
+
         if (t === 'rubrica') {
             sec.style.display = 'block';
             const esProyecto = document.getElementById('sel-tipo-act') ? document.getElementById('sel-tipo-act').value === 'Proyecto' : false;
             if (esProyecto) {
-                document.getElementById('container-rubrica-global').style.display = 'none';
-                document.getElementById('container-rubrica-proyecto').style.display = 'block';
+                if (cGlobal) cGlobal.style.display = 'none';
+                if (cProy) cProy.style.display = 'block';
+                if (btnVolver) btnVolver.style.display = 'none';
+                if (editor) editor.style.display = Views.Evaluacion.currentProyectoRubrica ? 'block' : 'none';
+                sel.required = false;
+            } else if (Views.Evaluacion.currentProyectoRubrica) {
+                if (cGlobal) cGlobal.style.display = 'none';
+                if (cProy) cProy.style.display = 'none';
+                if (btnVolver) btnVolver.style.display = 'inline-flex';
+                if (editor) editor.style.display = 'block';
                 sel.required = false;
             } else {
-                document.getElementById('container-rubrica-global').style.display = 'block';
-                document.getElementById('container-rubrica-proyecto').style.display = 'none';
+                if (cGlobal) cGlobal.style.display = 'block';
+                if (cProy) cProy.style.display = 'none';
+                if (btnVolver) btnVolver.style.display = 'none';
+                if (editor) editor.style.display = 'none';
                 sel.required = true;
             }
         } else {
@@ -2547,13 +3391,17 @@ Views.Evaluacion.toggleRubricaField = function() {
         }
 
         // VALIDACIÓN ESTRICTA: No permitir exceder el límite máximo de la dimensión
-        const currentDimsList = (Store.data.configAcademica && Store.data.configAcademica.dimensions) || [
+        const isRecupParcial = (data.parcialId === 'recuperacion');
+        const currentDimsList = isRecupParcial ? [
+            { key: 'aula', nombre: 'Guía / Acumulativo de Reforzamiento', porcentaje: 40, max: 40 },
+            { key: 'examenes', nombre: 'Examen de Recuperación', porcentaje: 60, max: 60 }
+        ] : ((Store.data.configAcademica && Store.data.configAcademica.dimensions) || [
             { key: 'extraAula', nombre: 'Actividades Extra-Aula', porcentaje: 10 },
             { key: 'aula', nombre: 'Actividades de Aula', porcentaje: 25 },
             { key: 'actitudes', nombre: 'Valores y Actitudes', porcentaje: 10 },
             { key: 'expresiones', nombre: 'Expresiones Artísticas', porcentaje: 5 },
             { key: 'examenes', nombre: 'Examen Escrito', porcentaje: 50 }
-        ];
+        ]);
         const currentDim = currentDimsList.find(d => d.key === data.dimensionKey);
         const maxPermitidoDim = currentDim ? parseFloat(currentDim.porcentaje) : 100;
         const otrasActividades = (Store.get('actividades') || []).filter(a => 
@@ -2593,21 +3441,35 @@ Views.Evaluacion.toggleRubricaField = function() {
         const elTipoAct = form.querySelector('#sel-tipo-act');
         const esProyecto = (elTipoAct ? elTipoAct.value : (actId ? (Store.get('actividades') || []).find(a=>a.id===actId).tipo : '')) === 'Proyecto';
         if (data.tipoEval === 'rubrica') {
-            if (esProyecto) {
-                if (!Views.Evaluacion.currentProyectoRubrica) {
-                    UI.toast('Debes configurar la rúbrica del proyecto', 'error');
-                    return;
-                }
+            if (Views.Evaluacion.currentProyectoRubrica) {
                 const maxPts = parseFloat(data.puntajeMax);
                 const suma = Views.Evaluacion.currentProyectoRubrica.criterios.reduce((s, c) => s + parseFloat(c.peso||0), 0);
                 if (Math.abs(suma - maxPts) > 0.1) {
                     UI.toast(`La suma de los criterios (${Math.round(suma*10)/10}) no coincide con el máximo de la actividad (${maxPts})`, 'error');
                     return;
                 }
+                Views.Evaluacion.currentProyectoRubrica.nombre = (data.nombre || Views.Evaluacion.currentProyectoRubrica.nombre || 'Rúbrica de Actividad').trim();
+                Views.Evaluacion.currentProyectoRubrica.puntajeTotal = maxPts;
                 data.rubricaPersonalizada = Views.Evaluacion.currentProyectoRubrica;
-                data.rubricaId = ''; // No usa banco global
+                data.rubricaId = ''; // Usa rúbrica incrustada en la actividad
+
+                const chkGuardarBanco = form.querySelector('#chk-guardar-rubrica-banco');
+                if (chkGuardarBanco && chkGuardarBanco.checked && typeof Store !== 'undefined') {
+                    const cAct = Store.getActiveCourse();
+                    const subjCfg = (typeof BancoCurricularInteligente !== 'undefined')
+                        ? BancoCurricularInteligente.getSubjectConfig(cAct)
+                        : null;
+                    const rubCopia = JSON.parse(JSON.stringify(Views.Evaluacion.currentProyectoRubrica));
+                    rubCopia.id = 'rub_' + Date.now();
+                    rubCopia.asignatura = (cAct && (cAct.asignatura || cAct.materia)) || (subjCfg && subjCfg.label) || 'General';
+                    rubCopia.categoria = elTipoAct ? elTipoAct.value : 'General';
+                    Store.add('rubricas', rubCopia);
+                }
+            } else if (esProyecto) {
+                UI.toast('Debes configurar la rúbrica del proyecto', 'error');
+                return;
             } else if (!data.rubricaId) {
-                UI.toast('Debes seleccionar una rúbrica', 'error');
+                UI.toast('Debes seleccionar una rúbrica o crearla con el Asistente', 'error');
                 return;
             }
         }
@@ -2716,9 +3578,9 @@ Views.Evaluacion.toggleRubricaField = function() {
             }
         } else {
             // Check max limit
-            const dim = Store.data.configAcademica.dimensions.find(d => d.key === data.dimensionKey);
+            const dim = currentDimsList.find(d => d.key === data.dimensionKey);
             const currentCount = (Store.get('actividades') || []).filter(a => a.cursoId === data.cursoId && a.dimensionKey === data.dimensionKey && a.parcialId === data.parcialId).length;
-            if (dim && currentCount >= dim.max) {
+            if (!isRecupParcial && dim && dim.max && currentCount >= dim.max) {
                 alert(`⚠️ Has alcanzado el límite máximo de ${dim.max} actividades en esta dimensión para el parcial seleccionado.`);
                 return;
             }
@@ -3942,28 +4804,35 @@ console.log('[EvalSmart] Módulo Inteligente Cargado ✅');
 
             const extraSection = `
                 <!-- Tarjeta de Actividades Extraordinarias con Estilo de Dimensión de Evaluación -->
-                <div class="card hover-lift" style="background: #f5f3ff; border: 1.5px solid #c7d2fe; margin-bottom: 0; cursor: pointer; transition: all 0.2s; border-radius: var(--radius-lg);" 
+                <div class="card hover-lift" style="background: #f5f3ff; border: 1.5px solid #c7d2fe; border-radius: 18px; margin-bottom: 0; cursor: pointer; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 2px 8px rgba(0,0,0,0.03);" 
                      onclick="Views.Evaluacion.renderParcialActividadesExtraordinarias('${parcial.id}')"
-                     onmouseover="this.style.boxShadow='var(--shadow-hover)'; this.style.transform='translateY(-3px)';"
-                     onmouseout="this.style.boxShadow='none'; this.style.transform='translateY(0)';">
-                    <div class="card-b" style="padding: 16px; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; text-align: center;">
-                        <!-- Icono decorativo de fondo -->
-                        <i data-lucide="calendar-check" style="position: absolute; top: -5px; right: -5px; width: 60px; height: 60px; color: #4f46e5; opacity: 0.12;"></i>
+                     onmouseover="this.style.boxShadow='0 8px 24px rgba(79, 70, 229, 0.28)'; this.style.transform='translateY(-3px)'; var b=this.querySelector('.dim-icon-badge'); if(b) b.style.transform='scale(1.1) rotate(4deg)';"
+                     onmouseout="this.style.boxShadow='0 2px 8px rgba(0,0,0,0.03)'; this.style.transform='translateY(0)'; var b=this.querySelector('.dim-icon-badge'); if(b) b.style.transform='scale(1) rotate(0deg)';">
+                    <div class="card-b" style="padding: 18px 18px 16px 18px; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; text-align: center;">
+                        
+                        <!-- Fila Superior: Badge Puntos Extras e Icono Insignia Moderno y Definido -->
+                        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 6px;">
+                            <span style="background: #e0e7ff; color: #3730a3; font-size: 10px; font-weight: 850; padding: 3px 10px; border-radius: 20px; border: 1px solid #c7d2fe; letter-spacing: 0.02em;">
+                                Puntos Extras
+                            </span>
+                            <div class="dim-icon-badge" style="width: 44px; height: 44px; border-radius: 13px; background: #ffffff; border: 1.5px solid #c7d2fe; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.22), 0 1px 3px rgba(0,0,0,0.04); display: flex; align-items: center; justify-content: center; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);">
+                                <i data-lucide="award" style="width: 22px; height: 22px; color: #4f46e5; stroke-width: 2.3;"></i>
+                            </div>
+                        </div>
                         
                         <div style="position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; width: 100%;">
-                            <div style="margin-bottom: 6px;">
-                                <span style="background: #e0e7ff; color: #3730a3; font-size: 9px; font-weight: 800; padding: 1px 8px; border-radius: 20px; border: 1px solid #c7d2fe;">Puntos Extras</span>
-                            </div>
-                            <h5 style="color: #3730a3; font-size: 16px; font-weight: 800; margin: 0 0 12px; line-height: 1.2;">Actividades Extraordinarias</h5>
+                            <h5 style="color: #3730a3; font-size: 15.5px; font-weight: 850; margin: 4px 0 12px; line-height: 1.25; min-height: 38px; display: flex; align-items: center; justify-content: center;">
+                                Actividades Extraordinarias
+                            </h5>
                             
                             <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%;">
-                                <div style="display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.75); padding: 4px 10px; border-radius: 20px; border: 1px solid #c7d2fe;">
-                                    <i data-lucide="clipboard-list" style="width: 12px; height: 12px; color: #4f46e5;"></i>
-                                    <span style="font-size: 13px; font-weight: 600; color: #3730a3;">${totalExtraActs} <span style="font-size: 9px; color: #6366f1; font-weight: 400;">act.</span></span>
+                                <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.85); padding: 4px 12px; border-radius: 20px; border: 1px solid #c7d2fe; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+                                    <i data-lucide="clipboard-list" style="width: 13px; height: 13px; color: #4f46e5;"></i>
+                                    <span style="font-size: 12.5px; font-weight: 700; color: #3730a3;">${totalExtraActs} <span style="font-size: 9.5px; color: #6366f1; font-weight: 500;">act.</span></span>
                                 </div>
-                                <div style="display: flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 700; color: #4f46e5;">
+                                <div style="display: flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 800; color: #4f46e5; margin-top: 2px;">
                                     <span>Gestionar</span>
-                                    <i data-lucide="arrow-right" style="width: 12px; height: 12px;"></i>
+                                    <i data-lucide="arrow-right" style="width: 13px; height: 13px;"></i>
                                 </div>
                             </div>
                         </div>
@@ -3995,12 +4864,13 @@ console.log('[EvalSmart] Módulo Inteligente Cargado ✅');
     };
 
     Views.Evaluacion.clearAllExtraordinaryActivities = function(parcialId) {
-        UI.confirm('¿Vaciar todas las actividades extraordinarias de este parcial?', 'Se eliminarán todas las actividades extraordinarias creadas para este parcial.', () => {
+        UI.confirm('¿Vaciar todas las actividades extraordinarias de este parcial?', 'Se eliminarán todas las actividades extraordinarias creadas para este parcial y los puntos asignados. Esta acción no se puede deshacer.', () => {
             const c = Store.getActiveCourse();
             if (!c) return;
             const acts = Store.getExtraordinaryActivities(c.id, parcialId);
             acts.forEach(a => Store.deleteExtraordinaryActivity(a.id));
-            UI.toast('Actividades vaciadas correctamente', 'info');
+            Store.save();
+            UI.toast('Actividades extraordinarias vaciadas correctamente', 'info');
             Views.Evaluacion.renderParcialActividadesExtraordinarias(parcialId);
         });
     };
@@ -4369,9 +5239,10 @@ console.log('[EvalSmart] Módulo Inteligente Cargado ✅');
 
     // Confirmación y Eliminación de una opción
     Views.Evaluacion.deleteExtraordinaryActivity = function(actId, parcialId) {
-        UI.confirm('¿Eliminar esta opción de actividad extraordinarias?', 'Se eliminarán los puntos asignados en esta opción específica. Esta acción no se puede deshacer.', () => {
+        UI.confirm('¿Eliminar esta actividad extraordinaria?', 'Se eliminarán los puntos asignados a los estudiantes en esta actividad. Esta acción no se puede deshacer.', () => {
             Store.deleteExtraordinaryActivity(actId);
-            UI.toast('Opción eliminada', 'info');
+            Store.save();
+            UI.toast('Actividad extraordinaria eliminada', 'info');
             Views.Evaluacion.renderParcialActividadesExtraordinarias(parcialId);
         });
     };
