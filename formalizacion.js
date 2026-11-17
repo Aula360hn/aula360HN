@@ -174,7 +174,7 @@ Views.Formalizacion = {
                         <h4 class="font-semibold text-sm mb-3 flex items-center gap-2"><i data-lucide="info" class="w-4 h-4 text-blue-400"></i> ¿Cómo funciona?</h4>
                         <ol class="text-xs text-muted space-y-1.5 list-decimal list-inside">
                             <li>Selecciona el <b>Parcial del curso</b> y el <b>Término BC</b> correspondiente (ej. P1).</li>
-                            <li>Selecciona la <b>Asignatura</b> y el <b>Grado</b> para buscar en el Banco Curricular.</li>
+                            <li>Selecciona el <b>Campo del Conocimiento</b> y el <b>Grado</b> para buscar en el Banco Curricular.</li>
                             <li>Presiona <b>Generar desde Banco Curricular</b> para crear la matriz prellenada con estándares y contenidos reales.</li>
                             <li>Edita las celdas directamente, agrega filas y <b>Guarda / Imprime</b>.</li>
                             <li>Si el banco está vacío usa <b>Matriz en blanco</b> y llena manualmente.</li>
@@ -490,7 +490,7 @@ contenido: cEscr.join('\n\n'),
                             <h2 class="font-bold text-center text-xl uppercase tracking-wider">${centro}</h2>
                             <h3 class="font-bold text-center text-lg text-slate-700 mt-1 uppercase">Jornalización del Parcial</h3>
                             <div class="grid grid-cols-2 gap-x-8 gap-y-2 text-sm mt-6">
-                                <div><span class="font-bold">Asignatura:</span> ${course.asignatura || '____________________'}</div>
+                                <div><span class="font-bold">Campo del Conocimiento:</span> ${course.asignatura || '____________________'}</div>
                                 <div><span class="font-bold">Grado:</span> ${course.grado || '_____'}° — <span class="font-bold">Sección:</span> ${course.seccion || '_____'}</div>
                                 <div><span class="font-bold">Jornada:</span> ${jornada}</div>
                                 <div><span class="font-bold">Docente:</span> ${docente}</div>

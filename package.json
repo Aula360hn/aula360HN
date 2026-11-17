@@ -1,10 +1,11 @@
 {
     "name": "aula-360-hn",
-    "version": "1.4.8",
+    "version": "1.9.4",
     "description": "Aula 360 HN - Gestión Académica Profesional",
     "main": "index.html",
     "scripts": {
         "start": "npx serve www",
+        "test": "node tests/academic_engine.test.js && node tests/auto_backup.test.js",
         "build": "node build_www.js",
         "cap:init": "npx cap init \"Aula 360 HN\" com.wipin.aula360 --web-dir www",
         "android:add": "npx cap add android",

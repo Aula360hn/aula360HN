@@ -1245,22 +1245,12 @@ window.RID = (function () {
 
         html2pdf().set(opt).from(element).output('blob').then(function (blob) {
             const fileName = code + '.pdf';
-            const file = new File([blob], fileName, { type: 'application/pdf' });
-
-            if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                navigator.share({
-                    title: `Documento ${code}`,
-                    text: 'Te comparto el documento generado desde el Repositorio Institucional.',
-                    files: [file]
-                }).then(() => UI.toast('Compartido con éxito.', 'success'))
-                    .catch((err) => console.log('Cancelado / Error', err));
-            } else {
-                UI.toast('Descargando PDF localmente...', 'success');
-                const link = document.createElement('a');
-                link.href = URL.createObjectURL(blob);
-                link.download = fileName;
-                link.click();
-            }
+            UI.shareData({
+                title: `Documento ${code}`,
+                text: 'Te comparto el documento generado desde el Repositorio Institucional.',
+                blob: blob,
+                fileName: fileName
+            });
         });
     }
 

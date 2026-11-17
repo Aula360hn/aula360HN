@@ -161,7 +161,7 @@ Views.Sace = {
     render() {
         const contentHtml = this.renderStep1();
         return `
-            <div class="sace-wrap fade-in" style="max-width: 1000px; margin: 0 auto; padding: 20px; font-family: var(--font-main);">
+            <div class="sace-wrap fade-in" style="width: 100%; max-width: 100%; margin: 0; padding: 4px 8px; font-family: var(--font-main); box-sizing: border-box;">
                 <div id="sace-step-container">
                     ${contentHtml}
                 </div>
@@ -438,101 +438,150 @@ Views.Sace = {
         const course = Store.get('cursos').find(c => c.id === this.selectedCourseId);
         if (!course) return [];
 
+        // 1. Si el usuario cargó la macro Excel de SACE, respetar el ORDEN EXACTO de las filas de SACE
+        if (this.matchedStudents && this.matchedStudents.length > 0) {
+            const localStudents = Store.getStudentsByCourse(course.id) || [];
+            const studentMap = new Map(localStudents.map(s => [s.id, s]));
+            const ordered = [];
+            this.matchedStudents.forEach(m => {
+                const st = studentMap.get(m.localId);
+                if (st) {
+                    ordered.push({ ...st, identidad: m.saceIdentidad || st.identidad });
+                }
+            });
+            if (ordered.length > 0) return ordered;
+        }
+
         const students = Store.getStudentsByCourse(course.id) || [];
-        // Ordenar alfabéticamente por nombre completo (estándar SACE)
-        return students.sort((a, b) => (a.nombreCompleto || '').localeCompare(b.nombreCompleto || ''));
+        // 2. Orden oficial SACE Honduras: Listado de Mujeres (Femenino A-Z) primero, luego Varones (Masculino A-Z)
+        return students.sort((a, b) => {
+            const gA = String(a.genero || a.sexo || '').trim().toUpperCase();
+            const gB = String(b.genero || b.sexo || '').trim().toUpperCase();
+            const isFemA = gA.startsWith('F') ? 0 : 1;
+            const isFemB = gB.startsWith('F') ? 0 : 1;
+            if (isFemA !== isFemB) return isFemA - isFemB;
+            return (a.nombreCompleto || '').localeCompare(b.nombreCompleto || '');
+        });
+    },
+
+    copyParcial(parcialId, mode = 'both') {
+        const students = this.getCourseStudentList();
+        if (students.length === 0) {
+            UI.toast('No hay estudiantes matriculados en el curso seleccionado.', 'warning');
+            return;
+        }
+
+        const parcMap = {
+            p1: { name: 'I Parcial', cellBoth: 'D9', cellGrades: 'E9', cellInas: 'D9', inKey: 'p1_in', ntKey: 'p1_nt' },
+            p2: { name: 'II Parcial', cellBoth: 'F9', cellGrades: 'G9', cellInas: 'F9', inKey: 'p2_in', ntKey: 'p2_nt' },
+            p3: { name: 'III Parcial', cellBoth: 'H9', cellGrades: 'I9', cellInas: 'H9', inKey: 'p3_in', ntKey: 'p3_nt' },
+            p4: { name: 'IV Parcial', cellBoth: 'J9', cellGrades: 'K9', cellInas: 'J9', inKey: 'p4_in', ntKey: 'p4_nt' }
+        };
+
+        const cfg = parcMap[parcialId] || parcMap.p1;
+        let hasGrades = false;
+        let hasAbsences = false;
+
+        const lines = students.map(st => {
+            const gr = this.calculateStudentGrades(st.id, this.selectedCourseId);
+            const inas = gr[cfg.inKey];
+            const nota = gr[cfg.ntKey];
+
+            if (nota !== '' && nota !== undefined && nota !== null) hasGrades = true;
+            if (inas !== '' && inas !== undefined && inas !== null && Number(inas) > 0) hasAbsences = true;
+
+            const inasVal = (inas !== '' && inas !== undefined && inas !== null) ? inas : '';
+            const notaVal = (nota !== '' && nota !== undefined && nota !== null) ? nota : '';
+
+            if (mode === 'grades') {
+                return `${notaVal}`;
+            } else if (mode === 'absences') {
+                return `${inasVal}`;
+            } else {
+                return `${inasVal}\t${notaVal}`;
+            }
+        });
+
+        const tsvText = lines.join('\n');
+        const targetCell = mode === 'grades' ? cfg.cellGrades : cfg.cellBoth;
+
+        if (mode === 'grades') {
+            if (!hasGrades) {
+                this.copyToClipboard(tsvText, `Aviso: No hay notas registradas en ${cfg.name}. Se copiaron celdas vacías.`);
+            } else {
+                this.copyToClipboard(tsvText, `¡Notas de ${cfg.name} (${students.length} alumnos) copiadas! Ubícate en la celda ${targetCell} en Excel y presiona Ctrl + V.`);
+            }
+        } else if (mode === 'absences') {
+            if (!hasAbsences) {
+                this.copyToClipboard(tsvText, `Aviso: No hay inasistencias registradas en ${cfg.name} (0 faltas). Ubícate en ${targetCell} y presiona Ctrl + V.`);
+            } else {
+                this.copyToClipboard(tsvText, `¡Inasistencias de ${cfg.name} (${students.length} alumnos) copiadas! Ubícate en ${targetCell} y presiona Ctrl + V.`);
+            }
+        } else {
+            if (!hasGrades && !hasAbsences) {
+                this.copyToClipboard(tsvText, `Aviso: Sin calificaciones ni faltas registradas en ${cfg.name}. Ubícate en ${targetCell} y presiona Ctrl + V.`);
+            } else {
+                this.copyToClipboard(tsvText, `¡${cfg.name} copiado (Faltas + Notas de ${students.length} alumnos)! Ubícate en la celda ${targetCell} en Excel y presiona Ctrl + V.`);
+            }
+        }
+    },
+
+    copyAllParciales() {
+        const students = this.getCourseStudentList();
+        if (students.length === 0) {
+            UI.toast('No hay estudiantes matriculados en el curso seleccionado.', 'warning');
+            return;
+        }
+
+        let hasAnyData = false;
+        const lines = students.map(st => {
+            const gr = this.calculateStudentGrades(st.id, this.selectedCourseId);
+            const p1_in = (gr.p1_in !== '' && gr.p1_in !== undefined && gr.p1_in !== null) ? gr.p1_in : '';
+            const p1_nt = (gr.p1_nt !== '' && gr.p1_nt !== undefined && gr.p1_nt !== null) ? gr.p1_nt : '';
+            const p2_in = (gr.p2_in !== '' && gr.p2_in !== undefined && gr.p2_in !== null) ? gr.p2_in : '';
+            const p2_nt = (gr.p2_nt !== '' && gr.p2_nt !== undefined && gr.p2_nt !== null) ? gr.p2_nt : '';
+            const p3_in = (gr.p3_in !== '' && gr.p3_in !== undefined && gr.p3_in !== null) ? gr.p3_in : '';
+            const p3_nt = (gr.p3_nt !== '' && gr.p3_nt !== undefined && gr.p3_nt !== null) ? gr.p3_nt : '';
+            const p4_in = (gr.p4_in !== '' && gr.p4_in !== undefined && gr.p4_in !== null) ? gr.p4_in : '';
+            const p4_nt = (gr.p4_nt !== '' && gr.p4_nt !== undefined && gr.p4_nt !== null) ? gr.p4_nt : '';
+
+            if (p1_nt || p2_nt || p3_nt || p4_nt || p1_in || p2_in || p3_in || p4_in) hasAnyData = true;
+
+            return `${p1_in}\t${p1_nt}\t${p2_in}\t${p2_nt}\t${p3_in}\t${p3_nt}\t${p4_in}\t${p4_nt}`;
+        });
+
+        const tsvText = lines.join('\n');
+        this.copyToClipboard(tsvText, `¡Los 4 parciales completos de ${students.length} alumnos copiados (columnas D9 a K9)! Ubícate en la celda D9 en Excel y presiona Ctrl + V.`);
     },
 
     copyBothColumns() {
-        const students = this.getCourseStudentList();
-        if (students.length === 0) {
-            UI.toast('No hay estudiantes matriculados en el curso seleccionado.', 'warning');
-            return;
-        }
-
-        const lines = students.map(st => {
-            const gr = this.calculateStudentGrades(st.id, this.selectedCourseId);
-            let inas = '';
-            let nota = '';
-
-            if (this.selectedParcialId === 'p1') { inas = gr.p1_in; nota = gr.p1_nt; }
-            else if (this.selectedParcialId === 'p2') { inas = gr.p2_in; nota = gr.p2_nt; }
-            else if (this.selectedParcialId === 'p3') { inas = gr.p3_in; nota = gr.p3_nt; }
-            else if (this.selectedParcialId === 'p4') { inas = gr.p4_in; nota = gr.p4_nt; }
-            else { inas = gr.p1_in; nota = gr.p1_nt; }
-
-            const inasVal = inas !== '' && inas !== undefined ? inas : '';
-            const notaVal = nota !== '' && nota !== undefined ? nota : '';
-            return `${inasVal}\t${notaVal}`;
-        });
-
-        const tsvText = lines.join('\n');
-        this.copyToClipboard(tsvText, `📋 ¡Faltas y Notas de ${students.length} alumnos copiadas! Ubícate en la celda D8 en Excel y presiona Ctrl + V.`);
+        this.copyParcial(this.selectedParcialId || 'p1', 'both');
     },
 
     copyGradesOnly() {
-        const students = this.getCourseStudentList();
-        if (students.length === 0) {
-            UI.toast('No hay estudiantes matriculados en el curso seleccionado.', 'warning');
-            return;
-        }
-
-        const lines = students.map(st => {
-            const gr = this.calculateStudentGrades(st.id, this.selectedCourseId);
-            let nota = '';
-
-            if (this.selectedParcialId === 'p1') nota = gr.p1_nt;
-            else if (this.selectedParcialId === 'p2') nota = gr.p2_nt;
-            else if (this.selectedParcialId === 'p3') nota = gr.p3_nt;
-            else if (this.selectedParcialId === 'p4') nota = gr.p4_nt;
-            else nota = gr.p1_nt;
-
-            return `${nota !== '' && nota !== undefined ? nota : ''}`;
-        });
-
-        const tsvText = lines.join('\n');
-        this.copyToClipboard(tsvText, `📝 ¡Calificaciones de ${students.length} alumnos copiadas! Ubícate en la celda E8 en Excel y presiona Ctrl + V.`);
+        this.copyParcial(this.selectedParcialId || 'p1', 'grades');
     },
 
     copyAbsencesOnly() {
-        const students = this.getCourseStudentList();
-        if (students.length === 0) {
-            UI.toast('No hay estudiantes matriculados en el curso seleccionado.', 'warning');
-            return;
-        }
-
-        const lines = students.map(st => {
-            const gr = this.calculateStudentGrades(st.id, this.selectedCourseId);
-            let inas = '';
-
-            if (this.selectedParcialId === 'p1') inas = gr.p1_in;
-            else if (this.selectedParcialId === 'p2') inas = gr.p2_in;
-            else if (this.selectedParcialId === 'p3') inas = gr.p3_in;
-            else if (this.selectedParcialId === 'p4') inas = gr.p4_in;
-            else inas = gr.p1_in;
-
-            return `${inas !== '' && inas !== undefined ? inas : ''}`;
-        });
-
-        const tsvText = lines.join('\n');
-        this.copyToClipboard(tsvText, `🗓️ ¡Inasistencias por fecha de ${students.length} alumnos copiadas! Ubícate en la celda D8 en Excel y presiona Ctrl + V.`);
+        this.copyParcial(this.selectedParcialId || 'p1', 'absences');
     },
 
-    copyPersonalityTraits() {
+    copyPersonalityTraits(parcialId = null) {
         const students = this.getCourseStudentList();
         if (students.length === 0) {
             UI.toast('No hay estudiantes matriculados en el curso seleccionado.', 'warning');
             return;
         }
 
-        const parcialId = this.selectedParcialId === 'all' ? 'p1' : this.selectedParcialId;
+        const pId = parcialId || this.selectedParcialId || 'p1';
+        const activeP = pId === 'all' ? 'p1' : pId;
         const lines = students.map(st => {
-            const p = this.getPersonalityTraits(st.id, parcialId);
+            const p = this.getPersonalityTraits(st.id, activeP);
             return `${p.puntualidad || 4}\t${p.espiritu || 4}\t${p.orden || 4}\t${p.sociabilidad || 4}\t${p.moralidad || 4}`;
         });
 
         const tsvText = lines.join('\n');
-        this.copyToClipboard(tsvText, `🌟 ¡Conducta/Personalidad (5 columnas) copiada! Ubícate en la celda E9 en Excel y presiona Ctrl + V.`);
+        this.copyToClipboard(tsvText, `¡Conducta y Personalidad de ${students.length} alumnos copiada! Ubícate en la celda E9 en Excel y presiona Ctrl + V.`);
     },
 
     renderCourseOptions(selectedId = null) {
@@ -553,7 +602,7 @@ Views.Sace = {
 
         if (distinctCenters > 1) {
             return Object.keys(centers).map(center => `
-                <optgroup label="🏫 ${center}">
+                <optgroup label="Centro: ${center}">
                     ${centers[center].map(c => {
                         const cleanGrado = String(c.grado || '').replace(/[°º]/g, '').trim();
                         const isSelected = selectedId === c.id ? 'selected' : '';
@@ -584,73 +633,105 @@ Views.Sace = {
 
         const activeCourse = courses.find(c => c.id === this.selectedCourseId);
         const courseOptionsHtml = this.renderCourseOptions(this.selectedCourseId);
-        
-        const realParciales = this.selectedCourseId ? Store.getParcialByCourse(this.selectedCourseId) : [];
-        const activeParcialObj = realParciales.find(p => p.id === this.selectedParcialId);
-        
-        let dateRangeStr = '';
-        if (activeParcialObj && activeParcialObj.fechaInicio && activeParcialObj.fechaFin) {
-            dateRangeStr = `📅 Rango de fechas del parcial: <strong>${activeParcialObj.fechaInicio}</strong> al <strong>${activeParcialObj.fechaFin}</strong> (las inasistencias se contabilizan automáticamente en este período)`;
-        } else if (this.selectedParcialId === 'all') {
-            dateRangeStr = '📅 Llenado anual: calcula inasistencias en el rango de fechas individual de cada parcial.';
-        } else {
-            dateRangeStr = '💡 En la Configuración Académica puedes definir las fechas de inicio y fin de cada parcial para filtrar automáticamente las faltas de asistencia por período.';
-        }
 
         const students = this.getCourseStudentList();
         const totalStudents = students.length;
+        let studentsWithGrades = 0;
 
-        // Renderizar filas de la tabla previa en pantalla
+        // Renderizar filas de la tabla con los 4 parciales completos
         const tableRows = students.map((st, idx) => {
             const gr = this.calculateStudentGrades(st.id, this.selectedCourseId);
-            let inas = '';
-            let nota = '';
 
-            if (this.selectedParcialId === 'p1') { inas = gr.p1_in; nota = gr.p1_nt; }
-            else if (this.selectedParcialId === 'p2') { inas = gr.p2_in; nota = gr.p2_nt; }
-            else if (this.selectedParcialId === 'p3') { inas = gr.p3_in; nota = gr.p3_nt; }
-            else if (this.selectedParcialId === 'p4') { inas = gr.p4_in; nota = gr.p4_nt; }
-            else { inas = gr.p1_in; nota = gr.p1_nt; }
+            const hasAnyGrade = [gr.p1_nt, gr.p2_nt, gr.p3_nt, gr.p4_nt].some(n => n !== '' && n !== null && n !== undefined);
+            if (hasAnyGrade) studentsWithGrades++;
 
-            const gradeDisplay = nota !== '' && nota !== undefined ? nota : '—';
-            const inasDisplay = inas !== '' && inas !== undefined && inas > 0 ? inas : '0';
+            const formatInas = (val) => (val !== '' && val !== null && val !== undefined && Number(val) > 0) ? String(val) : '0';
+            const formatNota = (val) => (val !== '' && val !== null && val !== undefined) ? String(val) : '—';
+
+            const p1_in = formatInas(gr.p1_in);
+            const p1_nt = formatNota(gr.p1_nt);
+            const p2_in = formatInas(gr.p2_in);
+            const p2_nt = formatNota(gr.p2_nt);
+            const p3_in = formatInas(gr.p3_in);
+            const p3_nt = formatNota(gr.p3_nt);
+            const p4_in = formatInas(gr.p4_in);
+            const p4_nt = formatNota(gr.p4_nt);
+
+            const validGrades = [gr.p1_nt, gr.p2_nt, gr.p3_nt, gr.p4_nt]
+                .filter(n => n !== '' && n !== null && n !== undefined && !isNaN(Number(n)))
+                .map(Number);
+
+            let promDisplay = '—';
+            let promNum = null;
+            if (validGrades.length > 0) {
+                promNum = Math.round(validGrades.reduce((a, b) => a + b, 0) / validGrades.length);
+                promDisplay = String(promNum);
+            }
 
             let desempeno = 'Avanzado (91-100%)';
             let badgeColor = 'var(--primary)';
             let badgeBg = 'rgba(0, 200, 83, 0.08)';
 
-            const nNum = Number(nota);
-            if (isNaN(nNum) || nota === '') {
+            if (promNum === null) {
                 desempeno = 'Sin Calificación';
                 badgeColor = '#64748b';
                 badgeBg = '#f1f5f9';
-            } else if (nNum < 60) {
+            } else if (promNum < 60) {
                 desempeno = 'Insuficiente (0-59%)';
                 badgeColor = '#dc2626';
                 badgeBg = 'rgba(220, 38, 38, 0.08)';
-            } else if (nNum <= 69) {
+            } else if (promNum <= 69) {
                 desempeno = 'Básico (60-69%)';
                 badgeColor = '#f59e0b';
                 badgeBg = 'rgba(245, 158, 11, 0.08)';
-            } else if (nNum <= 80) {
+            } else if (promNum <= 80) {
                 desempeno = 'Satisfactorio (70-80%)';
                 badgeColor = 'var(--info)';
                 badgeBg = 'rgba(41, 121, 255, 0.08)';
-            } else if (nNum <= 90) {
+            } else if (promNum <= 90) {
                 desempeno = 'Muy Satisfactorio (81-90%)';
                 badgeColor = 'var(--brand-purple)';
                 badgeBg = 'rgba(123, 31, 162, 0.08)';
             }
 
+            const getGradeColor = (notaStr) => {
+                if (notaStr === '—') return 'var(--text-muted)';
+                const num = Number(notaStr);
+                if (num >= 70) return 'var(--primary)';
+                if (num >= 60) return '#f59e0b';
+                return '#dc2626';
+            };
+
+            const promColor = promNum !== null ? (promNum >= 70 ? 'var(--primary)' : '#dc2626') : 'var(--text-muted)';
+
             return `
                 <tr style="border-bottom: 1px solid var(--border-soft); background: var(--surface);">
-                    <td style="padding: 10px 14px; text-align: center; font-weight: 700; color: var(--text-muted); width: 40px;">${idx + 1}</td>
-                    <td style="padding: 10px 14px; font-weight: 700; font-family: monospace; color: var(--text-main);">${st.identidad || 'SIN DNI'}</td>
-                    <td style="padding: 10px 14px; font-weight: 600; color: var(--text-main);">${(st.nombreCompleto || '').toUpperCase()}</td>
-                    <td style="padding: 10px 14px; text-align: center; font-weight: 700; color: var(--text-main); font-size: 13px;">${inasDisplay}</td>
-                    <td style="padding: 10px 14px; text-align: center; font-weight: 800; color: var(--primary); font-size: 14px;">${gradeDisplay}</td>
-                    <td style="padding: 10px 14px; text-align: center;">
-                        <span style="font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 6px; color: ${badgeColor}; background: ${badgeBg}; display: inline-block;">${desempeno}</span>
+                    <td style="padding: 4px 6px; text-align: center; font-weight: 700; color: var(--text-muted); width: 28px; border-right: 1px solid var(--border-soft); font-size: 11px;">${idx + 1}</td>
+                    <td style="padding: 4px 6px; font-weight: 700; font-family: monospace; color: var(--text-main); font-size: 10.5px; width: 105px; border-right: 1px solid var(--border-soft); white-space: nowrap;">${st.identidad || 'SIN DNI'}</td>
+                    <td style="padding: 4px 8px; font-weight: 700; color: var(--text-main); white-space: nowrap; border-right: 1px solid var(--border-soft); font-size: 11px; max-width: 190px; overflow: hidden; text-overflow: ellipsis;" title="${(st.nombreCompleto || '').toUpperCase()}">${(st.nombreCompleto || '').toUpperCase()}</td>
+                    
+                    <!-- I PARCIAL -->
+                    <td style="padding: 4px 3px; text-align: center; color: ${Number(p1_in) > 0 ? '#d97706' : 'var(--text-muted)'}; font-weight: ${Number(p1_in) > 0 ? '700' : '500'}; font-size: 11px; width: 34px;">${p1_in}</td>
+                    <td style="padding: 4px 3px; text-align: center; font-weight: 900; color: ${getGradeColor(p1_nt)}; font-size: 11.5px; border-right: 1.5px solid var(--border-soft); width: 44px; background: rgba(0,200,83,0.02);">${p1_nt}</td>
+                    
+                    <!-- II PARCIAL -->
+                    <td style="padding: 4px 3px; text-align: center; color: ${Number(p2_in) > 0 ? '#d97706' : 'var(--text-muted)'}; font-weight: ${Number(p2_in) > 0 ? '700' : '500'}; font-size: 11px; width: 34px;">${p2_in}</td>
+                    <td style="padding: 4px 3px; text-align: center; font-weight: 900; color: ${getGradeColor(p2_nt)}; font-size: 11.5px; border-right: 1.5px solid var(--border-soft); width: 44px; background: rgba(0,200,83,0.02);">${p2_nt}</td>
+                    
+                    <!-- III PARCIAL -->
+                    <td style="padding: 4px 3px; text-align: center; color: ${Number(p3_in) > 0 ? '#d97706' : 'var(--text-muted)'}; font-weight: ${Number(p3_in) > 0 ? '700' : '500'}; font-size: 11px; width: 34px;">${p3_in}</td>
+                    <td style="padding: 4px 3px; text-align: center; font-weight: 900; color: ${getGradeColor(p3_nt)}; font-size: 11.5px; border-right: 1.5px solid var(--border-soft); width: 44px; background: rgba(0,200,83,0.02);">${p3_nt}</td>
+                    
+                    <!-- IV PARCIAL -->
+                    <td style="padding: 4px 3px; text-align: center; color: ${Number(p4_in) > 0 ? '#d97706' : 'var(--text-muted)'}; font-weight: ${Number(p4_in) > 0 ? '700' : '500'}; font-size: 11px; width: 34px;">${p4_in}</td>
+                    <td style="padding: 4px 3px; text-align: center; font-weight: 900; color: ${getGradeColor(p4_nt)}; font-size: 11.5px; border-right: 1.5px solid var(--border-soft); width: 44px; background: rgba(0,200,83,0.02);">${p4_nt}</td>
+                    
+                    <!-- PROMEDIO -->
+                    <td style="padding: 4px 3px; text-align: center; font-weight: 900; color: ${promColor}; font-size: 12px; border-right: 1px solid var(--border-soft); width: 44px; background: var(--bg-muted);">${promDisplay}</td>
+                    
+                    <!-- DESEMPEÑO -->
+                    <td style="padding: 4px 4px; text-align: center; width: 85px;">
+                        <span style="font-size: 9px; font-weight: 800; color: ${badgeColor}; background: ${badgeBg}; padding: 2px 6px; border-radius: 99px; white-space: nowrap; border: 1px solid ${badgeColor}; display: inline-block;">${desempeno}</span>
                     </td>
                 </tr>
             `;
@@ -685,58 +766,44 @@ Views.Sace = {
                                 <i data-lucide="shield-alert" style="width: 22px; height: 22px;"></i>
                             </div>
                             <div>
-                                <h4 style="margin: 0; font-size: 14px; font-weight: 800; color: #dc2626;">⛔ BLOQUEO DE SEGURIDAD SACE: ASIGNATURA INCOMPATIBLE</h4>
+                                <h4 style="margin: 0; font-size: 14px; font-weight: 800; color: #dc2626;">BLOQUEO DE SEGURIDAD SACE: ASIGNATURA INCOMPATIBLE</h4>
                                 <p style="margin: 4px 0 0; font-size: 12.5px; color: var(--text-main); line-height: 1.5;">
                                     ${this.subjectMismatchError}
                                 </p>
                                 <p style="margin: 8px 0 0; font-size: 11.5px; font-weight: 700; color: #b91c1c;">
-                                    💡 Solución: Seleccione arriba el curso correspondiente a <strong>${this.detectedSubject}</strong> o suba la plantilla descargada para <strong>${activeCourse ? activeCourse.asignatura : ''}</strong>.
+                                    Sugerencia: Seleccione arriba el curso correspondiente a <strong>${this.detectedSubject}</strong> o suba la plantilla descargada para <strong>${activeCourse ? activeCourse.asignatura : ''}</strong>.
                                 </p>
                             </div>
                         </div>
                     </div>
                 `;
             } else {
-                const typeLabel = this.fileType === 'notas' ? '📊 Plantilla SACE: Notas e Inasistencias' : '🌟 Plantilla SACE: Conducta / Personalidad';
+                const typeLabel = this.fileType === 'notas' ? 'Plantilla SACE: Notas e Inasistencias' : 'Plantilla SACE: Conducta / Personalidad';
                 const typeBadgeBg = this.fileType === 'notas' ? 'rgba(0, 200, 83, 0.1)' : 'rgba(123, 31, 162, 0.1)';
                 const typeBadgeColor = this.fileType === 'notas' ? 'var(--primary)' : '#7b1fa2';
-                
-                const parcialText = this.selectedParcialId === 'p1' ? 'I Parcial' :
-                                    this.selectedParcialId === 'p2' ? 'II Parcial' :
-                                    this.selectedParcialId === 'p3' ? 'III Parcial' :
-                                    this.selectedParcialId === 'p4' ? 'IV Parcial' : 'Todos los Parciales (Anual)';
 
                 fileStatusCard = `
-                    <div style="background: rgba(0, 200, 83, 0.04); border: 1.5px solid rgba(0, 200, 83, 0.3); border-radius: var(--radius-md); padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+                    <div style="background: rgba(0, 200, 83, 0.04); border: 1.5px solid rgba(0, 200, 83, 0.3); border-radius: var(--radius-md); padding: 18px; display: flex; flex-direction: column; gap: 14px;">
                         <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
                             <div>
-                                <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); letter-spacing:0.04em;">Plantilla Cargada y Vinculada</span>
-                                <div style="font-size: 14px; font-weight: 800; color: var(--text-main); font-family: monospace; margin-top: 2px;">
+                                <span style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); letter-spacing:0.04em;">Plantilla Cargada y Sincronizada</span>
+                                <div style="font-size: 13.5px; font-weight: 800; color: var(--text-main); font-family: monospace; margin-top: 2px;">
                                     ${this.selectedFile.name}
                                 </div>
                             </div>
-                            <span style="font-size: 11px; padding: 4px 12px; background: ${typeBadgeBg}; border: 1px solid ${typeBadgeColor}; border-radius: 99px; color: ${typeBadgeColor}; font-weight: 800;">
-                                ${typeLabel}
+                            <span style="font-size: 11px; padding: 4px 12px; background: ${typeBadgeBg}; border: 1px solid ${typeBadgeColor}; border-radius: 99px; color: ${typeBadgeColor}; font-weight: 800; display: inline-flex; align-items: center; gap: 5px;">
+                                <i data-lucide="${this.fileType === 'notas' ? 'file-spreadsheet' : 'heart-handshake'}" style="width: 13px; height: 13px;"></i> ${typeLabel}
                             </span>
                         </div>
 
-                        ${this.gradeMismatchWarning ? `
-                            <div style="background: rgba(245, 158, 11, 0.06); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: var(--radius-sm); padding: 8px 12px; font-size: 11.5px; color: #b45309; display: flex; align-items: center; gap: 6px;">
-                                <i data-lucide="alert-triangle" style="width: 14px; flex-shrink: 0;"></i>
-                                <span>${this.gradeMismatchWarning}</span>
-                            </div>
-                        ` : ''}
-
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; background: #ffffff; padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-soft); font-size: 12.5px;">
-                            <div>👥 <strong>Vinculación:</strong> <span style="color: var(--primary); font-weight: 800;">${matchedCount} / ${totalLocalStudents} alumnos</span></div>
-                            <div>📋 <strong>Período:</strong> <span style="color: var(--text-main); font-weight: 700;">${parcialText}</span></div>
-                            <div>🗓️ <strong>Inasistencias:</strong> <span style="color: var(--text-main); font-weight: 600;">Filtradas por fecha</span></div>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; background: #ffffff; padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-soft); font-size: 12px;">
+                            <div style="display:flex; align-items:center; gap:6px;"><i data-lucide="users" style="width:14px; height:14px; color:var(--primary);"></i> <strong>Orden de Lista:</strong> <span style="color: var(--primary); font-weight: 800;">${matchedCount} / ${totalLocalStudents} alumnos en orden exacto</span></div>
+                            <div style="display:flex; align-items:center; gap:6px;"><i data-lucide="award" style="width:14px; height:14px; color:var(--primary);"></i> <strong>Calificaciones:</strong> <span style="color: var(--text-main); font-weight: 700;">Vinculadas por DNI y Nombre</span></div>
                         </div>
 
-                        <!-- Botón Principal de Acción 1-Clic -->
-                        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 4px;">
-                            <button onclick="Views.Sace.generateFilledFile()" class="btn btn-primary" style="flex: 1; min-width: 240px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 20px; font-weight: 800; font-size: 14px; box-shadow: 0 4px 14px rgba(0, 200, 83, 0.3);">
-                                <i data-lucide="zap" style="width: 18px; height: 18px;"></i> ⚡ Llenar y Descargar Plantilla SACE (.xls)
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button onclick="Views.Sace.generateFilledFile()" class="btn btn-primary" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 18px; font-weight: 800; font-size: 13px;">
+                                <i data-lucide="download" style="width: 16px; height: 16px;"></i> Descargar Plantilla SACE Inyectada (.xls)
                             </button>
                         </div>
                     </div>
@@ -745,151 +812,168 @@ Views.Sace = {
         }
 
         return `
-            <div class="card" style="border-radius: var(--radius-lg); background: var(--bg-card); border: 1px solid var(--border-soft); padding: 32px; display: flex; flex-direction: column; gap: 24px;">
-                <!-- Encabezado Principal -->
-                <div style="text-align: center; max-width: 720px; margin: 0 auto;">
-                    <div style="width: 56px; height: 56px; border-radius: 16px; background: rgba(0, 200, 83, 0.08); color: var(--primary); display: grid; place-items: center; margin: 0 auto 16px;">
-                        <i data-lucide="shield-check" style="width: 28px; height: 28px;"></i>
-                    </div>
-                    <h2 class="text-xl font-bold" style="color: var(--text-main); margin: 0;">Módulo de Integración SACE</h2>
-                    <p class="text-muted text-sm mt-2" style="line-height: 1.5;">
-                        Transfiere inasistencias y notas a tu plantilla oficial descargada de SACE con <strong>0% modificación de propiedades o formato binario de la macro</strong>.
-                    </p>
-                </div>
-
-                <!-- Selección de Curso Activo y Parcial -->
-                <div style="background: var(--bg-muted); border: 1px solid var(--border-soft); border-radius: var(--radius-md); padding: 22px; display: flex; flex-direction: column; gap: 18px;">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                        <div style="grid-column: span 2;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                                <label class="font-bold text-xs uppercase tracking-wider text-muted" style="margin:0;">🏫 Curso Activo:</label>
-                                <span style="font-size: 11px; font-weight: 700; color: var(--primary);">
-                                    ${totalStudents} alumnos en sistema
-                                </span>
-                            </div>
-                            <select id="sace-active-course" class="a360-input" style="width: 100%; font-size: 13.5px; height: 40px; font-weight: 600;" onchange="Views.Sace.selectedCourseId = this.value; Views.Sace.loadPersonalityData(); if (Views.Sace.workbook) Views.Sace.recalculateMatches(); Router.render();">
+            <div class="card" style="border-radius: var(--radius-md); background: var(--bg-card); border: 1px solid var(--border-soft); padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; width: 100%; box-sizing: border-box;">
+                <!-- Barra Superior Ejecutiva Unificada (Cero Espacio Desperdiciado) -->
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; background: #ffffff; border: 1px solid var(--border-soft); border-radius: 10px; padding: 6px 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+                    <!-- Título y Selección de Curso -->
+                    <div style="display: flex; align-items: center; gap: 8px; flex: 1; min-width: 270px;">
+                        <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(0, 200, 83, 0.1); color: var(--primary); display: grid; place-items: center; flex-shrink: 0;">
+                            <i data-lucide="shield-check" style="width: 18px; height: 18px;"></i>
+                        </div>
+                        <div style="min-width: 0;">
+                            <h2 style="font-size: 13.5px; font-weight: 800; color: var(--text-main); margin: 0; line-height: 1.2;">
+                                Integración SACE
+                            </h2>
+                            <span style="font-size: 9.5px; font-weight: 700; color: var(--text-muted);">
+                                Orden Femenino (A-Z) → Masculino (A-Z)
+                            </span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 6px; margin-left: 6px;">
+                            <select id="sace-active-course" class="a360-input" style="font-size: 11.5px; height: 30px; font-weight: 700; padding: 2px 8px; border-radius: 6px;" onchange="Views.Sace.selectedCourseId = this.value; Views.Sace.loadPersonalityData(); if (Views.Sace.workbook) Views.Sace.recalculateMatches(); Router.render();">
                                 ${courseOptionsHtml}
                             </select>
                         </div>
-
-                        <div style="grid-column: span 2;">
-                            <label class="font-bold text-xs uppercase tracking-wider text-muted" style="display: block; margin-bottom: 6px;">
-                                📅 Parcial a Exportar:
-                            </label>
-                            <select id="sace-parcial-select" class="a360-input" style="width: 100%; font-size: 13px; height: 38px;" onchange="Views.Sace.selectedParcialId = this.value; Router.render();">
-                                <option value="p1" ${this.selectedParcialId === 'p1' ? 'selected' : ''}>I Parcial</option>
-                                <option value="p2" ${this.selectedParcialId === 'p2' ? 'selected' : ''}>II Parcial</option>
-                                <option value="p3" ${this.selectedParcialId === 'p3' ? 'selected' : ''}>III Parcial</option>
-                                <option value="p4" ${this.selectedParcialId === 'p4' ? 'selected' : ''}>IV Parcial</option>
-                                <option value="all" ${this.selectedParcialId === 'all' ? 'selected' : ''}>✨ Todos los Parciales (Llenado Anual Completo + Recuperación)</option>
-                            </select>
-                            <p style="font-size: 11.5px; color: var(--text-muted); margin: 6px 0 0; line-height: 1.4;">
-                                ${dateRangeStr}
-                            </p>
-                        </div>
                     </div>
-                </div>
 
-                <!-- MÉTODO RECOMENDADO Y 100% FIEL A SACE: COPIADO AL PORTAPAPELES -->
-                <div style="background: rgba(0, 200, 83, 0.04); border: 2px solid rgba(0, 200, 83, 0.35); border-radius: var(--radius-md); padding: 24px; display: flex; flex-direction: column; gap: 18px; box-shadow: 0 4px 16px rgba(0, 200, 83, 0.08);">
-                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-                        <div style="font-weight: 800; font-size: 15px; color: var(--primary); display: flex; align-items: center; gap: 8px;">
-                            <i data-lucide="check-circle-2" style="width: 20px; height: 20px;"></i>
-                            Método 100% Seguro: Pegado Directo al Excel Oficial (Ctrl + V)
-                        </div>
-                        <span style="font-size: 10.5px; font-weight: 800; padding: 4px 10px; background: rgba(0, 200, 83, 0.15); color: var(--primary); border-radius: 99px; border: 1px solid rgba(0, 200, 83, 0.4);">
-                            ⭐ Recomendado (0% Modificación de Propiedades)
+                    <!-- Botones de Acción de Copiado Rápido -->
+                    <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                        <button onclick="Views.Sace.copyAllParciales()" class="btn btn-primary btn-sm" style="display: inline-flex; align-items: center; gap: 5px; font-weight: 800; font-size: 11px; padding: 5px 10px; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,200,83,0.25);">
+                            <i data-lucide="copy" style="width: 13px; height: 13px;"></i> Copiar Año (D9:K9)
+                        </button>
+                        <button onclick="Views.Sace.copyPersonalityTraits()" class="btn btn-secondary btn-sm" style="display: inline-flex; align-items: center; gap: 5px; font-weight: 700; font-size: 11px; padding: 5px 9px; border-radius: 6px; background: #fff; border: 1px solid rgba(123, 31, 162, 0.3); color: #7b1fa2;">
+                            <i data-lucide="heart-handshake" style="width: 13px; height: 13px; color: #7b1fa2;"></i> Copiar Conducta (E9)
+                        </button>
+                        <span style="font-size: 10px; font-weight: 800; color: var(--primary); background: rgba(0, 200, 83, 0.1); border: 1px solid rgba(0, 200, 83, 0.3); padding: 2px 6px; border-radius: 6px;">
+                            ${totalStudents} alumnos
                         </span>
                     </div>
-
-                    <p style="margin: 0; font-size: 12.5px; color: var(--text-main); line-height: 1.5;">
-                        Haz clic en un botón para copiar los datos en orden alfabético SACE, abre tu archivo descargado en Excel, selecciona la celda de inicio y presiona <strong>Ctrl + V</strong>. Tu archivo mantendrá el 100% de sus propiedades y formato original.
-                    </p>
-
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;">
-                        <button onclick="Views.Sace.copyBothColumns()" class="btn btn-primary" style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 16px; font-weight: 800; font-size: 13.5px; box-shadow: 0 4px 14px rgba(0, 200, 83, 0.3);">
-                            <i data-lucide="copy" style="width: 18px;"></i> 📋 Copiar Faltas + Notas (Pegar en D8)
-                        </button>
-
-                        <button onclick="Views.Sace.copyGradesOnly()" class="btn btn-secondary" style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 16px; font-weight: 700; font-size: 13px;">
-                            <i data-lucide="file-text" style="width: 16px;"></i> 📝 Copiar Solo Notas (Pegar en E8)
-                        </button>
-
-                        <button onclick="Views.Sace.copyAbsencesOnly()" class="btn btn-secondary" style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 16px; font-weight: 700; font-size: 13px;">
-                            <i data-lucide="calendar-check" style="width: 16px;"></i> 🗓️ Copiar Solo Faltas (Pegar en D8)
-                        </button>
-
-                        <button onclick="Views.Sace.copyPersonalityTraits()" class="btn btn-secondary" style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 16px; font-weight: 700; font-size: 13px; color: #7b1fa2; border-color: rgba(123, 31, 162, 0.3);">
-                            <i data-lucide="smile" style="width: 16px;"></i> 🌟 Copiar Conducta (Pegar en E9)
-                        </button>
-                    </div>
-
-                    <!-- Paso a Paso Visual -->
-                    <div style="background: #ffffff; border: 1px solid var(--border-soft); border-radius: var(--radius-sm); padding: 14px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; font-size: 12px;">
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <span style="width: 22px; height: 22px; border-radius: 50%; background: var(--primary); color: #fff; font-weight: 800; display: grid; place-items: center; font-size: 11px; flex-shrink: 0;">1</span>
-                            <span>Abre tu macro <strong>.xls</strong> descargada de SACE en Excel.</span>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <span style="width: 22px; height: 22px; border-radius: 50%; background: var(--primary); color: #fff; font-weight: 800; display: grid; place-items: center; font-size: 11px; flex-shrink: 0;">2</span>
-                            <span>Haz clic en un botón de arriba y selecciona la celda <strong>D8</strong> o <strong>E8</strong>.</span>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <span style="width: 22px; height: 22px; border-radius: 50%; background: var(--primary); color: #fff; font-weight: 800; display: grid; place-items: center; font-size: 11px; flex-shrink: 0;">3</span>
-                            <span>Presiona <strong>Ctrl + V</strong>. Guarda en Excel y sube a SACE.</span>
-                        </div>
-                    </div>
                 </div>
 
-                <!-- MÉTODO OPCIONAL DE LLENADO DIRECTO DE ARCHIVO (DROPZONE) -->
-                <div style="background: var(--bg-muted); border: 1px solid var(--border-soft); border-radius: var(--radius-md); padding: 20px; display: flex; flex-direction: column; gap: 14px;">
-                    <div style="font-weight: 700; font-size: 13px; color: var(--text-muted); display: flex; align-items: center; gap: 6px;">
-                        <i data-lucide="file-up" style="width: 16px;"></i> Opción B: Inyección Directa en Archivo por Navegador
+                <!-- Tira de Instrucciones Compacta -->
+                <div style="background: rgba(0, 200, 83, 0.03); border: 1px solid rgba(0, 200, 83, 0.18); border-radius: 6px; padding: 4px 10px; font-size: 10.5px; color: var(--text-soft); display: flex; align-items: center; justify-content: space-between; gap: 6px;">
+                    <div style="display: flex; align-items: center; gap: 5px;">
+                        <i data-lucide="info" style="width: 13px; height: 13px; color: var(--primary); flex-shrink: 0;"></i>
+                        <span>Clic en el botón de copiar (ej. <strong>D9</strong>, <strong>F9</strong>, <strong>H9</strong>, <strong>J9</strong>), abre el Excel SACE en la primera celda del estudiante y presiona <strong>Ctrl + V</strong>.</span>
                     </div>
-
-                    <div style="border: 2px dashed #cbd5e1; border-radius: var(--radius-md); padding: 24px 20px; text-align: center; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 10px; background: ${isFileLoaded ? 'rgba(0, 200, 83, 0.02)' : '#ffffff'};" id="sace-dropzone">
-                        <input type="file" id="sace-file-input" accept=".xls,.xlsx" style="display: none;" />
-                        <div style="width: 42px; height: 42px; border-radius: 50%; background: #f8fafc; border: 1px solid #e2e8f0; display: grid; place-items: center; color: var(--primary);">
-                            <i data-lucide="upload-cloud" style="width: 22px; height: 22px;"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-sm" style="margin: 0; color: var(--text-main);">
-                                ${isFileLoaded ? 'Cambiar plantilla Excel cargada' : 'Arrastre aquí la macro Excel (.xls) descargada de SACE'}
-                            </h4>
-                            <p class="text-xs text-muted mt-1">O haga clic para seleccionarla desde su computadora</p>
-                        </div>
-                    </div>
-
-                    ${fileStatusCard}
+                    <span style="font-size: 10px; font-weight: 700; color: #0284c7; white-space: nowrap;">
+                        ${studentsWithGrades} con notas
+                    </span>
                 </div>
 
-                <!-- Matriz de Verificación de Datos en Pantalla -->
-                <div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                        <h4 style="margin: 0; font-size: 13.5px; font-weight: 800; color: var(--text-main);">
-                            📊 Vista Previa de Alumnos y Datos Calculados (${totalStudents})
-                        </h4>
-                        <span style="font-size: 11px; color: var(--text-muted);">
-                            Orden alfabético exacto según norma SACE
-                        </span>
-                    </div>
-
-                    <div style="overflow-x: auto; border: 1px solid var(--border-soft); border-radius: var(--radius-md); max-height: 380px;">
-                        <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left;">
+                <!-- Tabla de los 4 Parciales con Máximo Aprovechamiento de Pantalla -->
+                <div style="width: 100%; box-sizing: border-box;">
+                    <div style="overflow-x: auto; overflow-y: auto; border: 1px solid var(--border-soft); border-radius: 8px; max-height: calc(100vh - 195px); min-height: 480px; box-shadow: 0 1px 3px rgba(0,0,0,0.03); background: #ffffff;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 11px; text-align: left; min-width: 820px;">
                             <thead style="background: var(--bg-muted); border-bottom: 2px solid var(--border-soft); position: sticky; top: 0; z-index: 10;">
+                                <!-- Fila 1 de Encabezados -->
                                 <tr>
-                                    <th style="padding: 10px 14px; color: var(--text-muted); font-weight: 700; width: 40px; text-align: center;">No.</th>
-                                    <th style="padding: 10px 14px; color: var(--text-muted); font-weight: 700;">Identidad (DNI)</th>
-                                    <th style="padding: 10px 14px; color: var(--text-muted); font-weight: 700;">Nombre del Estudiante</th>
-                                    <th style="padding: 10px 14px; text-align: center; color: var(--text-muted); font-weight: 700;">Faltas (Parcial)</th>
-                                    <th style="padding: 10px 14px; text-align: center; color: var(--text-muted); font-weight: 700;">Nota Total</th>
-                                    <th style="padding: 10px 14px; text-align: center; color: var(--text-muted); font-weight: 700;">Desempeño</th>
+                                    <th rowspan="2" style="padding: 4px 5px; color: var(--text-muted); font-weight: 800; width: 28px; text-align: center; border-right: 1px solid var(--border-soft); font-size: 10px;">No.</th>
+                                    <th rowspan="2" style="padding: 4px 5px; color: var(--text-muted); font-weight: 800; width: 105px; border-right: 1px solid var(--border-soft); font-size: 10px;">Identidad (DNI)</th>
+                                    <th rowspan="2" style="padding: 4px 6px; color: var(--text-muted); font-weight: 800; min-width: 150px; border-right: 1px solid var(--border-soft); font-size: 10px;">Nombre del Estudiante</th>
+
+                                    <!-- I PARCIAL -->
+                                    <th colspan="2" style="padding: 3px 5px; text-align: center; border-right: 1.5px solid var(--border-soft); background: rgba(0, 200, 83, 0.05); width: 80px;">
+                                        <div style="display: flex; align-items: center; justify-content: center; gap: 4px;">
+                                            <span style="font-weight: 900; color: var(--text-main); font-size: 10px;">I PARCIAL</span>
+                                            <button onclick="Views.Sace.copyParcial('p1', 'both')" title="Copiar Parcial Completo: Faltas y Notas (Pegar en celda D9 en Excel)" style="padding: 1px 5px; font-size: 9.5px; font-weight: 800; border-radius: 4px; background: var(--primary); color: #fff; border: none; display: inline-flex; align-items: center; gap: 2px; cursor: pointer;">
+                                                <i data-lucide="copy" style="width: 11px; height: 11px;"></i> D9
+                                            </button>
+                                        </div>
+                                    </th>
+
+                                    <!-- II PARCIAL -->
+                                    <th colspan="2" style="padding: 3px 5px; text-align: center; border-right: 1.5px solid var(--border-soft); background: rgba(0, 200, 83, 0.05); width: 80px;">
+                                        <div style="display: flex; align-items: center; justify-content: center; gap: 4px;">
+                                            <span style="font-weight: 900; color: var(--text-main); font-size: 10px;">II PARCIAL</span>
+                                            <button onclick="Views.Sace.copyParcial('p2', 'both')" title="Copiar Parcial Completo: Faltas y Notas (Pegar en celda F9 en Excel)" style="padding: 1px 5px; font-size: 9.5px; font-weight: 800; border-radius: 4px; background: var(--primary); color: #fff; border: none; display: inline-flex; align-items: center; gap: 2px; cursor: pointer;">
+                                                <i data-lucide="copy" style="width: 11px; height: 11px;"></i> F9
+                                            </button>
+                                        </div>
+                                    </th>
+
+                                    <!-- III PARCIAL -->
+                                    <th colspan="2" style="padding: 3px 5px; text-align: center; border-right: 1.5px solid var(--border-soft); background: rgba(0, 200, 83, 0.05); width: 80px;">
+                                        <div style="display: flex; align-items: center; justify-content: center; gap: 4px;">
+                                            <span style="font-weight: 900; color: var(--text-main); font-size: 10px;">III PARCIAL</span>
+                                            <button onclick="Views.Sace.copyParcial('p3', 'both')" title="Copiar Parcial Completo: Faltas y Notas (Pegar en celda H9 en Excel)" style="padding: 1px 5px; font-size: 9.5px; font-weight: 800; border-radius: 4px; background: var(--primary); color: #fff; border: none; display: inline-flex; align-items: center; gap: 2px; cursor: pointer;">
+                                                <i data-lucide="copy" style="width: 11px; height: 11px;"></i> H9
+                                            </button>
+                                        </div>
+                                    </th>
+
+                                    <!-- IV PARCIAL -->
+                                    <th colspan="2" style="padding: 3px 5px; text-align: center; border-right: 1.5px solid var(--border-soft); background: rgba(0, 200, 83, 0.05); width: 80px;">
+                                        <div style="display: flex; align-items: center; justify-content: center; gap: 4px;">
+                                            <span style="font-weight: 900; color: var(--text-main); font-size: 10px;">IV PARCIAL</span>
+                                            <button onclick="Views.Sace.copyParcial('p4', 'both')" title="Copiar Parcial Completo: Faltas y Notas (Pegar en celda J9 en Excel)" style="padding: 1px 5px; font-size: 9.5px; font-weight: 800; border-radius: 4px; background: var(--primary); color: #fff; border: none; display: inline-flex; align-items: center; gap: 2px; cursor: pointer;">
+                                                <i data-lucide="copy" style="width: 11px; height: 11px;"></i> J9
+                                            </button>
+                                        </div>
+                                    </th>
+
+                                    <th rowspan="2" style="padding: 4px 5px; text-align: center; color: var(--text-muted); font-weight: 800; width: 44px; border-right: 1px solid var(--border-soft); font-size: 10px;">Prom.</th>
+                                    <th rowspan="2" style="padding: 4px 5px; text-align: center; color: var(--text-muted); font-weight: 800; width: 85px; font-size: 10px;">Desempeño</th>
+                                </tr>
+
+                                <!-- Fila 2 de Subencabezados (Compactos) -->
+                                <tr style="font-size: 9px; color: var(--text-muted); border-top: 1px solid var(--border-soft);">
+                                    <th style="padding: 2px 3px; text-align: center; border-right: 1px solid var(--border-soft); font-weight: 600; width: 34px;">
+                                        <div style="display: flex; align-items: center; justify-content: center; gap: 2px;">
+                                            <span>FAL</span>
+                                            <button onclick="Views.Sace.copyParcial('p1', 'absences')" title="Copiar Inasistencias (Pegar en celda D9)" style="padding: 1px 3px; border-radius: 3px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; display: inline-flex; cursor: pointer;"><i data-lucide="copy" style="width: 10px; height: 10px;"></i></button>
+                                        </div>
+                                    </th>
+                                    <th style="padding: 2px 3px; text-align: center; border-right: 1.5px solid var(--border-soft); font-weight: 800; color: var(--primary); width: 44px;">
+                                        <div style="display: flex; align-items: center; justify-content: center; gap: 2px;">
+                                            <span>NOTA</span>
+                                            <button onclick="Views.Sace.copyParcial('p1', 'grades')" title="Copiar Notas (Pegar en celda E9)" style="padding: 1px 3px; border-radius: 3px; border: 1px solid var(--primary); background: rgba(0,200,83,0.1); color: var(--primary); display: inline-flex; cursor: pointer;"><i data-lucide="copy" style="width: 10px; height: 10px;"></i></button>
+                                        </div>
+                                    </th>
+
+                                    <th style="padding: 2px 3px; text-align: center; border-right: 1px solid var(--border-soft); font-weight: 600; width: 34px;">
+                                        <div style="display: flex; align-items: center; justify-content: center; gap: 2px;">
+                                            <span>FAL</span>
+                                            <button onclick="Views.Sace.copyParcial('p2', 'absences')" title="Copiar Inasistencias (Pegar en celda F9)" style="padding: 1px 3px; border-radius: 3px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; display: inline-flex; cursor: pointer;"><i data-lucide="copy" style="width: 10px; height: 10px;"></i></button>
+                                        </div>
+                                    </th>
+                                    <th style="padding: 2px 3px; text-align: center; border-right: 1.5px solid var(--border-soft); font-weight: 800; color: var(--primary); width: 44px;">
+                                        <div style="display: flex; align-items: center; justify-content: center; gap: 2px;">
+                                            <span>NOTA</span>
+                                            <button onclick="Views.Sace.copyParcial('p2', 'grades')" title="Copiar Notas (Pegar en celda G9)" style="padding: 1px 3px; border-radius: 3px; border: 1px solid var(--primary); background: rgba(0,200,83,0.1); color: var(--primary); display: inline-flex; cursor: pointer;"><i data-lucide="copy" style="width: 10px; height: 10px;"></i></button>
+                                        </div>
+                                    </th>
+
+                                    <th style="padding: 2px 3px; text-align: center; border-right: 1px solid var(--border-soft); font-weight: 600; width: 34px;">
+                                        <div style="display: flex; align-items: center; justify-content: center; gap: 2px;">
+                                            <span>FAL</span>
+                                            <button onclick="Views.Sace.copyParcial('p3', 'absences')" title="Copiar Inasistencias (Pegar en celda H9)" style="padding: 1px 3px; border-radius: 3px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; display: inline-flex; cursor: pointer;"><i data-lucide="copy" style="width: 10px; height: 10px;"></i></button>
+                                        </div>
+                                    </th>
+                                    <th style="padding: 2px 3px; text-align: center; border-right: 1.5px solid var(--border-soft); font-weight: 800; color: var(--primary); width: 44px;">
+                                        <div style="display: flex; align-items: center; justify-content: center; gap: 2px;">
+                                            <span>NOTA</span>
+                                            <button onclick="Views.Sace.copyParcial('p3', 'grades')" title="Copiar Notas (Pegar en celda I9)" style="padding: 1px 3px; border-radius: 3px; border: 1px solid var(--primary); background: rgba(0,200,83,0.1); color: var(--primary); display: inline-flex; cursor: pointer;"><i data-lucide="copy" style="width: 10px; height: 10px;"></i></button>
+                                        </div>
+                                    </th>
+
+                                    <th style="padding: 2px 3px; text-align: center; border-right: 1px solid var(--border-soft); font-weight: 600; width: 34px;">
+                                        <div style="display: flex; align-items: center; justify-content: center; gap: 2px;">
+                                            <span>FAL</span>
+                                            <button onclick="Views.Sace.copyParcial('p4', 'absences')" title="Copiar Inasistencias (Pegar en celda J9)" style="padding: 1px 3px; border-radius: 3px; border: 1px solid #cbd5e1; background: #ffffff; color: #475569; display: inline-flex; cursor: pointer;"><i data-lucide="copy" style="width: 10px; height: 10px;"></i></button>
+                                        </div>
+                                    </th>
+                                    <th style="padding: 2px 3px; text-align: center; border-right: 1.5px solid var(--border-soft); font-weight: 800; color: var(--primary); width: 44px;">
+                                        <div style="display: flex; align-items: center; justify-content: center; gap: 2px;">
+                                            <span>NOTA</span>
+                                            <button onclick="Views.Sace.copyParcial('p4', 'grades')" title="Copiar Notas (Pegar en celda K9)" style="padding: 1px 3px; border-radius: 3px; border: 1px solid var(--primary); background: rgba(0,200,83,0.1); color: var(--primary); display: inline-flex; cursor: pointer;"><i data-lucide="copy" style="width: 10px; height: 10px;"></i></button>
+                                        </div>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 ${tableRows.length > 0 ? tableRows : `
                                     <tr>
-                                        <td colspan="6" style="padding: 24px; text-align: center; color: var(--text-muted); font-style: italic;">
+                                        <td colspan="13" style="padding: 24px; text-align: center; color: var(--text-muted); font-style: italic;">
                                             No hay alumnos matriculados en el curso seleccionado.
                                         </td>
                                     </tr>
@@ -899,10 +983,37 @@ Views.Sace = {
                     </div>
                 </div>
 
+                <!-- Sección Opcional: Cargar Macro Excel SACE (.xls) -->
+                <div style="background: var(--bg-muted); border: 1px solid var(--border-soft); border-radius: var(--radius-md); padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+                    <div style="font-weight: 700; font-size: 12.5px; color: var(--text-muted); display: flex; align-items: center; justify-content: space-between;">
+                        <span style="display: inline-flex; align-items: center; gap: 6px;">
+                            <i data-lucide="file-up" style="width: 15px; height: 15px;"></i> Opción Avanzada: Sincronizar archivo .xls descargado de SACE
+                        </span>
+                        <span style="font-size: 10.5px; font-weight: 600; color: var(--text-muted);">
+                            Permite ordenar alumnos idéntico a tu archivo y llenar automáticamente
+                        </span>
+                    </div>
+
+                    <div style="border: 2px dashed #cbd5e1; border-radius: var(--radius-md); padding: 18px 16px; text-align: center; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 8px; background: ${isFileLoaded ? 'rgba(0, 200, 83, 0.02)' : '#ffffff'};" id="sace-dropzone">
+                        <input type="file" id="sace-file-input" accept=".xls,.xlsx" style="display: none;" />
+                        <div style="width: 38px; height: 38px; border-radius: 50%; background: #f8fafc; border: 1px solid #e2e8f0; display: grid; place-items: center; color: var(--primary);">
+                            <i data-lucide="upload-cloud" style="width: 20px; height: 20px;"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-xs" style="margin: 0; color: var(--text-main);">
+                                ${isFileLoaded ? 'Cambiar archivo Excel cargado' : 'Arrastre aquí la macro Excel (.xls) descargada de SACE'}
+                            </h4>
+                            <p class="text-xs text-muted" style="margin: 2px 0 0; font-size: 11px;">O haga clic para seleccionarla desde su computadora</p>
+                        </div>
+                    </div>
+
+                    ${fileStatusCard}
+                </div>
+
                 <!-- Enlace al portal SACE -->
-                <div style="border-top: 1px solid var(--border-soft); padding-top: 20px; text-align: right;">
-                    <a href="https://sace.se.gob.hn" target="_blank" class="btn btn-secondary btn-sm" style="display: inline-flex; align-items: center; gap: 6px;">
-                        Abrir Portal SACE (sace.se.gob.hn) <i data-lucide="external-link" style="width: 14px;"></i>
+                <div style="border-top: 1px solid var(--border-soft); padding-top: 14px; text-align: right;">
+                    <a href="https://sace.se.gob.hn" target="_blank" class="btn btn-secondary btn-sm" style="display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px;">
+                        Abrir Portal SACE (sace.se.gob.hn) <i data-lucide="external-link" style="width: 13px;"></i>
                     </a>
                 </div>
             </div>
@@ -951,9 +1062,9 @@ Views.Sace = {
                         </div>
                         
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12px; border-top: 1px solid var(--border-soft); padding-top: 10px;">
-                            <div>🏫 <strong>Centro:</strong> <span style="color: var(--text-main); font-weight: 600;">${this.detectedCenter || 'No especificado'}</span></div>
-                            <div>🎓 <strong>Grado / Sección:</strong> <span style="color: var(--text-main); font-weight: 600;">${this.detectedGrade || 'No especificado'} ${this.detectedSection ? `- Sec. ${this.detectedSection}` : ''}</span></div>
-                            <div style="grid-column: span 2;">📖 <strong>Asignatura SACE:</strong> <span style="color: var(--text-main); font-weight: 600;">${this.detectedSubject || 'No especificado'}</span></div>
+                            <div><strong>Centro:</strong> <span style="color: var(--text-main); font-weight: 600;">${this.detectedCenter || 'No especificado'}</span></div>
+                            <div><strong>Grado / Sección:</strong> <span style="color: var(--text-main); font-weight: 600;">${this.detectedGrade || 'No especificado'} ${this.detectedSection ? `- Sec. ${this.detectedSection}` : ''}</span></div>
+                            <div style="grid-column: span 2;"><strong>Asignatura SACE:</strong> <span style="color: var(--text-main); font-weight: 600;">${this.detectedSubject || 'No especificado'}</span></div>
                         </div>
                     </div>
 
@@ -981,7 +1092,7 @@ Views.Sace = {
                                 <option value="p2" ${this.selectedParcialId === 'p2' ? 'selected' : ''}>II Parcial</option>
                                 <option value="p3" ${this.selectedParcialId === 'p3' ? 'selected' : ''}>III Parcial</option>
                                 <option value="p4" ${this.selectedParcialId === 'p4' ? 'selected' : ''}>IV Parcial</option>
-                                ${this.fileType === 'notas' ? `<option value="all" ${this.selectedParcialId === 'all' ? 'selected' : ''}>✨ Todos los Parciales (Llenado Anual Completo + Recuperación)</option>` : ''}
+                                ${this.fileType === 'notas' ? `<option value="all" ${this.selectedParcialId === 'all' ? 'selected' : ''}>Todos los Parciales (Llenado Anual Completo + Recuperación)</option>` : ''}
                             </select>
                         </div>
                     </div>
@@ -1503,12 +1614,12 @@ Views.Sace = {
                 <div style="background: var(--bg-muted); border: 1px solid var(--border-soft); border-radius: var(--radius-md); padding: 18px;">
                     <h4 class="font-bold text-xs uppercase tracking-wider text-muted mb-4" style="margin-top:0;">Resumen General del Archivo:</h4>
                     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 24px; font-size: 13px;">
-                        <div>📂 <strong>Tipo de Archivo:</strong> <span style="color: var(--text-main); font-weight: 600;">${isNotas ? 'Notas e inasistencias' : 'Personalidad / Conducta'}</span></div>
-                        <div>📋 <strong>Parcial Seleccionado:</strong> <span style="color: var(--text-main); font-weight: 600;">${parcialLabel}</span></div>
-                        <div>👥 <strong>Total Alumnos en Plantilla SACE:</strong> <span style="color: var(--text-main); font-weight: 600;">${totalSace}</span></div>
-                        <div>🔗 <strong>Alumnos Vinculados:</strong> <span style="color: var(--primary); font-weight: 700;">${linkedCount} / ${totalSace}</span></div>
-                        <div>⚠️ <strong>Errores Críticos:</strong> <span style="color: #dc2626; font-weight: 700;">${errorCount}</span></div>
-                        <div>💡 <strong>Advertencias:</strong> <span style="color: #f59e0b; font-weight: 700;">${warningCount}</span></div>
+                        <div><strong>Tipo de Archivo:</strong> <span style="color: var(--text-main); font-weight: 600;">${isNotas ? 'Notas e inasistencias' : 'Personalidad / Conducta'}</span></div>
+                        <div><strong>Parcial Seleccionado:</strong> <span style="color: var(--text-main); font-weight: 600;">${parcialLabel}</span></div>
+                        <div><strong>Total Alumnos en Plantilla SACE:</strong> <span style="color: var(--text-main); font-weight: 600;">${totalSace}</span></div>
+                        <div><strong>Alumnos Vinculados:</strong> <span style="color: var(--primary); font-weight: 700;">${linkedCount} / ${totalSace}</span></div>
+                        <div><strong>Errores Críticos:</strong> <span style="color: #dc2626; font-weight: 700;">${errorCount}</span></div>
+                        <div><strong>Advertencias:</strong> <span style="color: #f59e0b; font-weight: 700;">${warningCount}</span></div>
                     </div>
                 </div>
 
@@ -1527,7 +1638,7 @@ Views.Sace = {
                     </div>
                 ` : `
                     <div style="text-align: center; padding: 12px; font-size:13px; color: var(--primary); background: rgba(0, 200, 83, 0.03); border: 1px dashed rgba(0, 200, 83, 0.2); border-radius: 8px;">
-                        🎉 No se detectaron discrepancias ortográficas, inasistencias negativas ni valores vacíos. ¡El archivo está óptimo!
+                        No se detectaron discrepancias ortográficas, inasistencias negativas ni valores vacíos. ¡El archivo está óptimo!
                     </div>
                 `}
 
@@ -1562,9 +1673,9 @@ Views.Sace = {
                 </div>
 
                 <div style="background: var(--bg-muted); border: 1px solid var(--border-soft); border-radius: var(--radius-md); padding: 18px; max-width: 480px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; gap: 12px; text-align: left; font-size:12.5px;">
-                    <div>📂 <strong>Nombre del Archivo:</strong> <span style="font-family: monospace; color: var(--text-main); font-size:11px; font-weight: 700;">${this.outputFilename || 'SACE_EXPORT.xls'}</span></div>
-                    <div>🎯 <strong>Total Alumnos Procesados:</strong> <span style="color: var(--text-main); font-weight: 700;">${this.matchedStudents.length} vinculados</span></div>
-                    <div>📋 <strong>Periodo inyectado:</strong> <span style="color: var(--text-main); font-weight: 700;">${this.selectedParcialId === 'p1' ? 'I Parcial' : this.selectedParcialId === 'p2' ? 'II Parcial' : this.selectedParcialId === 'p3' ? 'III Parcial' : 'IV Parcial'}</span></div>
+                    <div><strong>Nombre del Archivo:</strong> <span style="font-family: monospace; color: var(--text-main); font-size:11px; font-weight: 700;">${this.outputFilename || 'SACE_EXPORT.xls'}</span></div>
+                    <div><strong>Total Alumnos Procesados:</strong> <span style="color: var(--text-main); font-weight: 700;">${this.matchedStudents.length} vinculados</span></div>
+                    <div><strong>Periodo inyectado:</strong> <span style="color: var(--text-main); font-weight: 700;">${this.selectedParcialId === 'p1' ? 'I Parcial' : this.selectedParcialId === 'p2' ? 'II Parcial' : this.selectedParcialId === 'p3' ? 'III Parcial' : 'IV Parcial'}</span></div>
                 </div>
 
                 <div style="background: rgba(245, 158, 11, 0.04); border: 1px solid rgba(245, 158, 11, 0.15); border-radius: var(--radius-md); padding: 14px; max-width: 480px; margin: 0 auto; font-size: 12px; color: var(--text-soft); display: flex; gap: 8px; text-align: left; line-height:1.5;">
@@ -2173,7 +2284,7 @@ Views.Sace = {
         if (dbUpdated) {
             Store.save();
             if (typeof UI !== 'undefined' && UI.toast) {
-                UI.toast(`🎉 ¡Se auto-completó el número de Identidad (DNI) de ${updatedDniCount} alumnos en la matrícula de Aula 360 HN!`, 'success');
+                UI.toast(`Identidad (DNI) auto-completada para ${updatedDniCount} alumnos en la matrícula de Aula 360 HN.`, 'success');
             }
         }
 
@@ -2182,58 +2293,119 @@ Views.Sace = {
     },
 
     calculateStudentGrades(studentId, courseId) {
-        const cuadroKey = 'cuadro1_' + courseId;
-        const savedCuadro = localStorage.getItem(cuadroKey);
-        
-        if (savedCuadro) {
-            try {
-                const parsed = JSON.parse(savedCuadro);
-                if (parsed && Array.isArray(parsed.filas)) {
-                    const fila = parsed.filas.find(f => f.estudianteId === studentId);
-                    if (fila && fila.parciales) {
-                        const getPGrade = (pObj) => {
-                            if (!pObj) return '';
-                            if (pObj.nf !== undefined && pObj.nf !== null && pObj.nf !== '') return pObj.nf;
-                            if (pObj.nt !== undefined && pObj.nt !== null && pObj.nt !== '') return pObj.nt;
-                            return '';
-                        };
-                        return {
-                            p1_nt: getPGrade(fila.parciales.p1),
-                            p1_in: fila.parciales.p1 ? fila.parciales.p1.in : '',
-                            p2_nt: getPGrade(fila.parciales.p2),
-                            p2_in: fila.parciales.p2 ? fila.parciales.p2.in : '',
-                            p3_nt: getPGrade(fila.parciales.p3),
-                            p3_in: fila.parciales.p3 ? fila.parciales.p3.in : '',
-                            p4_nt: getPGrade(fila.parciales.p4),
-                            p4_in: fila.parciales.p4 ? fila.parciales.p4.in : '',
-                            recuperacion: fila.recuperacion || ''
-                        };
-                    }
+        // 1. Integración en vivo con el motor oficial de Cuadro #1 (Calificaciones SACE)
+        let c1Data = null;
+        if (typeof Views !== 'undefined' && Views.Cuadro1) {
+            c1Data = Views.Cuadro1.getData(courseId);
+            if (!c1Data || !Array.isArray(c1Data.filas) || c1Data.filas.length === 0) {
+                try {
+                    c1Data = Views.Cuadro1.buildDefault(courseId);
+                } catch(e) {
+                    console.warn('[SACE] Error al generar buildDefault en Cuadro1:', e);
                 }
-            } catch(e) { console.error('Error al analizar caché del Cuadro #1', e); }
+            }
         }
 
-        const realParciales = Store.getParcialByCourse(courseId);
-        const allActivities = Store.get('actividades').filter(a => a.cursoId === courseId);
+        // Si tenemos datos válidos desde Cuadro #1
+        if (c1Data && Array.isArray(c1Data.filas)) {
+            const fila = c1Data.filas.find(f => String(f.estudianteId) === String(studentId));
+            if (fila && fila.parciales) {
+                const courseParciales = c1Data.parciales || (Views.Cuadro1 ? Views.Cuadro1.getCourseParciales(courseId) : []);
+                
+                const extractDataForParcial = (pIdx) => {
+                    const pObj = courseParciales[pIdx];
+                    const pId = pObj ? String(pObj.id) : ('p' + (pIdx + 1));
+                    const pNum = pObj ? String(pObj.numero) : String(pIdx + 1);
+                    
+                    // Buscar en fila.parciales de manera tolerante (id, p1, numero, etc.)
+                    let cell = fila.parciales[pId] ||
+                               fila.parciales['p' + (pIdx + 1)] ||
+                               fila.parciales[pNum] ||
+                               fila.parciales['p' + pNum];
+
+                    if (!cell && typeof fila.parciales === 'object') {
+                        const vals = Object.values(fila.parciales);
+                        if (vals[pIdx]) cell = vals[pIdx];
+                    }
+
+                    if (!cell) return { nt: '', in: '' };
+                    
+                    let grade = '';
+                    if (cell.nf !== undefined && cell.nf !== null && cell.nf !== '') grade = cell.nf;
+                    else if (cell.nt !== undefined && cell.nt !== null && cell.nt !== '') grade = cell.nt;
+
+                    let inas = '';
+                    if (cell.in !== undefined && cell.in !== null && cell.in !== '') inas = cell.in;
+                    
+                    return { nt: grade, in: inas };
+                };
+
+                const p1 = extractDataForParcial(0);
+                const p2 = extractDataForParcial(1);
+                const p3 = extractDataForParcial(2);
+                const p4 = extractDataForParcial(3);
+
+                return {
+                    p1_nt: p1.nt,
+                    p1_in: p1.in,
+                    p2_nt: p2.nt,
+                    p2_in: p2.in,
+                    p3_nt: p3.nt,
+                    p3_in: p3.in,
+                    p4_nt: p4.nt,
+                    p4_in: p4.in,
+                    recuperacion: fila.recuperacion || ''
+                };
+            }
+        }
+
+        // 2. Fallback de cálculo directo usando el motor de Cuadro1 si fila individual no estaba en caché
+        if (typeof Views !== 'undefined' && Views.Cuadro1 && typeof Views.Cuadro1.computeStudentGrade === 'function') {
+            const courseParciales = Views.Cuadro1.getCourseParciales(courseId);
+            const res = { p1_nt: '', p1_in: '', p2_nt: '', p2_in: '', p3_nt: '', p3_in: '', p4_nt: '', p4_in: '', recuperacion: '' };
+            ['p1', 'p2', 'p3', 'p4'].forEach((pKey, idx) => {
+                const pObj = courseParciales[idx] || { id: pKey, numero: idx + 1 };
+                const grade = Views.Cuadro1.computeStudentGrade(studentId, courseId, pObj, idx);
+                const absences = typeof Views.Cuadro1.computeStudentAbsences === 'function'
+                    ? Views.Cuadro1.computeStudentAbsences(studentId, courseId, pObj, idx)
+                    : '';
+                if (grade !== '' && grade !== undefined) res[`${pKey}_nt`] = grade;
+                if (absences !== '' && absences !== undefined) res[`${pKey}_in`] = absences;
+            });
+            return res;
+        }
+
+        // 3. Fallback directo sobre Store si Cuadro1 no existiera
+        const realParciales = (typeof Store.getParcialByCourse === 'function' ? Store.getParcialByCourse(courseId) : []) || [];
+        const allActivities = (Store.get('actividades') || []).filter(a => a.cursoId === courseId || a.courseId === courseId);
         const allCalificaciones = Store.get('calificaciones') || [];
         const dims = (Store.data.configAcademica && Store.data.configAcademica.dimensions) || (typeof CONFIG !== 'undefined' && CONFIG ? CONFIG.dimensions : []) || [];
 
-        const studentScores = allCalificaciones.filter(sc => sc.estudianteId === studentId && sc.cursoId === courseId);
+        const studentScores = allCalificaciones.filter(sc => sc.estudianteId === studentId && (sc.cursoId === courseId || sc.courseId === courseId || !sc.cursoId));
         const result = { p1_nt: '', p1_in: '', p2_nt: '', p2_in: '', p3_nt: '', p3_in: '', p4_nt: '', p4_in: '', recuperacion: '' };
 
         const pIds = ['p1', 'p2', 'p3', 'p4'];
         pIds.forEach((pId, pIdx) => {
-            const reParc = realParciales.find(p => p.id === pId) || realParciales[pIdx];
-            if (!reParc) return;
-
-            const parcialActivities = allActivities.filter(a => a.parcialId === reParc.id);
-            const columns = [];
+            const reParc = realParciales.find(p => p.id === pId) || realParciales[pIdx] || { id: pId, numero: pIdx + 1 };
             
+            const matchIds = new Set([String(reParc.id), String(reParc.numero || (pIdx + 1)), 'p' + (reParc.numero || (pIdx + 1)), pId]);
+            const parcialActivities = allActivities.filter(a => {
+                const aP = String(a.parcialId !== undefined ? a.parcialId : (a.parcial || ''));
+                return matchIds.has(aP);
+            });
+
+            const columns = [];
             dims.forEach(dim => {
-                const dimActs = parcialActivities.filter(a => a.dimensionKey === dim.key || a.dimension === dim.key);
-                if (dimActs.length > 0) {
-                    columns.push({ dimension: dim, activities: dimActs });
-                }
+                const dimActs = parcialActivities.filter(a => {
+                    const dk = a.dimensionKey || a.dimension || '';
+                    return dk === dim.key ||
+                           (dim.key === 'aula' && (dk === 'actividadesAula' || dk === 'aula')) ||
+                           (dim.key === 'extraAula' && (dk === 'actividadesExtraAula' || dk === 'extraAula')) ||
+                           (dim.key === 'actitudes' && (dk === 'valores' || dk === 'actitudes')) ||
+                           (dim.key === 'expresiones' && (dk === 'artisticas' || dk === 'expresiones')) ||
+                           (dim.key === 'examenes' && (dk === 'examen' || dk === 'examenes'));
+                });
+                if (dimActs.length > 0) columns.push({ dimension: dim, activities: dimActs });
             });
 
             let studentFinal = 0;
@@ -2242,12 +2414,12 @@ Views.Sace = {
                 let dimMax = 0;
                 col.activities.forEach(act => {
                     const score = studentScores.find(sc => sc.actividadId === act.id);
-                    const obt = score ? (score.puntajeObtenido !== undefined && score.puntajeObtenido !== null ? Number(score.puntajeObtenido) : Number(score.nota || 0)) : 0;
+                    const obt = score ? (score.puntajeObtenido !== undefined && score.puntajeObtenido !== null && score.puntajeObtenido !== '' ? Number(score.puntajeObtenido) : Number(score.nota || 0)) : 0;
                     const mx = Number(act.puntajeMax || 0);
                     if (!isNaN(obt)) dimObtained += obt;
                     if (!isNaN(mx))  dimMax      += mx;
                 });
-                const dimSub = dimMax > 0 ? ((dimObtained / dimMax) * col.dimension.porcentaje) : 0;
+                const dimSub = dimMax > 0 ? Math.min((dimObtained / dimMax) * col.dimension.porcentaje, col.dimension.porcentaje) : 0;
                 studentFinal += dimSub;
             });
 
@@ -2255,16 +2427,17 @@ Views.Sace = {
                 result[`${pId}_nt`] = Math.round(studentFinal);
             }
 
-            // Contabilizar inasistencias por parcial (filtrado estricto por fechaInicio y fechaFin del parcial)
+            // Inasistencias
             const inasistencias = (Store.data.asistencia || []).filter(a => {
-                if (a.estudianteId !== studentId || a.cursoId !== courseId) return false;
+                if (a.estudianteId !== studentId || (a.cursoId !== courseId && a.courseId !== courseId)) return false;
                 if (a.estado !== 'A' && a.estado !== 'Ausente') return false;
                 if (reParc.fechaInicio && reParc.fechaFin) {
                     return a.fecha >= reParc.fechaInicio && a.fecha <= reParc.fechaFin;
                 }
-                return a.parcialId === reParc.id || a.parcial === reParc.id;
+                const aP = String(a.parcialId !== undefined ? a.parcialId : (a.parcial || ''));
+                return matchIds.has(aP);
             }).length;
-            
+
             if (inasistencias > 0) result[`${pId}_in`] = inasistencias;
         });
 

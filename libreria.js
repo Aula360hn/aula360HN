@@ -505,9 +505,9 @@ window.Libreria = {
         // Cargar libreria PDF.js si no existe
         if (!window.pdfjsLib) {
             const script = document.createElement('script');
-            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js';
+            script.src = 'pdf.min.js';
             script.onload = () => {
-                window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+                window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.js';
             };
             document.head.appendChild(script);
         }
@@ -831,7 +831,7 @@ window.Libreria = {
 
                     <!-- Marcadores Pedagógicos -->
                     <div class="split-content" id="tab-bookmark">
-                        <label class="sp-label">Asignatura</label>
+                        <label class="sp-label">Campo del Conocimiento</label>
                         <input type="text" class="sp-input" id="sp-bm-subject" placeholder="Ej: Ciencias">
                         
                         <div style="display:flex; gap:10px;">
@@ -5541,7 +5541,7 @@ trailer <</Size 6/Root 1 0 R>>
         return new Promise((resolve) => {
             if (window.html2canvas) return resolve();
             const s = document.createElement('script');
-            s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+            s.src = 'html2canvas.min.js';
             s.onload = resolve;
             document.head.appendChild(s);
         });

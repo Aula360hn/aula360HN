@@ -251,7 +251,7 @@ Views.BancoRubricas = {
                         <textarea name="descripcion" class="form-control" rows="2" placeholder="Explica de qué trata esta rúbrica...">${r.descripcion || ''}</textarea>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Asignatura</label>
+                        <label class="form-label">Campo del Conocimiento</label>
                         <input type="text" name="asignatura" class="form-control" value="${r.asignatura}" list="list-asig">
                         <datalist id="list-asig">
                             ${Store.get('cursos').map(c => `<option value="${c.asignatura}">`).join('')}

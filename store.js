@@ -1,6 +1,6 @@
 // --- 0. VERSION & LOG ---
 const APP_VERSION_TAG = '2026.05.16.13';
-console.log('%c[Aula 360] %cInicializando versión: ' + APP_VERSION_TAG, 'color: #00C853; font-weight: bold;', 'color: #64748b;');
+console.log('%c[Aula 360] %cInicializando versión: ' + APP_VERSION_TAG, 'color: #10B981; font-weight: bold;', 'color: #64748b;');
 
 // --- 1. CONFIG & UTILS ---
 const APP_KEY = 'gdhndata_v1';
@@ -11,14 +11,14 @@ const CONFIG = {
     attendanceStates: ['P', 'A', 'E', 'T', 'PM'],
     months: ['Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre'], // Feb-Nov logic
     dimensions: [
-        { key: 'extraAula', nombre: 'Actividades Extra-Aula', porcentaje: 10, max: 5 },
-        { key: 'aula', nombre: 'Actividades de Aula', porcentaje: 25, max: 5 },
-        { key: 'actitudes', nombre: 'Actitudes y Valores', porcentaje: 10, max: 5 },
-        { key: 'expresiones', nombre: 'Expresiones Artísticas', porcentaje: 5, max: 5 },
-        { key: 'examenes', nombre: 'Examen Escrito o Práctico', porcentaje: 50, max: 5 }
+        { key: 'aula', nombre: 'Trabajo de Aula', porcentaje: 35, max: 5 },
+        { key: 'extraAula', nombre: 'Trabajo Extra-Aula', porcentaje: 20, max: 5 },
+        { key: 'actitudes', nombre: 'Valores y Actitudes', porcentaje: 10, max: 5 },
+        { key: 'expresiones', nombre: 'Expresiones Artísticas / Deportivas', porcentaje: 5, max: 5 },
+        { key: 'examenes', nombre: 'Examen Escrito o Práctico', porcentaje: 30, max: 5 }
     ],
     courseColors: {
-        teal: { start: '#00C853', end: '#0F766E' },
+        teal: { start: '#10B981', end: '#0F766E' },
         blue: { start: '#2563EB', end: '#1D4ED8' },
         indigo: { start: '#4F46E5', end: '#4338CA' },
         purple: { start: '#7C3AED', end: '#6D28D9' },
@@ -33,19 +33,53 @@ const CONFIG = {
     }
 };
 
+// --- DATOS GEOGRÁFICOS Y NORMATIVOS SACE (MODULARIZADOS) ---
+// Catálogo territorial y ponderaciones cargados desde honduras_geo.js y normativas_sace.js
+const GeoHN = (typeof window !== 'undefined' && window.GeoHN) 
+    ? window.GeoHN 
+    : (typeof require === 'function' ? require('./honduras_geo.js') : (typeof GeoHN !== 'undefined' ? GeoHN : {}));
+if (typeof window !== 'undefined' && !window.GeoHN) window.GeoHN = GeoHN;
+
+const NormativasSACE = (typeof window !== 'undefined' && window.NormativasSACE) 
+    ? window.NormativasSACE 
+    : (typeof require === 'function' ? require('./normativas_sace.js') : (typeof NormativasSACE !== 'undefined' ? NormativasSACE : {}));
+if (typeof window !== 'undefined' && !window.NormativasSACE) window.NormativasSACE = NormativasSACE;
+
 const Utils = {
     id: () => Date.now().toString(36) + Math.random().toString(36).substr(2),
     timestamp: () => new Date().toISOString(),
-    formatDate: (iso) => new Date(iso).toLocaleDateString(),
+    formatDate: (iso) => {
+        if (!iso) return '';
+        if (typeof iso === 'number') {
+            const d = new Date(Math.round((iso - 25569) * 86400 * 1000));
+            if (!isNaN(d.getTime())) return d.toLocaleDateString();
+        }
+        const s = String(iso).trim();
+        const dmy = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
+        if (dmy) {
+            return `${dmy[1].padStart(2, '0')}/${dmy[2].padStart(2, '0')}/${dmy[3]}`;
+        }
+        const ymd = s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
+        if (ymd) {
+            const d = new Date(Number(ymd[1]), Number(ymd[2]) - 1, Number(ymd[3]));
+            if (!isNaN(d.getTime())) return d.toLocaleDateString();
+        }
+        try {
+            const d = new Date(s);
+            return isNaN(d.getTime()) ? s : d.toLocaleDateString();
+        } catch(e) {
+            return s;
+        }
+    },
     cls: (...classes) => classes.filter(Boolean).join(' '),
     safeGet: (obj, path, def) => path.split('.').reduce((o, i) => o ? o[i] : undefined, obj) || def,
     getDimensionTheme(name, index) {
         const colors = [
-            { bg: '#EFF6FF', border: '#DBEAFE', text: '#1D4ED8', icon: '#3B82F6', badge: '#DBEAFE', badgeText: '#1E40AF' },
-            { bg: '#ECFDF5', border: '#D1FAE5', text: '#047857', icon: '#10B981', badge: '#D1FAE5', badgeText: '#065F46' },
-            { bg: '#F5F3FF', border: '#EDE9FE', text: '#6D28D9', icon: '#8B5CF6', badge: '#EDE9FE', badgeText: '#4C1D95' },
-            { bg: '#FFFBEB', border: '#FEF3C7', text: '#B45309', icon: '#F59E0B', badge: '#FEF3C7', badgeText: '#92400E' },
-            { bg: '#FDF2F8', border: '#FCE7F3', text: '#BE185D', icon: '#EC4899', badge: '#FCE7F3', badgeText: '#9D174D' }
+            { bg: '#F0FDF4', border: '#D1FAE5', text: '#059669', icon: '#10B981', badge: '#ECFDF5', badgeText: '#047857' },
+            { bg: '#F5F3FF', border: '#EDE9FE', text: '#7C3AED', icon: '#8B5CF6', badge: '#F3E8FF', badgeText: '#6D28D9' },
+            { bg: '#FDF2F8', border: '#FCE7F3', text: '#DB2777', icon: '#EC4899', badge: '#FCE7F3', badgeText: '#BE185D' },
+            { bg: '#EFF6FF', border: '#DBEAFE', text: '#2563EB', icon: '#3B82F6', badge: '#DBEAFE', badgeText: '#1D4ED8' },
+            { bg: '#FFFBEB', border: '#FEF3C7', text: '#D97706', icon: '#F59E0B', badge: '#FEF3C7', badgeText: '#B45309' }
         ];
 
         let iconName = 'layers';
@@ -62,36 +96,44 @@ const Utils = {
     }
 };
 
-// --- 1.1 SECURITY MODULE (Cifrado Militar AES) ---
+// --- 1.1 SECURITY MODULE (Cifrado Militar AES & Multi-Formato) ---
 const Security = {
-    _key: "Aula360_MasterKey_V1", // Internal key to prevent plain text reading of sensitive PII
+    _key: "Aula360_MasterKey_V1",
     encrypt(dataObj) {
         try {
-            if (!window.CryptoJS) return JSON.stringify(dataObj);
+            if (!window.CryptoJS || !window.CryptoJS.AES) return JSON.stringify(dataObj);
             return CryptoJS.AES.encrypt(JSON.stringify(dataObj), this._key).toString();
         } catch(e) {
             console.error("Encryption error", e);
-            return JSON.stringify(dataObj); // Fallback a plano si falla la libreria
+            return JSON.stringify(dataObj);
         }
     },
     decrypt(ciphertext) {
         try {
-            // Si el archivo empieza con "{" es texto plano (respaldo antiguo), no desencriptar
-            if (ciphertext.trim().startsWith('{')) {
-                return JSON.parse(ciphertext);
-            }
-            if (!window.CryptoJS) return JSON.parse(ciphertext);
+            if (typeof ciphertext !== 'string') return ciphertext;
+            // Limpiar posibles espacios en blanco y Byte Order Mark (BOM) UTF-8
+            const clean = ciphertext.replace(/^\uFEFF/, '').trim();
             
-            const bytes = CryptoJS.AES.decrypt(ciphertext, this._key);
-            const decryptedStr = bytes.toString(CryptoJS.enc.Utf8);
-            if (!decryptedStr) throw new Error("Decryption returned empty string");
-            return JSON.parse(decryptedStr);
+            // Si es texto plano JSON (empieza con { o [), parsear directamente
+            if (clean.startsWith('{') || clean.startsWith('[')) {
+                return JSON.parse(clean);
+            }
+            
+            // Si viene encriptado en AES Base64
+            if (window.CryptoJS && window.CryptoJS.AES) {
+                const bytes = CryptoJS.AES.decrypt(clean, this._key);
+                const decryptedStr = bytes.toString(CryptoJS.enc.Utf8);
+                if (decryptedStr) return JSON.parse(decryptedStr);
+            }
+            
+            return JSON.parse(clean);
         } catch(e) {
             console.error("Decryption error", e);
-            throw new Error("Archivo de respaldo dañado o contraseña incorrecta.");
+            throw new Error("Archivo de respaldo dañado o formato no reconocido: " + (e.message || ''));
         }
     }
 };
+if (typeof window !== 'undefined') window.Security = Security;
 
 // --- 1.2 MIGRATIONS ENGINE (Actualización Segura de Estructuras) ---
 const Migrations = {
@@ -166,13 +208,15 @@ const STORE_NAME = 'AppData';
 class AulaStorage {
     constructor() {
         this.db = null;
+        this._initPromise = null;
     }
 
     async init() {
-        return new Promise((resolve, reject) => {
+        if (this._initPromise) return this._initPromise;
+        this._initPromise = new Promise((resolve) => {
             if (!window.indexedDB) {
-                console.warn("IndexedDB no soportado en este navegador, se dependerá de localStorage");
-                resolve();
+                console.warn("[AulaStorage] IndexedDB no soportado en este entorno, se usará localStorage");
+                resolve(null);
                 return;
             }
 
@@ -188,39 +232,62 @@ class AulaStorage {
                 }
                 
                 if (oldVersion > 0 && oldVersion < DB_VERSION) {
-                    console.log(`Migrando BD desde versión ${oldVersion} a ${DB_VERSION}`);
-                    // Aquí se aplicarían cambios estructurales futuros
+                    console.log(`[AulaStorage] Migrando BD desde versión ${oldVersion} a ${DB_VERSION}`);
                 }
             };
 
             request.onsuccess = async (event) => {
                 this.db = event.target.result;
-                resolve();
+                if (navigator.storage && navigator.storage.persist) {
+                    try {
+                        const isPersisted = await navigator.storage.persist();
+                        if (isPersisted) {
+                            console.log("[Aula 360] Almacenamiento persistente activado con éxito.");
+                        }
+                    } catch (e) {}
+                }
+                resolve(this.db);
             };
 
             request.onerror = (event) => {
-                console.error("Error inicializando IndexedDB", event);
-                resolve(); // Fallback to localStorage logic if IDB completely fails
+                console.error("[AulaStorage] Error inicializando IndexedDB", event);
+                resolve(null);
             };
         });
+        return this._initPromise;
+    }
+
+    async ensureDB() {
+        if (this.db) return this.db;
+        return await this.init();
     }
 
     async get(key) {
+        await this.ensureDB();
         return new Promise((resolve) => {
             if (!this.db) return resolve(null);
             try {
                 const transaction = this.db.transaction([STORE_NAME], 'readonly');
                 const store = transaction.objectStore(STORE_NAME);
                 const request = store.get(key);
-                request.onsuccess = () => resolve(request.result ? request.result.value : null);
-                request.onerror = () => resolve(null);
+                request.onsuccess = () => {
+                    if (!request.result) return resolve(null);
+                    if (request.result.value !== undefined) return resolve(request.result.value);
+                    return resolve(request.result);
+                };
+                request.onerror = (err) => {
+                    console.error("[AulaStorage] Error en lectura get:", err);
+                    resolve(null);
+                };
             } catch(e) {
+                console.error("[AulaStorage] Excepción en lectura get:", e);
                 resolve(null);
             }
         });
     }
 
     async set(key, value) {
+        await this.ensureDB();
         return new Promise((resolve) => {
             if (!this.db) return resolve();
             try {
@@ -228,8 +295,12 @@ class AulaStorage {
                 const store = transaction.objectStore(STORE_NAME);
                 const request = store.put({ id: key, value: value });
                 request.onsuccess = () => resolve();
-                request.onerror = () => resolve();
+                request.onerror = (err) => {
+                    console.error("[AulaStorage] Error en guardado set:", err);
+                    resolve();
+                };
             } catch(e) {
+                console.error("[AulaStorage] Excepción en guardado set:", e);
                 resolve();
             }
         });
@@ -254,6 +325,8 @@ const Store = {
         actividades: [],
         calificaciones: [],
         asistencia: [],
+        conducta_records: [],
+        conducta_tipos: null,
         sartAlertas: [],
         agendaEventos: [],
         agendaEventosInstitucionales: [],
@@ -265,6 +338,7 @@ const Store = {
         custom_extraordinary_categories: [],
         diasNoLectivos: [],
         pruebasDiagnosticas: [],
+        configAsistencia: { autoPresente: false, alertarOmision: true, promptShown: false },
         activeCourseId: null
     },
     async init() {
@@ -282,7 +356,23 @@ const Store = {
             }
         }
         
-        // Fase 2: Paracaídas Invisible (Capacitor Native Restore)
+        // Fase 2: Paracaídas Invisible y Motor de Respaldo Rotativo Atómico
+        if (!idbSaved && !lsSaved) {
+            if (typeof AutoBackup !== 'undefined' && typeof AutoBackup.recoverLatest === 'function') {
+                try {
+                    console.log("[Store.init] Buscando respaldo en Motor de Respaldo Rotativo...");
+                    const recovered = await AutoBackup.recoverLatest();
+                    if (recovered) {
+                        idbSaved = recovered;
+                        await StorageAPI.set(APP_KEY, idbSaved);
+                        try { localStorage.setItem(APP_KEY, JSON.stringify(idbSaved)); } catch(q) {}
+                        console.log("[Store.init] ¡Datos recuperados exitosamente desde AutoBackup!");
+                    }
+                } catch(e) {
+                    console.warn('[Store.init] Error en auto-recuperación:', e);
+                }
+            }
+        }
         if (!idbSaved && !lsSaved && window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Filesystem) {
             try {
                 console.log("Buscando respaldo nativo (Paracaídas Invisible)...");
@@ -295,7 +385,7 @@ const Store = {
                     console.log("¡Respaldo nativo encontrado! Restaurando datos...");
                     idbSaved = JSON.parse(result.data);
                     await StorageAPI.set(APP_KEY, idbSaved);
-                    localStorage.setItem(APP_KEY, result.data);
+                    try { localStorage.setItem(APP_KEY, result.data); } catch(quotaErr) { console.warn('[Aula 360] localStorage quota exceeded on native restore:', quotaErr); }
                 }
             } catch(e) {
                 console.log("No se encontró respaldo nativo o hubo un error al leerlo.");
@@ -371,12 +461,16 @@ const Store = {
         if (!this.data.bcLessons) {
             this.data.bcLessons = [];
         }
+        if (!this.data.configAsistencia) {
+            this.data.configAsistencia = { autoPresente: false, alertarOmision: true, promptShown: false };
+        }
         if (!this.data.configPreferencias) {
             this.data.configPreferencias = { sonidosHabilitados: true };
         }
         if (!this.data.perfilDocente) {
             this.data.perfilDocente = {
-                nombre: '', correo: '', telefono: '', googleDriveUrl: ''
+                nombre: '', correo: '', telefono: '', googleDriveUrl: '',
+                guias: []
             };
         }
         if (!this.data.securityPassword) {
@@ -519,6 +613,27 @@ const Store = {
             this.data.configRespaldo = { backupAlAbrir: true, backupSemanal: false, lastBackupTime: 0, lastBackupVersion: '' };
         }
 
+        // Recordatorio preventivo no intrusivo en Web/PWA si hay notas y no hay respaldo reciente
+        if (!(window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Filesystem)) {
+            setTimeout(() => {
+                try {
+                    const totalNotas = Array.isArray(this.data?.calificaciones) ? this.data.calificaciones.length : 0;
+                    if (totalNotas < 10) return;
+                    const lastRemind = parseInt(localStorage.getItem('aula360_last_backup_remind') || '0', 10);
+                    const lastManual = this.data?.configRespaldo?.lastBackupTime || 0;
+                    const now = Date.now();
+                    const dias14 = 14 * 24 * 60 * 60 * 1000;
+                    const dias7 = 7 * 24 * 60 * 60 * 1000;
+                    if ((now - lastManual > dias14) && (now - lastRemind > dias7)) {
+                        localStorage.setItem('aula360_last_backup_remind', String(now));
+                        if (window.UI && typeof UI.toast === 'function') {
+                            UI.toast('Tienes notas guardadas sin respaldo reciente. Exporta una copia en Ajustes → Respaldo.', 'info');
+                        }
+                    }
+                } catch (e) {}
+            }, 6000);
+        }
+
         // Ejecutar Motor de Respaldos Automáticos
         if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Filesystem) {
             setTimeout(() => {
@@ -544,6 +659,9 @@ const Store = {
                 }
 
                 if (triggerBackup) {
+                    if (typeof AutoBackup !== 'undefined' && typeof AutoBackup.saveDailySnapshot === 'function') {
+                        AutoBackup.saveDailySnapshot(this.data);
+                    }
                     window.Capacitor.Plugins.Filesystem.writeFile({
                         path: fileName,
                         data: Security.encrypt(this.data),
@@ -560,7 +678,7 @@ const Store = {
             }, 3000); // Esperar 3 seg para no bloquear el inicio
         }
     },
-    reset() {
+    reset(skipSave = true) {
         this.data = {
             cursos: [],
             estudiantes: [],
@@ -579,37 +697,70 @@ const Store = {
             jornalizaciones: [],
             activeCourseId: null
         };
-        this.save();
+        if (!skipSave) this.save();
     },
-    save() {
-        // Guardado asíncrono en IndexedDB (no bloquea UI)
-        StorageAPI.set(APP_KEY, this.data).catch(e => console.error(e));
+    save(collection) {
+        if (collection) {
+            this._dirtyCollections = this._dirtyCollections || new Set();
+            this._dirtyCollections.add(collection);
+        }
+        this._hasPendingSave = true;
         
+        // Debounce optimizado a 350ms para no saturar CPU en ráfagas de notas o asistencias
         if (this._saveTimeout) clearTimeout(this._saveTimeout);
         this._saveTimeout = setTimeout(() => {
-            try {
-                const strData = JSON.stringify(this.data);
-                
-                // Fallback redundante en localStorage
-                localStorage.setItem(APP_KEY, strData);
-                
-                if (window.GoogleSheetsSync && typeof window.GoogleSheetsSync.debouncedSync === 'function') {
-                    window.GoogleSheetsSync.debouncedSync();
-                }
-                
-                // Fase 2: Paracaídas Invisible (Capacitor Native Backup)
-                if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Filesystem) {
-                    window.Capacitor.Plugins.Filesystem.writeFile({
-                        path: 'Aula360_Native_Backup.json',
-                        data: strData,
-                        directory: 'DATA',
-                        encoding: 'utf8'
-                    }).catch(e => console.log("Error silencioso en backup nativo:", e));
-                }
-            } catch(e) {}
-        }, 500);
+            this.saveNow();
+        }, 350);
     },
-    get(collection) { return this.data[collection] || []; },
+
+    saveNow() {
+        if (!this.data) return;
+        if (this._saveTimeout) {
+            clearTimeout(this._saveTimeout);
+            this._saveTimeout = null;
+        }
+        this._hasPendingSave = false;
+
+        // 1. Guardado asíncrono no-bloqueante en IndexedDB
+        StorageAPI.set(APP_KEY, this.data).catch(e => console.error('[Store.saveNow] Error IndexedDB:', e));
+
+        // 2. Serialización protegida para localStorage y Paracaídas Nativo
+        try {
+            const strData = JSON.stringify(this.data);
+            
+            // Fallback redundante en localStorage (blindado contra límite de 5MB)
+            try {
+                localStorage.setItem(APP_KEY, strData);
+            } catch(quotaErr) {
+                console.warn("[Aula 360] Cuota de localStorage excedida (5MB). IndexedDB mantiene los datos completos de forma segura:", quotaErr);
+            }
+            
+            if (window.GoogleSheetsSync && typeof window.GoogleSheetsSync.debouncedSync === 'function') {
+                window.GoogleSheetsSync.debouncedSync();
+            }
+            
+            // Fase 2: Motor de Respaldo Rotativo Atómico (Slot A / Slot B) y Paracaídas
+            if (typeof AutoBackup !== 'undefined' && typeof AutoBackup.saveAtomic === 'function') {
+                AutoBackup.saveAtomic(this.data).catch(e => console.warn('[Store.saveNow] Error AutoBackup:', e));
+            } else if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Filesystem) {
+                window.Capacitor.Plugins.Filesystem.writeFile({
+                    path: 'Aula360_Native_Backup.json',
+                    data: strData,
+                    directory: 'DATA',
+                    encoding: 'utf8'
+                }).catch(e => console.log("Error silencioso en backup nativo:", e));
+            }
+        } catch(e) {
+            console.error('[Store.saveNow] Error serializando datos:', e);
+        }
+    },
+    get(collection) {
+        const val = this.data ? this.data[collection] : null;
+        if (!val) return [];
+        if (Array.isArray(val)) return val;
+        if (typeof val === 'object') return Object.values(val);
+        return [];
+    },
     set(collection, data) {
         this.data[collection] = data;
         this.save();
@@ -635,6 +786,108 @@ const Store = {
     // Specific Helpers
     getActiveCourse() {
         return this.data.cursos.find(c => c.id === this.data.activeCourseId);
+    },
+    getMaestroGuias() {
+        const perfil = this.data.perfilDocente || (this.data.perfilDocente = {});
+        if (!Array.isArray(perfil.guias)) {
+            perfil.guias = [];
+            // Migración desde el formato anterior (una sola guía)
+            if (perfil.gradoGuia || perfil.cursoGuiaId) {
+                perfil.guias.push({
+                    id: 'guia_' + Date.now(),
+                    cursoId: perfil.cursoGuiaId || '',
+                    grado: perfil.gradoGuia || '',
+                    seccion: perfil.seccionGuia || '',
+                    jornada: perfil.jornadaGuia || '',
+                    centro: ''
+                });
+            }
+        }
+        return perfil.guias;
+    },
+    _normGuia(v) {
+        return String(v || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
+    },
+    _normGrado(v) {
+        if (!v) return '';
+        const s = String(v).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+        const numMatch = s.match(/\d+/);
+        if (numMatch) return numMatch[0];
+        if (s.includes('primer')) return '1';
+        if (s.includes('segund')) return '2';
+        if (s.includes('tercer')) return '3';
+        if (s.includes('cuart')) return '4';
+        if (s.includes('quint')) return '5';
+        if (s.includes('sext')) return '6';
+        if (s.includes('septim')) return '7';
+        if (s.includes('octav')) return '8';
+        if (s.includes('noven')) return '9';
+        if (s.includes('decim')) return '10';
+        if (s.includes('once')) return '11';
+        if (s.includes('doce')) return '12';
+        return s.replace(/[^a-z0-9]/g, '');
+    },
+    _normSeccion(v) {
+        if (!v) return '';
+        const s = String(v).toLowerCase().trim();
+        const numMatch = s.match(/\d+/);
+        if (numMatch) return numMatch[0];
+        return s.replace(/[^a-z0-9]/g, '');
+    },
+    _cursoJornada(c) {
+        return c.jornadaP || c.jornada || (c.jornadaInicio ? (c.jornadaInicio >= '12:00' ? 'vespertina' : 'matutina') : '');
+    },
+    guiaMatchesCurso(g, c) {
+        if (!g || !c) return false;
+        if (g.cursoId && g.cursoId === c.id) return true;
+        if (g.grado && c.grado && this._normGrado(g.grado) !== this._normGrado(c.grado)) return false;
+        if (g.seccion && c.seccion && this._normSeccion(g.seccion) !== this._normSeccion(c.seccion)) return false;
+        const cj = this._cursoJornada(c);
+        if (g.jornada && cj) {
+            const gjNorm = this._normGuia(g.jornada);
+            const cjNorm = this._normGuia(cj);
+            if (gjNorm && cjNorm && !gjNorm.includes(cjNorm) && !cjNorm.includes(gjNorm)) {
+                return false;
+            }
+        }
+        if (g.centro && c.centroEducativo) {
+            const gcNorm = this._normGuia(g.centro);
+            const ccNorm = this._normGuia(c.centroEducativo);
+            if (gcNorm && ccNorm && !gcNorm.includes(ccNorm) && !ccNorm.includes(gcNorm)) {
+                return false;
+            }
+        }
+        return true;
+    },
+    getGuiaForCurso(courseId) {
+        const c = (this.data.cursos || []).find(x => x.id === courseId);
+        if (!c) return null;
+        return this.getMaestroGuias().find(g => this.guiaMatchesCurso(g, c)) || null;
+    },
+    getCursosGuia() {
+        return (this.data.cursos || []).filter(c => this.getMaestroGuias().some(g => this.guiaMatchesCurso(g, c)));
+    },
+    getMaestroGuiaInfo(courseId = null) {
+        const guias = this.getMaestroGuias();
+        const cursosGuia = this.getCursosGuia();
+        const activeId = courseId || this.data.activeCourseId;
+        const curso = cursosGuia.find(c => c.id === activeId) || cursosGuia[0] || null;
+        const g = curso ? this.getGuiaForCurso(curso.id) : (guias[0] || null);
+        return {
+            grado: g?.grado || curso?.grado || '',
+            seccion: g?.seccion || curso?.seccion || '',
+            jornada: g?.jornada || (curso ? this._cursoJornada(curso) : '') || '',
+            centro: g?.centro || curso?.centroEducativo || '',
+            curso,
+            cursoId: curso?.id || null,
+            guias,
+            cursosGuia,
+            hasGuia: guias.length > 0
+        };
+    },
+    isMaestroGuia(courseId) {
+        if (!courseId) return false;
+        return !!this.getGuiaForCurso(courseId);
     },
     getCargasDocentes() {
         return this.data.cargasDocentes || [];
@@ -742,6 +995,14 @@ const Store = {
         const targetRoute = route || Router.current || 'panel';
         Router.navigate(targetRoute);
     },
+    isInactiveStudent(s) {
+        if (!s) return false;
+        const est = String(s.estadoMatricula || '').trim().toLowerCase();
+        return est === 'traslado' || est === 'desertor' || est === 'inactivo';
+    },
+    isActiveStudent(s) {
+        return !this.isInactiveStudent(s);
+    },
     getStudentsByCourse(courseId) {
         const enrollment = this.data.matriculas.filter(m => m.cursoId === courseId);
         return enrollment.map(m => {
@@ -758,6 +1019,14 @@ const Store = {
     getParcialByCourse(courseId) {
         if (!this.data || !Array.isArray(this.data.parciales)) return [];
         return this.data.parciales.filter(p => p.cursoId === courseId).sort((a, b) => a.numero - b.numero);
+    },
+    getActivitiesByCourse(courseId) {
+        if (!this.data || !Array.isArray(this.data.actividades)) return [];
+        return this.data.actividades.filter(a => a.cursoId === courseId);
+    },
+    getActivitiesByCourseAndParcial(courseId, parcialId) {
+        if (!this.data || !Array.isArray(this.data.actividades)) return [];
+        return this.data.actividades.filter(a => a.cursoId === courseId && (!parcialId || parcialId === 'all' || a.parcialId === parcialId));
     },
     createDefaultParciales(courseId, anio = 2026) {
         // Clear existing parciales for this course
@@ -1383,6 +1652,306 @@ const Store = {
             this.data.custom_extraordinary_categories.push(clean);
             this.save();
         }
+    },
+
+    // ==========================================
+    // MÓDULO PERSONALIDAD & CONDUCTA ESCOLAR
+    // ==========================================
+    getConductDefaultTypes() {
+        return {
+            positivas: [
+                { id: 'pos_1', nombre: 'Entrega los trabajos cuando corresponde', icono: 'clipboard-check', categoria: 'positiva', puntos: 1, aspectos: ['puntualidad', 'espiritu_trabajo'] },
+                { id: 'pos_2', nombre: 'Ha hecho los deberes', icono: 'badge-check', categoria: 'positiva', puntos: 1, aspectos: ['espiritu_trabajo', 'orden_presentacion'] },
+                { id: 'pos_3', nombre: 'Ha mejorado su rendimiento', icono: 'trending-up', categoria: 'positiva', puntos: 1, aspectos: ['espiritu_trabajo'] },
+                { id: 'pos_4', nombre: 'Ha mejorado su trabajo', icono: 'line-chart', categoria: 'positiva', puntos: 1, aspectos: ['espiritu_trabajo', 'orden_presentacion'] },
+                { id: 'pos_5', nombre: 'Reconocimiento positivo', icono: 'star', categoria: 'positiva', puntos: 1, aspectos: ['espiritu_trabajo', 'moralidad'] },
+                { id: 'pos_6', nombre: 'Se esfuerza y participa', icono: 'hand', categoria: 'positiva', puntos: 1, aspectos: ['espiritu_trabajo', 'sociabilidad'] },
+                { id: 'pos_7', nombre: 'Trabaja en clase', icono: 'pencil', categoria: 'positiva', puntos: 1, aspectos: ['espiritu_trabajo', 'orden_presentacion'] },
+                { id: 'pos_8', nombre: 'Ayuda a un compañero', icono: 'heart-handshake', categoria: 'positiva', puntos: 1, aspectos: ['sociabilidad', 'moralidad'] },
+                { id: 'pos_9', nombre: 'Buen trabajo en equipo', icono: 'users', categoria: 'positiva', puntos: 1, aspectos: ['sociabilidad', 'espiritu_trabajo'] },
+                { id: 'pos_10', nombre: 'Respeta el turno de palabra', icono: 'message-square', categoria: 'positiva', puntos: 1, aspectos: ['sociabilidad', 'moralidad', 'orden_presentacion'] },
+                { id: 'pos_11', nombre: 'Actitud ejemplar', icono: 'medal', categoria: 'positiva', puntos: 1, aspectos: ['moralidad', 'sociabilidad', 'orden_presentacion'] },
+                { id: 'pos_12', nombre: 'Llega puntual y preparado a la clase', icono: 'clock', categoria: 'positiva', puntos: 1, aspectos: ['puntualidad', 'orden_presentacion'] },
+                { id: 'pos_13', nombre: 'Excelente orden, aseo y presentación personal', icono: 'sparkles', categoria: 'positiva', puntos: 1, aspectos: ['orden_presentacion'] }
+            ],
+            incidencias: [
+                // LEVE (8 tipos) - Olvidos y conductas que no impiden la clase
+                { id: 'inc_l1', nombre: 'No entrega los trabajos', icono: 'file-x', categoria: 'leve', nivel: 1, puntos: -1, aspectos: ['puntualidad', 'espiritu_trabajo'] },
+                { id: 'inc_l2', nombre: 'No hace los deberes', icono: 'pencil-off', categoria: 'leve', nivel: 1, puntos: -1, aspectos: ['espiritu_trabajo', 'orden_presentacion'] },
+                { id: 'inc_l3', nombre: 'No se presenta a un examen', icono: 'calendar-x', categoria: 'leve', nivel: 1, puntos: -1, aspectos: ['puntualidad', 'espiritu_trabajo'] },
+                { id: 'inc_l4', nombre: 'No trabaja en clase', icono: 'moon', categoria: 'leve', nivel: 1, puntos: -1, aspectos: ['espiritu_trabajo'] },
+                { id: 'inc_l5', nombre: 'No trae el material a clase', icono: 'package-x', categoria: 'leve', nivel: 1, puntos: -1, aspectos: ['orden_presentacion', 'espiritu_trabajo'] },
+                { id: 'inc_l6', nombre: 'Come en clase', icono: 'cup-soda', categoria: 'leve', nivel: 1, puntos: -1, aspectos: ['orden_presentacion'] },
+                { id: 'inc_l7', nombre: 'Llega tarde a clase sin justificación', icono: 'clock', categoria: 'leve', nivel: 1, puntos: -1, aspectos: ['puntualidad'] },
+                { id: 'inc_l8', nombre: 'Descuido en el orden, cuaderno o presentación personal', icono: 'shirt', categoria: 'leve', nivel: 1, puntos: -1, aspectos: ['orden_presentacion'] },
+
+                // GRAVE (15 tipos) - Interrumpe la clase o falta al respeto
+                { id: 'inc_g1', nombre: 'Abandona la clase sin permiso', icono: 'door-open', categoria: 'grave', nivel: 2, puntos: -2, aspectos: ['puntualidad', 'moralidad'] },
+                { id: 'inc_g2', nombre: 'Coge materiales que no son suyos', icono: 'hand', categoria: 'grave', nivel: 2, puntos: -2, aspectos: ['moralidad', 'sociabilidad'] },
+                { id: 'inc_g3', nombre: 'Distrae a los compañeros', icono: 'megaphone', categoria: 'grave', nivel: 2, puntos: -2, aspectos: ['sociabilidad', 'espiritu_trabajo'] },
+                { id: 'inc_g4', nombre: 'Falta el respeto a los compañeros', icono: 'frown', categoria: 'grave', nivel: 2, puntos: -2, aspectos: ['sociabilidad', 'moralidad'] },
+                { id: 'inc_g5', nombre: 'Falta el respeto al profesor', icono: 'user-x', categoria: 'grave', nivel: 2, puntos: -2, aspectos: ['moralidad', 'sociabilidad'] },
+                { id: 'inc_g6', nombre: 'Habla, molesta e interrumpe', icono: 'message-circle-x', categoria: 'grave', nivel: 2, puntos: -2, aspectos: ['sociabilidad', 'orden_presentacion'] },
+                { id: 'inc_g7', nombre: 'Incita a no cumplir las normas', icono: 'users', categoria: 'grave', nivel: 2, puntos: -2, aspectos: ['sociabilidad', 'moralidad'] },
+                { id: 'inc_g8', nombre: 'Maltrata el material del aula', icono: 'trash-2', categoria: 'grave', nivel: 2, puntos: -2, aspectos: ['orden_presentacion', 'moralidad'] },
+                { id: 'inc_g9', nombre: 'Molesta durante un examen', icono: 'file-warning', categoria: 'grave', nivel: 2, puntos: -2, aspectos: ['moralidad', 'sociabilidad'] },
+                { id: 'inc_g10', nombre: 'No comunica la información del centro a la familia, de forma intencionada', icono: 'mail-x', categoria: 'grave', nivel: 2, puntos: -2, aspectos: ['moralidad'] },
+                { id: 'inc_g11', nombre: 'No cumple las normas del centro', icono: 'alert-triangle', categoria: 'grave', nivel: 2, puntos: -2, aspectos: ['moralidad', 'orden_presentacion'] },
+                { id: 'inc_g12', nombre: 'Se niega a cumplir las medidas correctoras propuestas', icono: 'ban', categoria: 'grave', nivel: 2, puntos: -2, aspectos: ['moralidad', 'sociabilidad'] },
+                { id: 'inc_g13', nombre: 'Utiliza el móvil y/o aparatos electrónicos cuando no corresponde', icono: 'smartphone', categoria: 'grave', nivel: 2, puntos: -2, aspectos: ['orden_presentacion', 'espiritu_trabajo'] },
+                { id: 'inc_g14', nombre: 'Utiliza inadecuadamente las TIC', icono: 'monitor-x', categoria: 'grave', nivel: 2, puntos: -2, aspectos: ['orden_presentacion', 'moralidad'] },
+                { id: 'inc_g15', nombre: 'Copia en un examen', icono: 'copy', categoria: 'grave', nivel: 2, puntos: -2, aspectos: ['moralidad'] },
+
+                // MUY GRAVE (5 tipos) - Agresiones, daños o situaciones serias
+                { id: 'inc_mg1', nombre: 'Altera y/o modifica las informaciones del centro', icono: 'alert-octagon', categoria: 'muy_grave', nivel: 3, puntos: -3, aspectos: ['moralidad'] },
+                { id: 'inc_mg2', nombre: 'Daña el mobiliario y/o material del centro', icono: 'hammer', categoria: 'muy_grave', nivel: 3, puntos: -3, aspectos: ['orden_presentacion', 'moralidad'] },
+                { id: 'inc_mg3', nombre: 'Introduce sustancias perjudiciales para la salud', icono: 'shield-alert', categoria: 'muy_grave', nivel: 3, puntos: -3, aspectos: ['moralidad'] },
+                { id: 'inc_mg4', nombre: 'Suplanta la personalidad de un compañero', icono: 'user-check', categoria: 'muy_grave', nivel: 3, puntos: -3, aspectos: ['moralidad'] },
+                { id: 'inc_mg5', nombre: 'Agresión o pelea', icono: 'shield-x', categoria: 'muy_grave', nivel: 3, puntos: -3, aspectos: ['sociabilidad', 'moralidad'] }
+            ]
+        };
+    },
+
+    getConductTypes() {
+        const defaults = this.getConductDefaultTypes();
+        if (!this.data.conducta_tipos || !Array.isArray(this.data.conducta_tipos.positivas) || !Array.isArray(this.data.conducta_tipos.incidencias)) {
+            this.data.conducta_tipos = defaults;
+            this.save();
+            return this.data.conducta_tipos;
+        }
+        let changed = false;
+        const defaultPosMap = new Map(defaults.positivas.map(p => [p.id, p]));
+        const defaultIncMap = new Map(defaults.incidencias.map(i => [i.id, i]));
+
+        this.data.conducta_tipos.positivas.forEach(p => {
+            if (!Array.isArray(p.aspectos) || p.aspectos.length === 0) {
+                const def = defaultPosMap.get(p.id);
+                p.aspectos = def ? [...def.aspectos] : ['espiritu_trabajo'];
+                changed = true;
+            }
+        });
+        defaults.positivas.forEach(def => {
+            if (!this.data.conducta_tipos.positivas.some(p => p.id === def.id)) {
+                this.data.conducta_tipos.positivas.push({ ...def });
+                changed = true;
+            }
+        });
+
+        this.data.conducta_tipos.incidencias.forEach(i => {
+            if (!Array.isArray(i.aspectos) || i.aspectos.length === 0) {
+                const def = defaultIncMap.get(i.id);
+                i.aspectos = def ? [...def.aspectos] : ['moralidad'];
+                changed = true;
+            }
+        });
+        defaults.incidencias.forEach(def => {
+            if (!this.data.conducta_tipos.incidencias.some(i => i.id === def.id)) {
+                this.data.conducta_tipos.incidencias.push({ ...def });
+                changed = true;
+            }
+        });
+
+        if (changed) this.save();
+        return this.data.conducta_tipos;
+    },
+
+    getPersonalityOverride(courseId, partialId, studentId) {
+        if (!this.data.personalidad_overrides) return null;
+        return this.data.personalidad_overrides[`${courseId}_${partialId}_${studentId}`] || null;
+    },
+
+    savePersonalityOverride(courseId, partialId, studentId, overridesObj) {
+        if (!this.data.personalidad_overrides) this.data.personalidad_overrides = {};
+        const key = `${courseId}_${partialId}_${studentId}`;
+        if (!overridesObj || Object.keys(overridesObj).length === 0) {
+            delete this.data.personalidad_overrides[key];
+        } else {
+            this.data.personalidad_overrides[key] = {
+                ...overridesObj,
+                updatedAt: new Date().toISOString()
+            };
+        }
+        this.save();
+    },
+
+    // ==========================================
+    // MÓDULO CALIFICACIONES DE EMERGENCIA (I - IV PARCIAL)
+    // ==========================================
+    _resolveParcialMeta(courseId, partialRef, partialIndex) {
+        let pId = '';
+        let pNum = null;
+        if (partialRef && typeof partialRef === 'object') {
+            pId = String(partialRef.id || '');
+            pNum = Number(partialRef.numero) || null;
+        } else if (partialRef !== undefined && partialRef !== null) {
+            pId = String(partialRef);
+        }
+        if (!pNum && typeof partialIndex === 'number' && partialIndex >= 0 && partialIndex < 4) {
+            pNum = partialIndex + 1;
+        }
+        const courseParciales = (this.getParcialByCourse ? this.getParcialByCourse(courseId) : (this.data.parciales || []).filter(p => p.cursoId === courseId || p.courseId === courseId)) || [];
+        if (pId && !pNum) {
+            const found = courseParciales.find(p => String(p.id) === pId || String(p.numero) === pId || ('p' + p.numero) === pId);
+            if (found && found.numero) pNum = Number(found.numero);
+            else if (/^[1-4]$/.test(pId)) pNum = Number(pId);
+            else if (/^p([1-4])$/i.test(pId)) pNum = Number(pId.replace(/\D/g, ''));
+        }
+        if (pNum && (!pId || /^[1-4]$/.test(pId) || /^p[1-4]$/i.test(pId))) {
+            const foundByNum = courseParciales.find(p => Number(p.numero) === pNum);
+            if (foundByNum && foundByNum.id) pId = String(foundByNum.id);
+        }
+        return { pId, pNum };
+    },
+
+    isEmergencyBypassed(courseId, partialRef, partialIndex) {
+        if (!this.data || !this.data.notas_emergencia_bypass) return false;
+        const { pId, pNum } = this._resolveParcialMeta(courseId, partialRef, partialIndex);
+        if (pId && this.data.notas_emergencia_bypass[`${courseId}_${pId}`]) return true;
+        if (pNum && this.data.notas_emergencia_bypass[`${courseId}_num${pNum}`]) return true;
+        return false;
+    },
+
+    setEmergencyBypass(courseId, partialRef, bypass, partialIndex) {
+        if (!this.data.notas_emergencia_bypass) this.data.notas_emergencia_bypass = {};
+        const { pId, pNum } = this._resolveParcialMeta(courseId, partialRef, partialIndex);
+        if (pId) {
+            if (bypass) this.data.notas_emergencia_bypass[`${courseId}_${pId}`] = true;
+            else delete this.data.notas_emergencia_bypass[`${courseId}_${pId}`];
+        }
+        if (pNum) {
+            if (bypass) this.data.notas_emergencia_bypass[`${courseId}_num${pNum}`] = true;
+            else delete this.data.notas_emergencia_bypass[`${courseId}_num${pNum}`];
+        }
+        this.save();
+    },
+
+    getEmergencyGrade(courseId, partialRef, studentId, partialIndex) {
+        if (!this.data || !this.data.notas_emergencia || !courseId || !studentId) return null;
+        if (partialRef === 'recuperacion' || (partialRef && partialRef.id === 'recuperacion')) return null;
+        if (this.isEmergencyBypassed(courseId, partialRef, partialIndex)) return null;
+
+        const { pId, pNum } = this._resolveParcialMeta(courseId, partialRef, partialIndex);
+        let raw = undefined;
+        if (pId && this.data.notas_emergencia[`${courseId}_${pId}_${studentId}`] !== undefined) {
+            raw = this.data.notas_emergencia[`${courseId}_${pId}_${studentId}`];
+        } else if (pNum && this.data.notas_emergencia[`${courseId}_num${pNum}_${studentId}`] !== undefined) {
+            raw = this.data.notas_emergencia[`${courseId}_num${pNum}_${studentId}`];
+        }
+        if (raw === undefined || raw === null || raw === '') return null;
+        const num = Number(raw);
+        return isNaN(num) ? null : Math.max(0, Math.min(100, Math.round(num)));
+    },
+
+    getRawEmergencyGrade(courseId, partialRef, studentId, partialIndex) {
+        if (!this.data || !this.data.notas_emergencia || !courseId || !studentId) return null;
+        const { pId, pNum } = this._resolveParcialMeta(courseId, partialRef, partialIndex);
+        let raw = undefined;
+        if (pId && this.data.notas_emergencia[`${courseId}_${pId}_${studentId}`] !== undefined) {
+            raw = this.data.notas_emergencia[`${courseId}_${pId}_${studentId}`];
+        } else if (pNum && this.data.notas_emergencia[`${courseId}_num${pNum}_${studentId}`] !== undefined) {
+            raw = this.data.notas_emergencia[`${courseId}_num${pNum}_${studentId}`];
+        }
+        if (raw === undefined || raw === null || raw === '') return null;
+        const num = Number(raw);
+        return isNaN(num) ? null : Math.max(0, Math.min(100, Math.round(num)));
+    },
+
+    saveEmergencyGrade(courseId, partialRef, studentId, gradeVal, partialIndex, skipSave = false) {
+        if (!this.data.notas_emergencia) this.data.notas_emergencia = {};
+        const { pId, pNum } = this._resolveParcialMeta(courseId, partialRef, partialIndex);
+        const isEmpty = (gradeVal === '' || gradeVal === null || gradeVal === undefined || isNaN(Number(gradeVal)));
+        if (isEmpty) {
+            if (pId) delete this.data.notas_emergencia[`${courseId}_${pId}_${studentId}`];
+            if (pNum) delete this.data.notas_emergencia[`${courseId}_num${pNum}_${studentId}`];
+        } else {
+            const cleanVal = Math.max(0, Math.min(100, Math.round(Number(gradeVal))));
+            if (pId) this.data.notas_emergencia[`${courseId}_${pId}_${studentId}`] = cleanVal;
+            if (pNum) this.data.notas_emergencia[`${courseId}_num${pNum}_${studentId}`] = cleanVal;
+        }
+        if (!skipSave) this.save();
+    },
+
+    countEmergencyGradesForParcial(courseId, partialRef, partialIndex) {
+        if (!this.data || !this.data.notas_emergencia || !courseId) return 0;
+        const students = (this.getStudentsByCourse ? this.getStudentsByCourse(courseId) : []).filter(s => s.estadoMatricula !== 'Traslado');
+        let count = 0;
+        students.forEach(s => {
+            if (this.getRawEmergencyGrade(courseId, partialRef, s.id, partialIndex) !== null) count++;
+        });
+        return count;
+    },
+
+    resetConductTypes() {
+        this.data.conducta_tipos = this.getConductDefaultTypes();
+        this.save();
+        return this.data.conducta_tipos;
+    },
+
+    saveConductType(typeObj) {
+        const types = this.getConductTypes();
+        const list = typeObj.categoria === 'positiva' ? types.positivas : types.incidencias;
+        if (!typeObj.id) {
+            typeObj.id = (typeObj.categoria === 'positiva' ? 'pos_c_' : 'inc_c_') + Date.now();
+            list.push(typeObj);
+        } else {
+            const idx = list.findIndex(t => t.id === typeObj.id);
+            if (idx >= 0) {
+                list[idx] = { ...list[idx], ...typeObj };
+            } else {
+                list.push(typeObj);
+            }
+        }
+        this.save();
+        return typeObj;
+    },
+
+    deleteConductType(typeId, categoria) {
+        const types = this.getConductTypes();
+        if (categoria === 'positiva') {
+            types.positivas = types.positivas.filter(t => t.id !== typeId);
+        } else {
+            types.incidencias = types.incidencias.filter(t => t.id !== typeId);
+        }
+        this.save();
+    },
+
+    getConductRecords(courseId, studentId, date) {
+        let list = this.data.conducta_records || [];
+        if (courseId) list = list.filter(r => r.cursoId === courseId);
+        if (studentId) list = list.filter(r => r.estudianteId === studentId);
+        if (date) list = list.filter(r => r.fecha === date);
+        return list;
+    },
+
+    saveConductRecord(record) {
+        if (!this.data.conducta_records) this.data.conducta_records = [];
+        if (!record.id) {
+            record.id = 'cond_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+        }
+        if (!record.createdAt) {
+            record.createdAt = new Date().toISOString();
+        }
+        this.data.conducta_records.push(record);
+        this.save();
+        return record;
+    },
+
+    deleteConductRecord(id) {
+        if (!this.data.conducta_records) return;
+        this.data.conducta_records = this.data.conducta_records.filter(r => r.id !== id);
+        this.save();
+    },
+
+    getConductSummary(courseId, studentId, date) {
+        const records = this.getConductRecords(courseId, studentId, date);
+        const pos = records.filter(r => r.tipo === 'positiva').length;
+        const inc = records.filter(r => r.tipo !== 'positiva').length;
+        return {
+            total: records.length,
+            positivasCount: pos,
+            incidenciasCount: inc,
+            records: records
+        };
     }
 };
 

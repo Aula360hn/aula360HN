@@ -147,7 +147,7 @@ Views.BancoCurricular = {
                             <table class="w-full text-left">
                                 <thead class="bg-violet-600 text-white text-[11px] uppercase tracking-wide">
                                     <tr>
-                                        <th class="py-3 px-3">Asignatura</th>
+                                        <th class="py-3 px-3">Campo del Conocimiento</th>
                                         <th class="py-3 px-3 text-center">Grado</th>
                                         <th class="py-3 px-3 text-center">Parcial</th>
                                         <th class="py-3 px-3">Unidad / Lecci\u00f3n</th>

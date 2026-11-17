@@ -1,7 +1,7 @@
 Views.PruebasFormativas = {
     state: {
-        mes: 'Febrero/Marzo',
-        rightOpen: true
+        mes: 'all',
+        rightOpen: false
     },
 
     isApplicableSubject: function(course) {
@@ -70,17 +70,140 @@ Views.PruebasFormativas = {
         '</div>';
     },
     
-    _key: function() {
-        return 'pruebas_formativas_' + (Store.data.activeCourseId || 'none') + '_' + this.state.mes.replace(/\//g, '-');
+    _key: function(mes, courseId) {
+        var m = mes || this.state.mes || 'Febrero/Marzo';
+        var cId = courseId || (Store.data && Store.data.activeCourseId) || 'none';
+        return 'pruebas_formativas_' + cId + '_' + String(m).replace(/\//g, '-');
     },
 
-    getData: function() {
-        var raw = localStorage.getItem(this._key());
-        return raw ? JSON.parse(raw) : null;
+    getData: function(mes, courseId) {
+        var key = this._key(mes, courseId);
+        // 1. Intentar desde Store.data.pruebasFormativas (Sincronizado con IndexedDB y Respaldos)
+        if (Store.data && Store.data.pruebasFormativas && typeof Store.data.pruebasFormativas === 'object') {
+            if (Store.data.pruebasFormativas[key]) {
+                return Store.data.pruebasFormativas[key];
+            }
+        }
+        // 2. Intentar desde localStorage (legacy)
+        try {
+            var raw = localStorage.getItem(key);
+            if (raw) {
+                var parsed = JSON.parse(raw);
+                if (Store.data) {
+                    if (!Store.data.pruebasFormativas || Array.isArray(Store.data.pruebasFormativas)) {
+                        Store.data.pruebasFormativas = {};
+                    }
+                    Store.data.pruebasFormativas[key] = parsed;
+                }
+                return parsed;
+            }
+        } catch(e) {}
+        return null;
     },
 
-    saveData: function(data) {
-        localStorage.setItem(this._key(), JSON.stringify(data));
+    saveData: function(data, mes, courseId) {
+        var key = this._key(mes, courseId);
+        // 1. Guardar en localStorage para compatibilidad
+        try {
+            localStorage.setItem(key, JSON.stringify(data));
+        } catch(e) {
+            console.error('Error al guardar en localStorage pruebas_formativas:', e);
+        }
+        // 2. Guardar en Store.data para que forme parte del RESPALDO GLOBAL y de IndexedDB
+        if (Store.data) {
+            if (!Store.data.pruebasFormativas || Array.isArray(Store.data.pruebasFormativas)) {
+                Store.data.pruebasFormativas = {};
+            }
+            Store.data.pruebasFormativas[key] = data;
+            Store.save();
+        }
+    },
+
+    // Escáner inteligente para recuperar datos huérfanos de pruebas formativas
+    scanAndRecoverLostData: function() {
+        var recoveredCount = 0;
+        var foundKeys = [];
+        var allCourses = Store.get('cursos') || [];
+
+        for (var i = 0; i < localStorage.length; i++) {
+            var k = localStorage.key(i);
+            if (k && k.indexOf('pruebas_formativas_') === 0) {
+                try {
+                    var raw = localStorage.getItem(k);
+                    if (!raw) continue;
+                    var d = JSON.parse(raw);
+                    if (d && d.filas && Array.isArray(d.filas)) {
+                        var hasData = d.filas.some(function(f) {
+                            return (f.lectura !== '' && f.lectura !== null && f.lectura !== undefined) ||
+                                   (f.escritura !== '' && f.escritura !== null && f.escritura !== undefined);
+                        });
+                        if (hasData) {
+                            foundKeys.push({ key: k, data: d });
+                        }
+                    }
+                } catch(e) {}
+            }
+        }
+
+        if (foundKeys.length === 0) {
+            return {
+                encontrados: 0,
+                mensaje: 'No se encontraron registros huérfanos con calificaciones en este dispositivo.'
+            };
+        }
+
+        if (!Store.data.pruebasFormativas || Array.isArray(Store.data.pruebasFormativas)) {
+            Store.data.pruebasFormativas = {};
+        }
+
+        foundKeys.forEach(function(item) {
+            var parts = item.key.split('_'); // ['pruebas', 'formativas', courseId, mes]
+            var keyCourseId = parts[2];
+            var keyMes = parts.slice(3).join('_');
+
+            var courseExists = allCourses.some(function(c) { return c.id === keyCourseId; });
+            if (!courseExists) {
+                // Intentar emparejar con cursos actuales por coincidencia de estudiantes
+                for (var ci = 0; ci < allCourses.length; ci++) {
+                    var courseStudents = Store.getStudentsByCourse(allCourses[ci].id);
+                    var matchCount = 0;
+                    item.data.filas.forEach(function(f) {
+                        if (courseStudents.some(function(cs) { return cs.id === f.estudianteId || cs.nombreCompleto === f.nombre; })) {
+                            matchCount++;
+                        }
+                    });
+                    if (matchCount > 0 && matchCount >= Math.min(courseStudents.length * 0.4, 2)) {
+                        var remappedKey = 'pruebas_formativas_' + allCourses[ci].id + '_' + keyMes;
+                        Store.data.pruebasFormativas[remappedKey] = item.data;
+                        try { localStorage.setItem(remappedKey, JSON.stringify(item.data)); } catch(e){}
+                        recoveredCount++;
+                        return;
+                    }
+                }
+            }
+
+            Store.data.pruebasFormativas[item.key] = item.data;
+            recoveredCount++;
+        });
+
+        Store.save();
+        return {
+            encontrados: foundKeys.length,
+            recuperados: recoveredCount,
+            mensaje: '¡Se recuperaron ' + recoveredCount + ' bloques de pruebas formativas con calificaciones!'
+        };
+    },
+
+    runRecoveryUI: function() {
+        var res = this.scanAndRecoverLostData();
+        if (res.recuperados > 0) {
+            UI.toast('🎉 ' + res.mensaje, 'success');
+            setTimeout(function() {
+                Router.navigate('pruebas-formativas');
+            }, 1000);
+        } else {
+            UI.toast('ℹ️ ' + res.mensaje, 'info');
+        }
     },
 
     buildDefault: function() {
@@ -368,6 +491,7 @@ Views.PruebasFormativas = {
 
     toggleRight: function() {
         this.state.rightOpen = !this.state.rightOpen;
+        try { localStorage.setItem("pf_rightOpen", this.state.rightOpen ? "1" : "0"); } catch(e){}
         var col = document.getElementById('pf-graphics-column');
         var btn = document.getElementById('pf-toggle-right-btn');
         if (col) {
@@ -401,6 +525,10 @@ Views.PruebasFormativas = {
 
     onMount: function() {
         if (window.lucide) window.lucide.createIcons();
+        try {
+            const saved = localStorage.getItem("pf_rightOpen");
+            if (saved !== null) this.state.rightOpen = (saved === "1");
+        } catch(e){}
         var col = document.getElementById('pf-graphics-column');
         var btn = document.getElementById('pf-toggle-right-btn');
         if (col) {
@@ -495,22 +623,10 @@ Views.PruebasFormativas = {
 
     executeShare: function() {
         var text = document.getElementById('share-text-preview').value;
-        if (navigator.share) {
-            navigator.share({
-                title: 'Reporte de Pruebas Formativas',
-                text: text
-            }).then(function() {
-                UI.closeModal();
-                if (typeof UI !== 'undefined' && UI.toast) UI.toast('Reporte compartido', 'success');
-            }).catch(function(err) {
-                console.log('Error sharing', err);
-            });
-        } else {
-            navigator.clipboard.writeText(text).then(function() {
-                UI.closeModal();
-                if (typeof UI !== 'undefined' && UI.toast) UI.toast('Texto copiado al portapapeles', 'success');
-            });
-        }
+        UI.shareData({
+            title: 'Reporte de Pruebas Formativas',
+            text: text
+        });
     },
 
     openFastInputModal: function(studentIndex) {
@@ -524,9 +640,7 @@ Views.PruebasFormativas = {
         
         var self = this;
         var rowsHtml = meses.map(function(mes) {
-            var key = 'pruebas_formativas_' + c.id + '_' + mes.replace(/\//g, '-');
-            var raw = localStorage.getItem(key);
-            var data = raw ? JSON.parse(raw) : null;
+            var data = self.getData(mes, c.id);
             var fila = { lectura: '', escritura: '' };
             if (data && data.filas) {
                 var found = data.filas.find(function(f) { return f.estudianteId === student.id; });
@@ -587,16 +701,14 @@ Views.PruebasFormativas = {
     updateFastCell: function(estId, mes, campo, val, inputElem) {
         var c = Store.getActiveCourse();
         if (!c) return;
-        var key = 'pruebas_formativas_' + c.id + '_' + mes.replace(/\//g, '-');
-        var raw = localStorage.getItem(key);
-        var data = raw ? JSON.parse(raw) : null;
+        var data = this.getData(mes, c.id);
         
         if (!data || !data.filas) {
             var students = Store.getStudentsByCourse(c.id);
             var filas = students.map(function(st) {
                 return {
                     estudianteId: st.id,
-                    nombre: st.nombreCompleto,
+                    nombre: st.nombreCompleto || st.nombre || '',
                     lectura: '',
                     escritura: ''
                 };
@@ -607,7 +719,7 @@ Views.PruebasFormativas = {
         var fila = data.filas.find(function(f) { return f.estudianteId === estId; });
         if (!fila) {
             var student = Store.getStudentsByCourse(c.id).find(function(s) { return s.id === estId; });
-            fila = { estudianteId: estId, nombre: student ? student.nombreCompleto : '', lectura: '', escritura: '' };
+            fila = { estudianteId: estId, nombre: student ? (student.nombreCompleto || student.nombre) : '', lectura: '', escritura: '' };
             data.filas.push(fila);
         }
         
@@ -615,7 +727,7 @@ Views.PruebasFormativas = {
         if (isNaN(numVal)) numVal = '';
         
         fila[campo] = numVal;
-        localStorage.setItem(key, JSON.stringify(data));
+        this.saveData(data, mes, c.id);
         
         if (inputElem) {
             var tr = inputElem.closest('tr');
@@ -636,9 +748,7 @@ Views.PruebasFormativas = {
     updateConsolidatedCell: function(studentId, mes, campo, val, inputElem) {
         var c = Store.getActiveCourse();
         if (!c) return;
-        var key = 'pruebas_formativas_' + c.id + '_' + mes.replace(/\//g, '-');
-        var raw = localStorage.getItem(key);
-        var data = raw ? JSON.parse(raw) : null;
+        var data = this.getData(mes, c.id);
 
         var students = Store.getStudentsByCourse(c.id) || [];
         if (!data || !data.filas) {
@@ -660,7 +770,7 @@ Views.PruebasFormativas = {
         if (isNaN(numVal)) numVal = '';
         fila[campo] = numVal;
 
-        localStorage.setItem(key, JSON.stringify(data));
+        this.saveData(data, mes, c.id);
 
         if (inputElem) {
             var tr = inputElem.closest('tr');
@@ -776,9 +886,7 @@ Views.PruebasFormativas = {
 
         var self = this;
         var monthStats = self.meses.map(function(m, idx) {
-            var key = 'pruebas_formativas_' + c.id + '_' + m.replace(/\//g, '-');
-            var raw = localStorage.getItem(key);
-            var data = raw ? JSON.parse(raw) : null;
+            var data = self.getData(m, c.id);
             var sumL = 0, countL = 0, sumE = 0, countE = 0;
             if (data && data.filas) {
                 data.filas.forEach(function(f) {
@@ -878,16 +986,14 @@ Views.PruebasFormativas = {
         if (isConsolidated) {
             var mesesData = {};
             meses.forEach(function(m) {
-                var key = 'pruebas_formativas_' + c.id + '_' + m.replace(/\//g, '-');
-                var raw = localStorage.getItem(key);
-                var data = raw ? JSON.parse(raw) : null;
+                var data = self.getData(m, c.id);
                 if (!data || !data.filas) {
                     data = {
                         filas: currentStudents.map(function(st) {
                             return { estudianteId: st.id, nombre: st.nombreCompleto || st.nombre || '', lectura: '', escritura: '' };
                         })
                     };
-                    localStorage.setItem(key, JSON.stringify(data));
+                    self.saveData(data, m, c.id);
                 }
                 var map = {};
                 data.filas.forEach(function(f) { map[f.estudianteId] = f; });
@@ -909,17 +1015,17 @@ Views.PruebasFormativas = {
                     if (eVal !== '') { sumE += Number(eVal); countE++; }
                     if (mTot !== '') { totAcum += Number(mTot); }
 
-                    return '<td style="padding: 0; text-align:center; border-right: 1px solid #cbd5e1; width:44px; min-width:44px; background:#fff;' + (mIdx === 0 ? ' border-left: 2px solid #64748b;' : '') + '">' +
+                    return '<td style="padding: 0; text-align:center; border-right: 1px solid #cbd5e1; width:38px; min-width:38px; background:#fff;' + (mIdx === 0 ? ' border-left: 2px solid #64748b;' : '') + '">' +
                         '<input type="number" min="0" max="48" class="pf-con-inp pf-grid-input" data-student-id="' + st.id + '" data-mes="' + m + '" data-mes-idx="' + mIdx + '" data-row-idx="' + sIdx + '" data-campo="lectura" value="' + lVal + '" ' +
                                'oninput="Views.PruebasFormativas.updateConsolidatedCell(\'' + st.id + '\', \'' + m + '\', \'lectura\', this.value, this)" ' +
                                'onkeydown="Views.PruebasFormativas.handleConsolidatedKey(event, ' + sIdx + ', ' + mIdx + ', \'lectura\')" />' +
                     '</td>' +
-                    '<td style="padding: 0; text-align:center; border-right: 1px solid #cbd5e1; width:40px; min-width:40px; background:#fff;">' +
+                    '<td style="padding: 0; text-align:center; border-right: 1px solid #cbd5e1; width:35px; min-width:35px; background:#fff;">' +
                         '<input type="number" min="0" max="20" class="pf-con-inp pf-grid-input" data-student-id="' + st.id + '" data-mes="' + m + '" data-mes-idx="' + mIdx + '" data-row-idx="' + sIdx + '" data-campo="escritura" value="' + eVal + '" ' +
                                'oninput="Views.PruebasFormativas.updateConsolidatedCell(\'' + st.id + '\', \'' + m + '\', \'escritura\', this.value, this)" ' +
                                'onkeydown="Views.PruebasFormativas.handleConsolidatedKey(event, ' + sIdx + ', ' + mIdx + ', \'escritura\')" />' +
                     '</td>' +
-                    '<td style="padding: 4px 2px; text-align:center; border-right: 2px solid #94a3b8; width:40px; min-width:40px; background:#f8fafc;">' +
+                    '<td style="padding: 4px 2px; text-align:center; border-right: 2px solid #94a3b8; width:35px; min-width:35px; background:#f8fafc;">' +
                         '<div class="pf-con-subtot" data-mes="' + m + '" style="font-size:11px; font-weight:800; color:' + (mTot !== '' ? '#0f172a' : '#94a3b8') + ';">' + (mTot !== '' ? mTot : '—') + '</div>' +
                     '</td>';
                 }).join('');
@@ -943,11 +1049,8 @@ Views.PruebasFormativas = {
 
                 return '<tr data-row-idx="' + sIdx + '" style="border-bottom: 1px solid #cbd5e1;">' +
                     '<td style="text-align:center; padding: 6px 4px; color:#64748b; font-size:11.5px; border-right: 1px solid #cbd5e1; position:sticky; left:0; background:#fff; z-index:5; width:38px; min-width:38px; max-width:38px; box-sizing:border-box;">' + (sIdx + 1) + '</td>' +
-                    '<td style="padding: 6px 8px; font-size:12px; color:#1e293b; font-weight:600; border-right: 2px solid #64748b; position:sticky; left:38px; background:#fff; z-index:5; width:220px; min-width:220px; max-width:220px; box-sizing:border-box; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' +
-                        '<div style="display:flex; justify-content:space-between; align-items:center;">' +
-                            '<span title="' + (st.nombreCompleto || st.nombre) + '">' + (st.nombreCompleto || st.nombre) + '</span>' +
-                            '<button onclick="Views.PruebasFormativas.openFastInputModal(' + sIdx + ')" style="background:none; border:none; color:#0ea5e9; cursor:pointer; padding:2px; margin-left:4px;" title="Ingreso individual por alumno"><i data-lucide="zap" style="width:13px; height:13px;"></i></button>' +
-                        '</div>' +
+                    '<td style="padding: 6px 8px; font-size:12px; color:#1e293b; font-weight:600; border-right: 2px solid #64748b; position:sticky; left:38px; background:#fff; z-index:5; width:195px; min-width:195px; max-width:195px; box-sizing:border-box; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' +
+                        '<span title="' + (st.nombreCompleto || st.nombre) + '">' + (st.nombreCompleto || st.nombre) + '</span>' +
                     '</td>' +
                     monthCells +
                     '<td class="pf-con-prom-l" style="padding: 6px 4px; text-align:center; font-weight:700; font-size:11.5px; color:#166534; border-right: 1px solid #cbd5e1; background:#f0fdf4;">' + promL + '</td>' +
@@ -1010,15 +1113,9 @@ Views.PruebasFormativas = {
                         '<button onclick="window.toggleSidebar()" class="pf-icon-btn" title="Alternar menú lateral"><i data-lucide="layout-sidebar" stroke-width="2.5" style="width:18px;height:18px;"></i></button>' +
                         '<div style="border-left: 1px solid #e2e8f0; height: 24px; margin: 0 4px;"></div>' +
                         
-                        '<!-- Switchers de Modo -->' +
-                        '<button onclick="Views.PruebasFormativas.changeMes(\'Febrero/Marzo\')" class="pf-mode-pill" title="Ver un solo mes con detalle de casillas">' +
-                            '<i data-lucide="calendar" style="width:14px; height:14px;"></i> Vista por Mes' +
-                        '</button>' +
-                        '<button onclick="Views.PruebasFormativas.changeMes(\'all\')" class="pf-mode-pill active" title="Ver y llenar todos los meses juntos">' +
-                            '<i data-lucide="table-2" style="width:14px; height:14px;"></i> Todos los Meses (Sábana Anual)' +
-                        '</button>' +
-
-                        '<div style="border-left: 1px solid #e2e8f0; height: 24px; margin: 0 4px;"></div>' +
+                        '<div style="display:flex; align-items:center; gap:8px; font-weight:800; font-size:13px; color:#0f172a;">' +
+                            '<span style="background:#e0f2fe; color:#0284c7; padding:4px 10px; border-radius:8px; display:inline-flex; align-items:center; gap:6px;"><i data-lucide="table-2" style="width:15px; height:15px;"></i> Sábana Anual Completa</span>' +
+                        '</div>' +
                         '<div style="display:flex; align-items:center; background:rgba(2, 132, 199, 0.08); border:1.5px solid rgba(2, 132, 199, 0.25); padding:4px 12px; border-radius:99px; color:#0284c7; font-size:13px; font-weight:700; gap:6px;">' +
                             '<i data-lucide="layers" style="width:14px; height:14px; color:#0284c7;"></i>' +
                             '<select style="font-weight:700; color:#0284c7; border:none; background:transparent; cursor:pointer; outline:none; font-size:13px; padding-right: 4px;" onchange="Views.PruebasFormativas.changeMes(this.value)">' +
@@ -1027,9 +1124,7 @@ Views.PruebasFormativas = {
                         '</div>' +
                     '</div>' +
                     '<div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">' +
-                        '<button onclick="Views.PruebasFormativas.openFastInputModal(0)" class="btn btn-sm btn-primary" style="display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:700; border-radius:8px; background:#0284c7; border-color:#0284c7;" title="Llenar calificaciones alumno por alumno">' +
-                            '<i data-lucide="user-check" style="width:14px; height:14px;"></i> Llenar por Alumno' +
-                        '</button>' +
+                        '<button onclick="Views.PruebasFormativas.runRecoveryUI()" class="btn btn-sm btn-outline" style="display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:700; border-radius:8px; border-color:#f59e0b; color:#b45309; background:#fffbeb;" title="Escanear y recuperar datos de pruebas formativas huérfanos o desvinculados"><i data-lucide="life-buoy" style="width:14px; height:14px;"></i> Rescatar Datos</button>' +
                         '<button onclick="window.print()" class="pf-icon-btn" title="Imprimir reporte anual"><i data-lucide="printer" stroke-width="2.2" style="width:16px;height:16px;"></i></button>' +
                         '<button onclick="Views.PruebasFormativas.previewShare()" class="pf-icon-btn" title="Compartir reporte" style="background:#0ea5e9; color:#fff; border-color:#0284c7;"><i data-lucide="share-2" stroke-width="2.2" style="width:16px;height:16px;color:#fff;"></i></button>' +
                         '<button id="pf-toggle-right-btn" onclick="Views.PruebasFormativas.toggleRight()" class="pf-icon-btn ' + (self.state.rightOpen ? 'active' : '') + '" title="Alternar panel de gráficos"><i data-lucide="panel-right" stroke-width="2.5" style="width:18px;height:18px;"></i></button>' +
@@ -1038,7 +1133,7 @@ Views.PruebasFormativas = {
 
                 '<div id="pf-layout-container" style="display:flex; gap:20px; flex-wrap:nowrap; align-items:flex-start; width:100%; transition: all 0.3s ease;">' +
                     '<!-- Columna Principal: Tabla Consolidada -->' +
-                    '<div id="pf-table-column" style="flex: 2; min-width: 320px; background:#fff; border-radius:16px; border:1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); overflow:hidden; padding: 20px; transition: all 0.3s ease;">' +
+                    '<div id="pf-table-column" style="width: 100%; max-width: 100%; flex: 1 1 100%; background:#fff; border-radius:16px; border:1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); overflow:hidden; padding: 20px; transition: all 0.3s ease;">' +
                         '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;">' +
                             '<div>' +
                                 '<div style="font-weight:900; font-size:16px; color:#0f172a; letter-spacing:-0.01em;">TABULACIÓN ANUAL CONSOLIDADA DE PRUEBAS FORMATIVAS</div>' +
@@ -1049,12 +1144,12 @@ Views.PruebasFormativas = {
                             '</div>' +
                         '</div>' +
 
-                        '<div style="overflow-x:auto; border: 1px solid #cbd5e1; border-radius: 10px; max-height:72vh; overflow-y:auto;">' +
+                        '<div style="overflow-x:auto; border: 1px solid #cbd5e1; border-radius: 10px; max-height:80vh; overflow-y:auto;">' +
                             '<table style="width:100%; border-collapse:collapse; text-align:left; font-size:12px;">' +
                                 '<thead style="position:sticky; top:0; z-index:10; background:#f8fafc;">' +
                                     '<tr style="border-bottom: 1px solid #cbd5e1;">' +
                                         '<th rowspan="2" style="padding: 8px 4px; font-size:11px; text-align:center; color:#475569; font-weight:800; border-right: 1px solid #cbd5e1; position:sticky; left:0; background:#f8fafc; z-index:12; width:38px; min-width:38px; max-width:38px; box-sizing:border-box;">N°</th>' +
-                                        '<th rowspan="2" style="padding: 8px 8px; font-size:11px; text-align:left; color:#475569; font-weight:800; border-right: 2px solid #64748b; position:sticky; left:38px; background:#f8fafc; z-index:12; width:220px; min-width:220px; max-width:220px; box-sizing:border-box; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Nombre del Educando</th>' +
+                                        '<th rowspan="2" style="padding: 8px 8px; font-size:11px; text-align:left; color:#475569; font-weight:800; border-right: 2px solid #64748b; position:sticky; left:38px; background:#f8fafc; z-index:12; width:195px; min-width:195px; max-width:195px; box-sizing:border-box; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Nombre del Educando</th>' +
                                         meses.map(function(m, mIdx) {
                                             return '<th colspan="3" style="padding: 6px 4px; font-size:11px; text-align:center; color:#1e293b; font-weight:800; border-right: 2px solid #94a3b8; background:#f1f5f9; white-space:nowrap;' + (mIdx === 0 ? ' border-left: 2px solid #64748b;' : '') + '">' + m + '</th>';
                                         }).join('') +
@@ -1062,9 +1157,9 @@ Views.PruebasFormativas = {
                                     '</tr>' +
                                     '<tr style="border-bottom: 2px solid #64748b; background:#f8fafc;">' +
                                         meses.map(function(m, mIdx) {
-                                            return '<th style="padding: 4px 2px; font-size:10px; text-align:center; color:#166534; font-weight:800; border-right: 1px solid #cbd5e1; width:44px; min-width:44px; white-space:nowrap;' + (mIdx === 0 ? ' border-left: 2px solid #64748b;' : '') + '" title="Lectura y Gramática (Máx 48 pts)">L (48)</th>' +
-                                                   '<th style="padding: 4px 2px; font-size:10px; text-align:center; color:#7c3aed; font-weight:800; border-right: 1px solid #cbd5e1; width:40px; min-width:40px; white-space:nowrap;" title="Escritura (Máx 20 pts)">E (20)</th>' +
-                                                   '<th style="padding: 4px 2px; font-size:10px; text-align:center; color:#0f172a; font-weight:800; border-right: 2px solid #94a3b8; width:40px; min-width:40px; background:#f1f5f9; white-space:nowrap;" title="Total del Mes (Máx 68 pts)">Tot</th>';
+                                            return '<th style="padding: 4px 2px; font-size:10px; text-align:center; color:#166534; font-weight:800; border-right: 1px solid #cbd5e1; width:38px; min-width:38px; white-space:nowrap;' + (mIdx === 0 ? ' border-left: 2px solid #64748b;' : '') + '" title="Lectura y Gramática (Máx 48 pts)">L (48)</th>' +
+                                                   '<th style="padding: 4px 2px; font-size:10px; text-align:center; color:#7c3aed; font-weight:800; border-right: 1px solid #cbd5e1; width:35px; min-width:35px; white-space:nowrap;" title="Escritura (Máx 20 pts)">E (20)</th>' +
+                                                   '<th style="padding: 4px 2px; font-size:10px; text-align:center; color:#0f172a; font-weight:800; border-right: 2px solid #94a3b8; width:35px; min-width:35px; background:#f1f5f9; white-space:nowrap;" title="Total del Mes (Máx 68 pts)">Tot</th>';
                                         }).join('') +
                                         '<th style="padding: 4px 4px; font-size:10px; text-align:center; color:#166534; font-weight:800; border-right: 1px solid #cbd5e1; width:48px; min-width:48px; background:#f0fdf4; white-space:nowrap;">Prom L</th>' +
                                         '<th style="padding: 4px 4px; font-size:10px; text-align:center; color:#7c3aed; font-weight:800; border-right: 1px solid #cbd5e1; width:48px; min-width:48px; background:#f5f3ff; white-space:nowrap;">Prom E</th>' +
@@ -1077,10 +1172,6 @@ Views.PruebasFormativas = {
                         '</div>' +
                     '</div>' +
 
-                    '<!-- Columna Derecha: Dashboard Consolidado Anual -->' +
-                    '<div id="pf-graphics-column" class="' + (self.state.rightOpen ? '' : 'collapsed') + '" style="flex: 0.9; min-width: 290px; display:flex; flex-direction:column; gap:20px;">' +
-                        '<!-- Se rellena con updateConsolidatedChartsDOM -->' +
-                    '</div>' +
                 '</div>' +
             '</div>';
         }
@@ -1154,7 +1245,7 @@ Views.PruebasFormativas = {
                 '<td style="text-align:center; padding: 8px 6px; color:#64748b; font-size:12px; border-right: 1px solid #cbd5e1;">' + (idx + 1) + '</td>' +
                 '<td style="padding: 8px 12px; font-size:13px; color:#334155; font-weight:600; border-right: 1px solid #cbd5e1; display:flex; justify-content:space-between; align-items:center;">' + 
                     '<span>' + fila.nombre + '</span>' +
-                    '<button onclick="Views.PruebasFormativas.openLightningMenu(' + idx + ')" style="background:transparent; border:none; cursor:pointer; color:#0ea5e9; padding:4px; border-radius:4px; display:grid; place-items:center;" title="Opciones de Corrección" onmouseover="this.style.background=\'#e0f2fe\'" onmouseout="this.style.background=\'transparent\'"><i data-lucide="activity" style="width:14px; height:14px;"></i></button>' +
+                    '' +
                 '</td>' +
                 
                 // Lectura y Gramática input
@@ -1366,9 +1457,7 @@ Views.PruebasFormativas = {
                     '<button onclick="Views.PruebasFormativas.nextMonth()" class="pf-icon-btn" title="Mes Siguiente" style="'+(nextDisabled ? 'opacity:0.3; pointer-events:none; cursor:not-allowed;' : '')+'" '+(nextDisabled ? 'disabled' : '')+'><i data-lucide="arrow-right" stroke-width="2.5" style="width:18px;height:18px;"></i></button>' +
                 '</div>' +
                 '<div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">' +
-                    '<button onclick="Views.PruebasFormativas.openFastInputModal(0)" class="btn btn-sm btn-primary" style="display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:700; border-radius:8px; background:#0284c7; border-color:#0284c7;" title="Llenar calificaciones alumno por alumno">' +
-                        '<i data-lucide="user-check" style="width:14px; height:14px;"></i> Llenar por Alumno' +
-                    '</button>' +
+                    '<button onclick="Views.PruebasFormativas.runRecoveryUI()" class="btn btn-sm btn-outline" style="display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:700; border-radius:8px; border-color:#f59e0b; color:#b45309; background:#fffbeb;" title="Escanear y recuperar datos de pruebas formativas huérfanos o desvinculados"><i data-lucide="life-buoy" style="width:14px; height:14px;"></i> Rescatar Datos</button>' +
                     '<button onclick="window.print()" class="pf-icon-btn" title="Imprimir reporte"><i data-lucide="printer" stroke-width="2.2" style="width:16px;height:16px;"></i></button>' +
                     '<button onclick="Views.PruebasFormativas.previewShare()" class="pf-icon-btn" title="Compartir reporte" style="background:#0ea5e9; color:#fff; border-color:#0284c7;"><i data-lucide="share-2" stroke-width="2.2" style="width:16px;height:16px;color:#fff;"></i></button>' +
                     '<button onclick="Views.PruebasFormativas.openGroupAnalysisModal()" class="pf-icon-btn" title="Análisis Grupal de Escritura" style="background:linear-gradient(135deg, #0ea5e9, #3b82f6); color:#fff; border:none; box-shadow: 0 2px 6px rgba(14, 165, 233, 0.3);"><i data-lucide="sparkles" stroke-width="2.2" style="width:16px;height:16px;color:#fff;"></i></button>' +

@@ -156,22 +156,10 @@ Views.ReporteParcial = {
 
     executeShare: function() {
         var text = document.getElementById('share-text-preview').value;
-        if (navigator.share) {
-            navigator.share({
-                title: 'Reporte del Parcial',
-                text: text
-            }).then(function() {
-                UI.closeModal();
-                if (typeof UI !== 'undefined' && UI.toast) UI.toast('Reporte compartido', 'success');
-            }).catch(function(err) {
-                console.log('Error sharing', err);
-            });
-        } else {
-            navigator.clipboard.writeText(text).then(function() {
-                UI.closeModal();
-                if (typeof UI !== 'undefined' && UI.toast) UI.toast('Texto copiado al portapapeles', 'success');
-            });
-        }
+        UI.shareData({
+            title: 'Reporte del Parcial',
+            text: text
+        });
     },
 
     getBadgeStyles: function(color) {
@@ -353,10 +341,10 @@ Views.ReporteParcial = {
             var badgeStyle = Views.ReporteParcial.getBadgeStyles(perf.color);
             var bgRow = idx % 2 === 0 ? '#ffffff' : '#f8fafc';
 
-            return '<tr style="background:' + bgRow + '; border-bottom: 1px solid #e2e8f0;">' +
-                '<td style="text-align:center; padding: 6px 4px; color:#475569; font-size:11.5px; border-right: 1px solid #cbd5e1; width:36px; font-weight:600;">' + (idx + 1) + '</td>' +
-                '<td style="padding: 6px 12px; font-size:12px; color:#0f172a; font-weight:600; border-right: 1px solid #cbd5e1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' + (s.nombreCompleto || (s.nombres + ' ' + s.apellidos)) + '</td>' +
-                '<td style="padding: 6px 8px; text-align:center; font-weight:800; font-size:13px; color:#0f172a; border-right: 1px solid #cbd5e1; width:75px;">' + finalScore + '%</td>' +
+            return '<tr style="background:' + bgRow + '; border-bottom: 1px solid #94a3b8;">' +
+                '<td style="text-align:center; padding: 6px 4px; color:#475569; font-size:11.5px; border-right: 1px solid #94a3b8; width:36px; font-weight:600;">' + (idx + 1) + '</td>' +
+                '<td style="padding: 6px 12px; font-size:12px; color:#0f172a; font-weight:600; border-right: 1px solid #94a3b8; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' + (s.nombreCompleto || (s.nombres + ' ' + s.apellidos)) + '</td>' +
+                '<td style="padding: 6px 8px; text-align:center; font-weight:800; font-size:13px; color:#0f172a; border-right: 1px solid #94a3b8; width:75px;">' + finalScore + '%</td>' +
                 '<td style="padding: 4px 6px; text-align:center; vertical-align:middle; width:100px;">' +
                     '<span style="display:inline-block; padding:2px 8px; font-size:10px; font-weight:700; border-radius:4px; text-transform:uppercase; letter-spacing:0.02em; ' + badgeStyle + '">' + perf.label + '</span>' +
                 '</td>' +
@@ -644,7 +632,7 @@ Views.ReporteParcial = {
                             '<div style="display:grid; grid-template-columns: repeat(' + (isLandscape ? '4' : '2') + ', 1fr); background:#f8fafc; border-bottom:1px solid #cbd5e1;">' +
                                 '<div style="padding:6px 10px; border-right:1px solid #cbd5e1;"><span style="color:#64748b; font-weight:600;">CENTRO:</span> <strong style="color:#0f172a;">' + centroEdu + '</strong></div>' +
                                 '<div style="padding:6px 10px; border-right:1px solid #cbd5e1;"><span style="color:#64748b; font-weight:600;">GRADO Y SECC:</span> <strong style="color:#0f172a;">' + grado + ' "' + seccion + '"</strong></div>' +
-                                '<div style="padding:6px 10px; border-right:1px solid #cbd5e1;"><span style="color:#64748b; font-weight:600;">ASIGNATURA:</span> <strong style="color:#0f172a;">' + asignatura + '</strong></div>' +
+                                '<div style="padding:6px 10px; border-right:1px solid #cbd5e1;"><span style="color:#64748b; font-weight:600;">CAMPO DEL CONOCIMIENTO:</span> <strong style="color:#0f172a;">' + asignatura + '</strong></div>' +
                                 '<div style="padding:6px 10px;"><span style="color:#64748b; font-weight:600;">ALDEA:</span> <strong style="color:#0f172a;">' + aldea + '</strong></div>' +
                             '</div>' +
                             '<div style="display:grid; grid-template-columns: repeat(' + (isLandscape ? '4' : '2') + ', 1fr); background:#ffffff;">' +
@@ -662,12 +650,12 @@ Views.ReporteParcial = {
                                 '<div style="font-size:12px; font-weight:800; color:#1e293b; text-transform:uppercase; margin-bottom:8px; display:flex; align-items:center; gap:6px;">' +
                                     '<i data-lucide="table" style="width:14px;height:14px;color:#185abd;"></i> Registro Oficial de Calificaciones' +
                                 '</div>' +
-                                '<table style="width:100%; border-collapse:collapse; border:1px solid #cbd5e1; font-size:11.5px;">' +
+                                '<table style="width:100%; border-collapse:collapse; border:1px solid #94a3b8; font-size:11.5px;">' +
                                     '<thead>' +
                                         '<tr style="background:#1e293b; color:#ffffff;">' +
-                                            '<th style="padding:8px 4px; text-align:center; font-size:10.5px; font-weight:700; width:36px; border-right:1px solid #334155;">No.</th>' +
-                                            '<th style="padding:8px 12px; text-align:left; font-size:10.5px; font-weight:700; border-right:1px solid #334155;">Nombre Completo del Educando</th>' +
-                                            '<th style="padding:8px 6px; text-align:center; font-size:10.5px; font-weight:700; width:75px; border-right:1px solid #334155;">Nota (%)</th>' +
+                                            '<th style="padding:8px 4px; text-align:center; font-size:10.5px; font-weight:700; width:36px; border-right:1px solid #94a3b8;">No.</th>' +
+                                            '<th style="padding:8px 12px; text-align:left; font-size:10.5px; font-weight:700; border-right:1px solid #94a3b8;">Nombre Completo del Educando</th>' +
+                                            '<th style="padding:8px 6px; text-align:center; font-size:10.5px; font-weight:700; width:75px; border-right:1px solid #94a3b8;">Nota (%)</th>' +
                                             '<th style="padding:8px 6px; text-align:center; font-size:10.5px; font-weight:700; width:100px;">Desempeño</th>' +
                                         '</tr>' +
                                     '</thead>' +
@@ -675,9 +663,9 @@ Views.ReporteParcial = {
                                         trows +
                                     '</tbody>' +
                                     '<tfoot>' +
-                                        '<tr style="background:#f1f5f9; font-weight:800; border-top:2px solid #cbd5e1;">' +
-                                            '<td colspan="2" style="padding:8px 12px; text-align:right; font-size:11px; color:#334155; border-right:1px solid #cbd5e1;">PROMEDIO GENERAL DE LA SECCIÓN:</td>' +
-                                            '<td style="padding:8px 6px; text-align:center; font-size:13px; color:#0f172a; border-right:1px solid #cbd5e1;">' + promedioGeneral + '%</td>' +
+                                        '<tr style="background:#f1f5f9; font-weight:800; border-top:1px solid #94a3b8;">' +
+                                            '<td colspan="2" style="padding:8px 12px; text-align:right; font-size:11px; color:#334155; border-right:1px solid #94a3b8;">PROMEDIO GENERAL DE LA SECCIÓN:</td>' +
+                                            '<td style="padding:8px 6px; text-align:center; font-size:13px; color:#0f172a; border-right:1px solid #94a3b8;">' + promedioGeneral + '%</td>' +
                                             '<td style="padding:6px; text-align:center;"><span style="font-size:10px; font-weight:800; text-transform:uppercase;">' + perfGeneral.label + '</span></td>' +
                                         '</tr>' +
                                     '</tfoot>' +
@@ -691,20 +679,20 @@ Views.ReporteParcial = {
                                 '</div>' +
 
                                 '<!-- Tabla Resumen por Nivel -->' +
-                                '<table style="width:100%; border-collapse:collapse; border:1px solid #cbd5e1; font-size:11px; text-align:center;">' +
+                                '<table style="width:100%; border-collapse:collapse; border:1px solid #94a3b8; font-size:11px; text-align:center;">' +
                                     '<thead>' +
-                                        '<tr style="background:#f8fafc; border-bottom:1px solid #cbd5e1;">' +
-                                            '<th style="padding:6px 10px; text-align:left; font-weight:700; color:#475569; border-right:1px solid #cbd5e1;">Nivel de Desempeño</th>' +
-                                            '<th style="padding:6px 8px; font-weight:700; color:#475569; border-right:1px solid #cbd5e1; width:70px;">Educandos</th>' +
+                                        '<tr style="background:#f8fafc; border-bottom:1px solid #94a3b8;">' +
+                                            '<th style="padding:6px 10px; text-align:left; font-weight:700; color:#475569; border-right:1px solid #94a3b8;">Nivel de Desempeño</th>' +
+                                            '<th style="padding:6px 8px; font-weight:700; color:#475569; border-right:1px solid #94a3b8; width:70px;">Educandos</th>' +
                                             '<th style="padding:6px 8px; font-weight:700; color:#475569; width:70px;">Porcentaje</th>' +
                                         '</tr>' +
                                     '</thead>' +
                                     '<tbody>' +
-                                        '<tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:5px 10px; text-align:left; font-weight:700; color:#166534; background:#f0fdf4; border-right:1px solid #cbd5e1;">Excelente (91-100%)</td><td style="border-right:1px solid #cbd5e1; font-weight:700;">' + stats.excelente + '</td><td style="font-weight:700;">' + pE + '%</td></tr>' +
-                                        '<tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:5px 10px; text-align:left; font-weight:700; color:#1e40af; background:#eff6ff; border-right:1px solid #cbd5e1;">Avanzado (81-90%)</td><td style="border-right:1px solid #cbd5e1; font-weight:700;">' + stats.avanzado + '</td><td style="font-weight:700;">' + pA + '%</td></tr>' +
-                                        '<tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:5px 10px; text-align:left; font-weight:700; color:#854d0e; background:#fefce8; border-right:1px solid #cbd5e1;">Básico (70-80%)</td><td style="border-right:1px solid #cbd5e1; font-weight:700;">' + stats.basico + '</td><td style="font-weight:700;">' + pB + '%</td></tr>' +
-                                        '<tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:5px 10px; text-align:left; font-weight:700; color:#991b1b; background:#fef2f2; border-right:1px solid #cbd5e1;">Inicial (< 70%)</td><td style="border-right:1px solid #cbd5e1; font-weight:700;">' + stats.inicial + '</td><td style="font-weight:700;">' + pI + '%</td></tr>' +
-                                        '<tr style="background:#f1f5f9; font-weight:800;"><td style="padding:6px 10px; text-align:left; color:#1e293b; border-right:1px solid #cbd5e1;">Total Matrícula</td><td style="border-right:1px solid #cbd5e1; color:#0f172a;">' + stats.total + '</td><td style="color:#185abd;">100%</td></tr>' +
+                                        '<tr style="border-bottom:1px solid #94a3b8;"><td style="padding:5px 10px; text-align:left; font-weight:700; color:#166534; background:#f0fdf4; border-right:1px solid #94a3b8;">Excelente (91-100%)</td><td style="border-right:1px solid #94a3b8; font-weight:700;">' + stats.excelente + '</td><td style="font-weight:700;">' + pE + '%</td></tr>' +
+                                        '<tr style="border-bottom:1px solid #94a3b8;"><td style="padding:5px 10px; text-align:left; font-weight:700; color:#1e40af; background:#eff6ff; border-right:1px solid #94a3b8;">Avanzado (81-90%)</td><td style="border-right:1px solid #94a3b8; font-weight:700;">' + stats.avanzado + '</td><td style="font-weight:700;">' + pA + '%</td></tr>' +
+                                        '<tr style="border-bottom:1px solid #94a3b8;"><td style="padding:5px 10px; text-align:left; font-weight:700; color:#854d0e; background:#fefce8; border-right:1px solid #94a3b8;">Básico (70-80%)</td><td style="border-right:1px solid #94a3b8; font-weight:700;">' + stats.basico + '</td><td style="font-weight:700;">' + pB + '%</td></tr>' +
+                                        '<tr style="border-bottom:1px solid #94a3b8;"><td style="padding:5px 10px; text-align:left; font-weight:700; color:#991b1b; background:#fef2f2; border-right:1px solid #94a3b8;">Inicial (< 70%)</td><td style="border-right:1px solid #94a3b8; font-weight:700;">' + stats.inicial + '</td><td style="font-weight:700;">' + pI + '%</td></tr>' +
+                                        '<tr style="background:#f1f5f9; font-weight:800;"><td style="padding:6px 10px; text-align:left; color:#1e293b; border-right:1px solid #94a3b8;">Total Matrícula</td><td style="border-right:1px solid #94a3b8; color:#0f172a;">' + stats.total + '</td><td style="color:#185abd;">100%</td></tr>' +
                                     '</tbody>' +
                                 '</table>' +
 

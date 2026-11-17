@@ -5,15 +5,15 @@
 // ============================================================
 
 (function seedRubricas() {
-    const SEED_VERSION = '2.2';
+    const SEED_VERSION = '2.3';
     const SEED_KEY = 'aula360_rubricas_seed_v' + SEED_VERSION;
 
-    if (typeof Store === 'undefined') {
+    if (typeof Store === 'undefined' || !Store.data) {
         setTimeout(seedRubricas, 200);
         return;
     }
 
-    if (localStorage.getItem(SEED_KEY) === 'done') {
+    if (localStorage.getItem(SEED_KEY) === 'done' && Store.data.rubricas && Store.data.rubricas.length > 5) {
         return;
     }
 
@@ -333,18 +333,157 @@
                     { levelId: 'lvl_excelente', points: 1.5, descriptor: 'Colabora de forma activa, respetuosa y constructiva con el equipo.' }
                 ]}
             ]
+        },
+        {
+            id: 'rubrica_cartografia_mapas',
+            nombre: 'Cartografía y Mapas Geográficos',
+            descripcion: 'Evalúa la elaboración, rotulación, precisión geográfica y simbología de mapas y álbumes cartográficos.',
+            categoria: 'Cartografía y Mapas',
+            asignatura: 'Ciencias Sociales',
+            puntajeTotal: 10,
+            criteria: [
+                { id: 'cm_c1', name: 'Precisión geográfica y ubicación', maxPoints: 3, levels: [
+                    { levelId: 'lvl_inicial', points: 0, descriptor: 'Ubicación errónea de los elementos geográficos principales.' },
+                    { levelId: 'lvl_basico', points: 1.5, descriptor: 'Ubica de forma aproximada o con imprecisiones notables los elementos geográficos.' },
+                    { levelId: 'lvl_avanzado', points: 2.25, descriptor: 'Ubica correctamente la mayoría de elementos, límites y coordenadas.' },
+                    { levelId: 'lvl_excelente', points: 3, descriptor: 'Precisión exacta y rigurosa en límites, coordenadas y accidentes geográficos.' }
+                ]},
+                { id: 'cm_c2', name: 'Simbología, leyenda y rosa náutica', maxPoints: 2.5, levels: [
+                    { levelId: 'lvl_inicial', points: 0, descriptor: 'Carece de leyenda, escala o rosa náutica.' },
+                    { levelId: 'lvl_basico', points: 1, descriptor: 'Presenta símbolos incompletos o sin correspondencia clara con la leyenda.' },
+                    { levelId: 'lvl_avanzado', points: 1.75, descriptor: 'Incluye leyenda clara y orientación cardinal adecuada.' },
+                    { levelId: 'lvl_excelente', points: 2.5, descriptor: 'Simbología cartográfica estándar impecable, escala y orientación correctas.' }
+                ]},
+                { id: 'cm_c3', name: 'Rotulación, toponimia y legibilidad', maxPoints: 2.5, levels: [
+                    { levelId: 'lvl_inicial', points: 0, descriptor: 'Letra ilegible, faltas ortográficas en topónimos o nombres borrosos.' },
+                    { levelId: 'lvl_basico', points: 1, descriptor: 'Rotulación descuidada o con varios errores ortográficos en nombres geográficos.' },
+                    { levelId: 'lvl_avanzado', points: 1.75, descriptor: 'Nombres geográficos claros, legibles y bien distribuidos.' },
+                    { levelId: 'lvl_excelente', points: 2.5, descriptor: 'Rotulación técnica impecable, excelente caligrafía, ortografía y estética cartográfica.' }
+                ]},
+                { id: 'cm_c4', name: 'Limpieza, coloreado y presentación', maxPoints: 2, levels: [
+                    { levelId: 'lvl_inicial', points: 0, descriptor: 'Presentación manchada, coloreado fuera de límites o descuidado.' },
+                    { levelId: 'lvl_basico', points: 1, descriptor: 'Coloreado parcial o sin respetar convenciones cartográficas elementales.' },
+                    { levelId: 'lvl_avanzado', points: 1.5, descriptor: 'Buen uso de colores geográficos (hidrografía, relieve) y orden general.' },
+                    { levelId: 'lvl_excelente', points: 2, descriptor: 'Presentación artística y técnica sobresaliente con respeto riguroso de convenciones.' }
+                ]}
+            ]
+        },
+        {
+            id: 'rubrica_analisis_historico',
+            nombre: 'Análisis Histórico y Líneas de Tiempo',
+            descripcion: 'Evalúa cronología, causas-consecuencias, contexto de eventos y análisis de fuentes históricas.',
+            categoria: 'Análisis Histórico y Fuentes',
+            asignatura: 'Ciencias Sociales',
+            puntajeTotal: 10,
+            criteria: [
+                { id: 'ah_c1', name: 'Secuencia cronológica y fechas', maxPoints: 3, levels: [
+                    { levelId: 'lvl_inicial', points: 0, descriptor: 'Orden cronológico incorrecto o desarticulado.' },
+                    { levelId: 'lvl_basico', points: 1.5, descriptor: 'Sitúa algunos periodos pero con confusiones temporales.' },
+                    { levelId: 'lvl_avanzado', points: 2.25, descriptor: 'Secuencia histórica coherente y fechas clave bien situadas.' },
+                    { levelId: 'lvl_excelente', points: 3, descriptor: 'Precisión cronológica ejemplar con periodización clara y fundamentada.' }
+                ]},
+                { id: 'ah_c2', name: 'Comprensión de causas y consecuencias', maxPoints: 3, levels: [
+                    { levelId: 'lvl_inicial', points: 0, descriptor: 'Se limita a memorizar o no explica el origen de los hechos.' },
+                    { levelId: 'lvl_basico', points: 1.5, descriptor: 'Menciona hechos aislados sin relacionar causas con sus efectos.' },
+                    { levelId: 'lvl_avanzado', points: 2.25, descriptor: 'Explica adecuadamente las relaciones de causa y efecto de los procesos.' },
+                    { levelId: 'lvl_excelente', points: 3, descriptor: 'Profundidad crítica para articular factores económicos, sociales y políticos.' }
+                ]},
+                { id: 'ah_c3', name: 'Uso de fuentes y biografías', maxPoints: 2, levels: [
+                    { levelId: 'lvl_inicial', points: 0, descriptor: 'Sin fuentes o con datos erróneos de personajes y próceres.' },
+                    { levelId: 'lvl_basico', points: 1, descriptor: 'Fuentes mínimas sin contrastar información.' },
+                    { levelId: 'lvl_avanzado', points: 1.5, descriptor: 'Cita y utiliza información pertinente sobre los personajes y sucesos.' },
+                    { levelId: 'lvl_excelente', points: 2, descriptor: 'Excelente contextualización crítica de personajes y fuentes históricas.' }
+                ]},
+                { id: 'ah_c4', name: 'Claridad expositiva y síntesis', maxPoints: 2, levels: [
+                    { levelId: 'lvl_inicial', points: 0, descriptor: 'Texto confuso, copia textual excesiva o desorden visual.' },
+                    { levelId: 'lvl_basico', points: 1, descriptor: 'Síntesis incompleta con dificultades de redacción.' },
+                    { levelId: 'lvl_avanzado', points: 1.5, descriptor: 'Buena capacidad de síntesis, lenguaje histórico adecuado y orden.' },
+                    { levelId: 'lvl_excelente', points: 2, descriptor: 'Excelente claridad argumentativa, dominio del vocabulario social y diseño pulcro.' }
+                ]}
+            ]
+        },
+        {
+            id: 'rubrica_investigacion_informe',
+            nombre: 'Investigación e Informe Escolar',
+            descripcion: 'Evalúa la estructura de informes, recopilación de información, conclusiones y citas bibliográficas.',
+            categoria: 'Investigación e Informe Social',
+            asignatura: 'General',
+            puntajeTotal: 10,
+            criteria: [
+                { id: 'ii_c1', name: 'Estructura del informe (Introducción, Desarrollo, Conclusión)', maxPoints: 2.5, levels: [
+                    { levelId: 'lvl_inicial', points: 0, descriptor: 'Faltan secciones fundamentales del informe.' },
+                    { levelId: 'lvl_basico', points: 1, descriptor: 'Estructura incompleta o con secciones poco desarrolladas.' },
+                    { levelId: 'lvl_avanzado', points: 1.75, descriptor: 'Cumple con portada, introducción, cuerpo y conclusiones.' },
+                    { levelId: 'lvl_excelente', points: 2.5, descriptor: 'Estructura académica formal perfecta con articulación lógica impecable.' }
+                ]},
+                { id: 'ii_c2', name: 'Calidad y profundidad del contenido', maxPoints: 3.5, levels: [
+                    { levelId: 'lvl_inicial', points: 0, descriptor: 'Contenido superficial, no responde al tema investigado.' },
+                    { levelId: 'lvl_basico', points: 1.5, descriptor: 'Aborda el tema con datos básicos sin profundizar.' },
+                    { levelId: 'lvl_avanzado', points: 2.5, descriptor: 'Información pertinente, suficiente y bien explicada.' },
+                    { levelId: 'lvl_excelente', points: 3.5, descriptor: 'Investigación rigurosa, enriquecedora y con aportes analíticos propios.' }
+                ]},
+                { id: 'ii_c3', name: 'Conclusiones y reflexión crítica', maxPoints: 2, levels: [
+                    { levelId: 'lvl_inicial', points: 0, descriptor: 'Sin conclusiones o copia del desarrollo.' },
+                    { levelId: 'lvl_basico', points: 1, descriptor: 'Conclusiones generales sin postura analítica.' },
+                    { levelId: 'lvl_avanzado', points: 1.5, descriptor: 'Conclusiones claras que responden a los objetivos planteados.' },
+                    { levelId: 'lvl_excelente', points: 2, descriptor: 'Reflexión crítica madura, propositiva y bien sustentada.' }
+                ]},
+                { id: 'ii_c4', name: 'Bibliografía, fuentes y presentación', maxPoints: 2, levels: [
+                    { levelId: 'lvl_inicial', points: 0, descriptor: 'Sin fuentes citadas, presentación descuidada.' },
+                    { levelId: 'lvl_basico', points: 1, descriptor: 'Fuentes mínimas citadas de forma incorrecta.' },
+                    { levelId: 'lvl_avanzado', points: 1.5, descriptor: 'Cita fuentes consultadas con pulcritud en la entrega.' },
+                    { levelId: 'lvl_excelente', points: 2, descriptor: 'Fuentes confiables debidamente referenciadas y presentación profesional.' }
+                ]}
+            ]
+        },
+        {
+            id: 'rubrica_practica_tecnologica',
+            nombre: 'Práctica Digital / Proyecto Tecnológico',
+            descripcion: 'Evalúa desarrollo de documentos digitales, presentaciones, uso de herramientas tecnológicas y diseño funcional.',
+            categoria: 'Práctica en Computadora / Software',
+            asignatura: 'Tecnología',
+            puntajeTotal: 10,
+            criteria: [
+                { id: 'pt_c1', name: 'Aplicación de herramientas del software', maxPoints: 3, levels: [
+                    { levelId: 'lvl_inicial', points: 0, descriptor: 'No utiliza las funciones solicitadas en el programa.' },
+                    { levelId: 'lvl_basico', points: 1.5, descriptor: 'Uso básico o con dificultad de las herramientas informáticas.' },
+                    { levelId: 'lvl_avanzado', points: 2.25, descriptor: 'Aplica correctamente las herramientas y formatos indicados.' },
+                    { levelId: 'lvl_excelente', points: 3, descriptor: 'Dominio fluido y eficiente de funciones avanzadas del software.' }
+                ]},
+                { id: 'pt_c2', name: 'Diseño, formato y estética digital', maxPoints: 2.5, levels: [
+                    { levelId: 'lvl_inicial', points: 0, descriptor: 'Formato desordenado, fuentes ilegibles o mala diagramación.' },
+                    { levelId: 'lvl_basico', points: 1, descriptor: 'Formato plano sin jerarquía visual clara.' },
+                    { levelId: 'lvl_avanzado', points: 1.75, descriptor: 'Buena combinación tipográfica, colores y distribución armónica.' },
+                    { levelId: 'lvl_excelente', points: 2.5, descriptor: 'Diseño visual profesional, atractivo y funcionalmente óptimo.' }
+                ]},
+                { id: 'pt_c3', name: 'Cumplimiento de especificaciones y datos', maxPoints: 2.5, levels: [
+                    { levelId: 'lvl_inicial', points: 0, descriptor: 'El producto digital no cumple los requisitos solicitados.' },
+                    { levelId: 'lvl_basico', points: 1, descriptor: 'Cumple parcialmente con las consignas técnicas.' },
+                    { levelId: 'lvl_avanzado', points: 1.75, descriptor: 'Cumple con todas las consignas y contenidos requeridos.' },
+                    { levelId: 'lvl_excelente', points: 2.5, descriptor: 'Supera las expectativas cumpliendo con exactitud técnica cada requerimiento.' }
+                ]},
+                { id: 'pt_c4', name: 'Organización de archivos y entrega digital', maxPoints: 2, levels: [
+                    { levelId: 'lvl_inicial', points: 0, descriptor: 'Archivo dañado, formato incorrecto o sin nombre identificable.' },
+                    { levelId: 'lvl_basico', points: 1, descriptor: 'Entrega con retraso o nomenclatura imprecisa.' },
+                    { levelId: 'lvl_avanzado', points: 1.5, descriptor: 'Archivo en formato correcto y debidamente nombrado.' },
+                    { levelId: 'lvl_excelente', points: 2, descriptor: 'Gestión impecable del archivo digital, entrega puntual y orden digital ejemplar.' }
+                ]}
+            ]
         }
     ];
 
-    const existentes = Store.get('rubricas') || [];
+    window.BancoRubricasOficial = BANCO_OFICIAL;
+
+    if (!Store.data.rubricas) Store.data.rubricas = [];
+    const existentes = Store.data.rubricas;
     const existentesIds = new Set(existentes.map(r => r.id));
     let sembradas = 0;
 
     BANCO_OFICIAL.forEach(rJSON => {
         // Siempre reemplazar las rúbricas del banco oficial para mantenerlas actualizadas
-        if (existentesIds.has(rJSON.id)) {
-             const index = existentes.findIndex(x => x.id === rJSON.id);
-             if (index !== -1) existentes.splice(index, 1);
+        const index = existentes.findIndex(x => x.id === rJSON.id);
+        if (index !== -1) {
+            existentes.splice(index, 1);
         }
 
         const rubrica = {
@@ -362,10 +501,12 @@
             niveles: NIVELES.map(n => ({ id: n.id, nombre: n.nombre, puntos: 0 }))
         };
 
-        Store.add('rubricas', rubrica);
+        Store.add('rubricas', rubrica, true);
         sembradas++;
     });
 
+    Store.save();
     localStorage.setItem(SEED_KEY, 'done');
     console.log(`[SeedRubricas] ✅ ${sembradas} rúbricas sembradas o actualizadas.`);
+    window._rubricasSembradasTotal = sembradas;
 })();

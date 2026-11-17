@@ -326,7 +326,7 @@ const GoogleSheetsSync = {
                 nivel_logro: pd.nivel || 'INICIAL',
                 fecha_evaluacion: pd.fecha || new Date().toISOString().substring(0, 10)
             })),
-            ...(d.pruebasFormativas || []).map(pf => ({
+            ...(Array.isArray(d.pruebasFormativas) ? d.pruebasFormativas : Object.values(d.pruebasFormativas || {})).map(pf => ({
                 prueba_id: pf.id,
                 tipo_prueba: 'FORMATIVA',
                 estudiante_id: pf.estudianteId,

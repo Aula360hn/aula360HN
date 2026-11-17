@@ -328,6 +328,7 @@ Views.Bitacora = {
             <option value="todos">Toda severidad</option>
             ${this._severidades.map(s => `<option value="${s.key}">${s.label}</option>`).join('')}
         </select>
+        ${typeof UI !== 'undefined' && UI.renderReportZoomControls ? UI.renderReportZoomControls('bita-entries-list', 'bita-zoom-label') : ''}
         <button class="btn btn-outline btn-sm" onclick="Views.Bitacora._exportarPDF()" title="Exportar a PDF">
             <i data-lucide="file-text" style="width:14px;height:14px;"></i> PDF
         </button>
